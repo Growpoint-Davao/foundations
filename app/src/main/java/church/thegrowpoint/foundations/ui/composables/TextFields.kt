@@ -1,6 +1,7 @@
 package church.thegrowpoint.foundations.ui.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +13,8 @@ fun RoundedTextInputField(
     modifier: Modifier = Modifier,
     value: String = "",
     label: String = "",
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    isError: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
@@ -19,6 +22,8 @@ fun RoundedTextInputField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedShapes.large
+        shape = RoundedShapes.large,
+        keyboardOptions = keyboardOptions,
+        isError = isError
     )
 }

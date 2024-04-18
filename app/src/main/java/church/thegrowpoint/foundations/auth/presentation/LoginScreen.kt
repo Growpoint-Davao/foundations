@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
@@ -30,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +50,13 @@ import java.util.Locale
 fun LoginScreen(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    var isValidEmail by rememberSaveable { mutableStateOf(true) }
+    var pwLengthValid by rememberSaveable { mutableStateOf(true) }
+    var enableSignInButton by rememberSaveable {
+        mutableStateOf((email.isNotEmpty() && password.isNotEmpty()))
+    }
+
+    enableSignInButton = pwLengthValid && isValidEmail && (email.isNotEmpty() && password.isNotEmpty())
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -72,20 +82,28 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(32.dp))
-        RoundedTextInputField(
-            label = stringResource(R.string.email),
+        EmailField(
             value = email,
-            onValueChange = { email = it }
+            onValueChange = {
+                email = it.trim()
+                isValidEmail = email.validEmail()
+            },
+            isError = !isValidEmail
         )
         Spacer(modifier = Modifier.height(8.dp))
         PasswordField(
             value = password,
-            onValueChange = { password = it }
+            onValueChange = {
+                password = it
+                pwLengthValid = password.validPasswordLength()
+            },
+            isError = !pwLengthValid
         )
         Spacer(modifier = Modifier.height(16.dp))
         LargeButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.sign_in),
+            enabled = enableSignInButton
         ) {
 
         }
@@ -137,9 +155,30 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun EmailField(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false
+) {
+    RoundedTextInputField(
+        modifier = modifier,
+        label = stringResource(R.string.email),
+        value = value,
+        onValueChange = onValueChange,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next
+        ),
+        isError = isError
+    )
+}
+
+@Composable
 fun PasswordField(
     modifier: Modifier = Modifier,
     value: String = "",
+    isError: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     var showPassword by remember { mutableStateOf(false) }
@@ -149,6 +188,7 @@ fun PasswordField(
         shape = RoundedShapes.large,
         value = value,
         onValueChange = onValueChange,
+        isError = isError,
         label = { Text(stringResource(R.string.password)) },
         placeholder = { Text(text = stringResource(R.string.enter_password)) },
         trailingIcon = {
@@ -159,7 +199,11 @@ fun PasswordField(
                 )
             }
         },
-        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
+        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        )
     )
 }
 
