@@ -217,7 +217,8 @@ fun PasswordField(
 fun GreetingPreview() {
     FoundationsTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
         ) {
             LoginScreen()
         }
