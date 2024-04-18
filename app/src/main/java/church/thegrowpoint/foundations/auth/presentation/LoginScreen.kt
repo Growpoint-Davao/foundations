@@ -41,6 +41,7 @@ import church.thegrowpoint.foundations.ui.composables.RoundedTextInputField
 import church.thegrowpoint.foundations.ui.composables.WhiteIconButton
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
+import java.util.Locale
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier) {
@@ -52,8 +53,19 @@ fun LoginScreen(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         modifier = modifier.padding(horizontal = 32.dp)
     ) {
-        Image(painter = painterResource(R.drawable.gp_login_text_logo), contentDescription = null)
+        Text(
+            text = stringResource(R.string.growpoint).uppercase(Locale.ROOT),
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.tertiary
+        )
+        Text(
+            text = stringResource(R.string.foundations).uppercase(Locale.ROOT),
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold
+        )
         Image(painter = painterResource(R.drawable.gp_login_logo), contentDescription = null)
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.sign_in_to_your_account),
             style = MaterialTheme.typography.titleLarge,
