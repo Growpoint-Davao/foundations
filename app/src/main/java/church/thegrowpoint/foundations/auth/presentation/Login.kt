@@ -11,12 +11,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -24,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
@@ -32,6 +40,7 @@ import church.thegrowpoint.foundations.ui.composables.LargeButton
 import church.thegrowpoint.foundations.ui.composables.RoundedTextInputField
 import church.thegrowpoint.foundations.ui.composables.WhiteIconButton
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
+import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
 @Composable
 fun Login(modifier: Modifier = Modifier) {
@@ -61,8 +70,7 @@ fun Login(modifier: Modifier = Modifier) {
             onValueChange = { email = it }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        RoundedTextInputField(
-            label = stringResource(R.string.password),
+        PasswordField(
             value = password,
             onValueChange = { password = it }
         )
@@ -124,8 +132,38 @@ fun Login(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun PasswordField(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    onValueChange: (String) -> Unit
+) {
+    var showPassword by remember { mutableStateOf(false) }
+
+    OutlinedTextField(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedShapes.large,
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(stringResource(R.string.password)) },
+        placeholder = { Text(text = stringResource(R.string.enter_password)) },
+        trailingIcon = {
+            IconButton(onClick = { showPassword = !showPassword }) {
+                Icon(
+                    Icons.Filled.Visibility,
+                    contentDescription = stringResource(R.string.show_hide_password)
+                )
+            }
+        },
+        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
+    )
+}
+
 @Preview(
-    showBackground = true, showSystemUi = true, name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES
+    showBackground = true,
+    showSystemUi = true,
+    name = "Dark Mode",
+    uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
 fun GreetingPreview() {
