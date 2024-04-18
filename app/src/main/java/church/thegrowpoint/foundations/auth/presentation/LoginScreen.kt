@@ -43,7 +43,7 @@ import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
 @Composable
-fun Login(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
@@ -52,12 +52,8 @@ fun Login(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         modifier = modifier.padding(horizontal = 32.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.gp_login_text_logo), contentDescription = null
-        )
-        Image(
-            painter = painterResource(R.drawable.gp_login_logo), contentDescription = null
-        )
+        Image(painter = painterResource(R.drawable.gp_login_text_logo), contentDescription = null)
+        Image(painter = painterResource(R.drawable.gp_login_logo), contentDescription = null)
         Text(
             text = stringResource(R.string.sign_in_to_your_account),
             style = MaterialTheme.typography.titleLarge,
@@ -93,9 +89,7 @@ fun Login(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             WhiteIconButton(
                 modifier = Modifier.weight(1f),
                 imageRes = R.drawable.facebook_logo,
@@ -113,9 +107,7 @@ fun Login(modifier: Modifier = Modifier) {
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(R.string.do_not_have_an_account),
                 style = MaterialTheme.typography.titleSmall
@@ -171,7 +163,7 @@ fun GreetingPreview() {
         Surface(
             modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
         ) {
-            Login()
+            LoginScreen()
         }
     }
 }
