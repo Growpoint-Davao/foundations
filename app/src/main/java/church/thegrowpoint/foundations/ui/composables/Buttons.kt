@@ -66,16 +66,15 @@ fun WhiteIconButton(
 fun LargeButton(
     modifier: Modifier = Modifier,
     text: String = "",
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    Button(
-        modifier = modifier, onClick = onClick
-    ) {
+    Button(modifier = modifier, onClick = onClick, enabled = enabled) {
         Text(
             modifier = Modifier.padding(all = 8.dp),
             text = text,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
         )
     }
 }

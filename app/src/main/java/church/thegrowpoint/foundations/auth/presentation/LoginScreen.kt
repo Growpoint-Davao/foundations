@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
@@ -30,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,43 +44,66 @@ import church.thegrowpoint.foundations.ui.composables.RoundedTextInputField
 import church.thegrowpoint.foundations.ui.composables.WhiteIconButton
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
+import java.util.Locale
 
 @Composable
-fun Login(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    var isValidEmail by rememberSaveable { mutableStateOf(true) }
+    var pwLengthValid by rememberSaveable { mutableStateOf(true) }
+    var enableSignInButton by rememberSaveable {
+        mutableStateOf((email.isNotEmpty() && password.isNotEmpty()))
+    }
+
+    enableSignInButton = pwLengthValid && isValidEmail && (email.isNotEmpty() && password.isNotEmpty())
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier.padding(horizontal = 32.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.gp_login_text_logo), contentDescription = null
+        Text(
+            text = stringResource(R.string.growpoint).uppercase(Locale.ROOT),
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.tertiary
         )
-        Image(
-            painter = painterResource(R.drawable.gp_login_logo), contentDescription = null
+        Text(
+            text = stringResource(R.string.foundations).uppercase(Locale.ROOT),
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold
         )
+        Image(painter = painterResource(R.drawable.gp_login_logo), contentDescription = null)
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.sign_in_to_your_account),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(32.dp))
-        RoundedTextInputField(
-            label = stringResource(R.string.email),
+        EmailField(
             value = email,
-            onValueChange = { email = it }
+            onValueChange = {
+                email = it.trim()
+                isValidEmail = email.validEmail()
+            },
+            isError = !isValidEmail
         )
         Spacer(modifier = Modifier.height(8.dp))
         PasswordField(
             value = password,
-            onValueChange = { password = it }
+            onValueChange = {
+                password = it
+                pwLengthValid = password.validPasswordLength()
+            },
+            isError = !pwLengthValid
         )
         Spacer(modifier = Modifier.height(16.dp))
         LargeButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.sign_in),
+            enabled = enableSignInButton
         ) {
 
         }
@@ -93,9 +119,7 @@ fun Login(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             WhiteIconButton(
                 modifier = Modifier.weight(1f),
                 imageRes = R.drawable.facebook_logo,
@@ -113,9 +137,7 @@ fun Login(modifier: Modifier = Modifier) {
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(R.string.do_not_have_an_account),
                 style = MaterialTheme.typography.titleSmall
@@ -133,9 +155,30 @@ fun Login(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun EmailField(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false
+) {
+    RoundedTextInputField(
+        modifier = modifier,
+        label = stringResource(R.string.email),
+        value = value,
+        onValueChange = onValueChange,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next
+        ),
+        isError = isError
+    )
+}
+
+@Composable
 fun PasswordField(
     modifier: Modifier = Modifier,
     value: String = "",
+    isError: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     var showPassword by remember { mutableStateOf(false) }
@@ -145,6 +188,7 @@ fun PasswordField(
         shape = RoundedShapes.large,
         value = value,
         onValueChange = onValueChange,
+        isError = isError,
         label = { Text(stringResource(R.string.password)) },
         placeholder = { Text(text = stringResource(R.string.enter_password)) },
         trailingIcon = {
@@ -155,7 +199,11 @@ fun PasswordField(
                 )
             }
         },
-        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
+        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        )
     )
 }
 
@@ -169,9 +217,10 @@ fun PasswordField(
 fun GreetingPreview() {
     FoundationsTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
         ) {
-            Login()
+            LoginScreen()
         }
     }
 }
