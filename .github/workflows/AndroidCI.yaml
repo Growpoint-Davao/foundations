@@ -26,6 +26,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Google Play Services
+      - name: Create Google Play Services JSON File
+        run: cat /home/runner/work/Foundations/Foundations/app/google-services.json | base64
+
+      # Putting data
+      - name: Putting data
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/Foundations/Foundations/app/google-services.json
+
       - name: Grant permissions
         run: chmod +x gradlew
 
