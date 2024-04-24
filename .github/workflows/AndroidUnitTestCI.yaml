@@ -26,10 +26,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Assemble debugging
-      - name: Assemble debug
-        run: ./gradlew assembleDebug assembleAndroidTest
-
       # Putting data
       - name: Create Google Play Services json file
         env:
@@ -39,6 +35,10 @@ jobs:
       # Verify Google Play Services
       - name: Display the list of file of app directory
         run: pwd && ls -la
+
+      # Assemble debugging
+      - name: Assemble debug
+        run: ./gradlew assembleDebug assembleAndroidTest
 
       - name: Grant permissions
         run: chmod +x gradlew
