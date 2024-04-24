@@ -10,9 +10,10 @@ import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
 @Composable
 fun RoundedTextInputField(
+    label: String,
+    supportingText: String,
     modifier: Modifier = Modifier,
     value: String = "",
-    label: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     isError: Boolean = false,
     onValueChange: (String) -> Unit
@@ -24,6 +25,14 @@ fun RoundedTextInputField(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedShapes.large,
         keyboardOptions = keyboardOptions,
-        isError = isError
+        isError = isError,
+        supportingText = {
+            if (isError) {
+                ErrorLabel(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = supportingText
+                )
+            }
+        }
     )
 }
