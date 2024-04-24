@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
+import church.thegrowpoint.foundations.ui.composables.ErrorLabel
 import church.thegrowpoint.foundations.ui.composables.LargeButton
 import church.thegrowpoint.foundations.ui.composables.RoundedTextInputField
 import church.thegrowpoint.foundations.ui.composables.WhiteIconButton
@@ -97,7 +98,8 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 password = it
                 pwLengthValid = password.validPasswordLength()
             },
-            isError = !pwLengthValid
+            isError = !pwLengthValid,
+            supportingText = stringResource(R.string.password_is_too_short)
         )
         Spacer(modifier = Modifier.height(16.dp))
         LargeButton(
@@ -108,11 +110,13 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
+        ClickableLabel(
             text = stringResource(R.string.forgot_the_password),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
-        )
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        ) {
+
+        }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(R.string.or_continue_with),
@@ -144,7 +148,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.width(16.dp))
             ClickableLabel(
-                textRes = R.string.sign_up,
+                text = stringResource(R.string.sign_up),
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             ) {
@@ -170,12 +174,14 @@ fun EmailField(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next
         ),
-        isError = isError
+        isError = isError,
+        supportingText = stringResource(R.string.please_provide_a_valid_email)
     )
 }
 
 @Composable
 fun PasswordField(
+    supportingText: String,
     modifier: Modifier = Modifier,
     value: String = "",
     isError: Boolean = false,
@@ -189,6 +195,14 @@ fun PasswordField(
         value = value,
         onValueChange = onValueChange,
         isError = isError,
+        supportingText = {
+            if (isError) {
+                ErrorLabel(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = supportingText
+                )
+            }
+        },
         label = { Text(stringResource(R.string.password)) },
         placeholder = { Text(text = stringResource(R.string.enter_password)) },
         trailingIcon = {

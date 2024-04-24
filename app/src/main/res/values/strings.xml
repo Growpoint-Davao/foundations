@@ -14,4 +14,6 @@
     <string name="show_hide_password">Show/Hide password</string>
     <string name="growpoint">Growpoint</string>
     <string name="foundations">Foundations</string>
+    <string name="please_provide_a_valid_email">Please provide a valid email</string>
+    <string name="password_is_too_short">Password is too short</string>
 </resources>
