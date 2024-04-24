@@ -26,8 +26,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Assemble debugging
+      - name: Assemble debug
+        run: ./gradlew assembleDebug assembleAndroidTest
+
       # Putting data
-      - name: Putting data
+      - name: Create Google Play Services json file
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: pwd && echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
@@ -43,6 +47,21 @@ jobs:
       - name: Run unit tests
         run: ./gradlew test
 
-      - name: Android Unit Report
+      - name: Android Unit Tests Report
         uses: asadmansr/android-test-report-action@v1.2.0
         if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
+
+      # execute instrumentation tests
+      - name: Run Instrumentation Tests
+        uses: emulator-wtf/run-tests@v0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          outputs-dir: build/test-results
+
+      - name: Publish test report
+        uses: mikepenz/action-junit-report@v2
+        if: always() # always run even if the tests fail
+        with:
+          report_paths: 'build/test-results/**/*.xml'
