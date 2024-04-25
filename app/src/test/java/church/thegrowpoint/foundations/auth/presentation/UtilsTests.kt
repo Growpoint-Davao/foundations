@@ -1,5 +1,7 @@
 package church.thegrowpoint.foundations.auth.presentation
 
+import church.thegrowpoint.foundations.utils.extensions.validEmail
+import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
