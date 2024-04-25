@@ -1,11 +1,9 @@
-package church.thegrowpoint.foundations.auth.presentation
+package church.thegrowpoint.foundations.utils.extensions
 
-import church.thegrowpoint.foundations.utils.extensions.validEmail
-import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class UtilsTests {
+class StringsTests {
     @Test
     fun invalid_emails() {
         val invalidEmail1 = "test"

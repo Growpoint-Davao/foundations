@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-
+    // core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,14 +63,24 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+
+    androidTestImplementation(libs.androidx.core)
+    androidTestImplementation(libs.core.ktx)
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestUtil(libs.androidx.orchestrator)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // hilt
     implementation(libs.hilt.android)
@@ -78,7 +88,11 @@ dependencies {
 
     // firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
     implementation(libs.firebase.analytics)
+
+    // google play
+    implementation(libs.play.services.auth)
 }
 
 // Allow references to generated code
