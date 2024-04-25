@@ -1,0 +1,44 @@
+name: Android Unit Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.13.0
+        with:
+          distribution: 'adopt'
+          java-version: 17
+
+      - name: Use Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('build.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Putting data
+      - name: Create Google Play Services Json File
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: pwd && echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
+
+      - name: Grant Permissions
+        run: chmod +x gradlew
+
+      # execute unit tests
+      - name: Run Unit tests
+        run: ./gradlew test
+
+      # - name: Android Unit Tests Report
+      #   uses: asadmansr/android-test-report-action@v1.2.0
+      #   if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
