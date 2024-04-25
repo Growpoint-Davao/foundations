@@ -45,6 +45,8 @@ import church.thegrowpoint.foundations.ui.composables.RoundedTextInputField
 import church.thegrowpoint.foundations.ui.composables.WhiteIconButton
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
+import church.thegrowpoint.foundations.utils.extensions.validEmail
+import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
 import java.util.Locale
 
 @Composable
