@@ -34,7 +34,7 @@ jobs:
 
       # Verify Google Play Services
       - name: Display the list of file of app directory
-        run: pwd && ls -la
+        run: pwd && ls -la app
 
       # Assemble debugging
       - name: Assemble debug
