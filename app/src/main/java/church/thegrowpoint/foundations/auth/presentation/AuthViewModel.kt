@@ -1,16 +1,16 @@
 package church.thegrowpoint.foundations.auth.presentation
 
+import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.auth.domain.models.User
 import church.thegrowpoint.foundations.auth.domain.usecases.GetCurrentUser
-import church.thegrowpoint.foundations.auth.domain.usecases.GetGoogleSignInClient
+import church.thegrowpoint.foundations.auth.domain.usecases.GetGoogleSignInClientIntent
 import church.thegrowpoint.foundations.auth.domain.usecases.GoogleSignInTask
 import church.thegrowpoint.foundations.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,7 +29,7 @@ class AuthViewModel @Inject constructor(
     getCurrentUser: GetCurrentUser,
     private val signOutUser: SignOutUser,
     private val registerUser: RegisterUser,
-    private val getGoogleSignInClient: GetGoogleSignInClient,
+    private val getGoogleSignInClientIntent: GetGoogleSignInClientIntent,
     private val googleSignInTask: GoogleSignInTask,
     private val signInWithEmailAndPassword: SignInWithEmailAndPassword
 ) : ViewModel() {
@@ -86,8 +86,8 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun createGoogleSignInClient(): GoogleSignInClient {
-        return getGoogleSignInClient()
+    fun createGoogleSignInClientIntent(): Intent {
+        return getGoogleSignInClientIntent()
     }
 
     fun signIn(email: String, password: String, onSignIn: (user: User?, exception: Exception?) -> Unit) {

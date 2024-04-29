@@ -42,7 +42,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.ErrorLabel
@@ -162,7 +161,7 @@ fun LoginScreen(
                 imageRes = R.drawable.google_logo,
                 labelRes = R.string.google
             ) {
-                launcher.launch(authViewModel.createGoogleSignInClient().signInIntent)
+                launcher.launch(authViewModel.createGoogleSignInClientIntent())
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
