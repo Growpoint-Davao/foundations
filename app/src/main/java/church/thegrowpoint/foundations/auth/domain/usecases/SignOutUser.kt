@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class SignOutUser @Inject constructor(private val authRepository: AuthRepository) {
     operator fun invoke() {
-        authRepository.signOut()
+        return authRepository.signOut()
     }
 }

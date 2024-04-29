@@ -4,11 +4,9 @@ import android.content.Context
 import church.thegrowpoint.foundations.auth.data.repositories.AuthRepositoryImplementation
 import church.thegrowpoint.foundations.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.auth.domain.usecases.GetCurrentUser
-import church.thegrowpoint.foundations.auth.domain.usecases.GetGoogleSignInClientIntent
-import church.thegrowpoint.foundations.auth.domain.usecases.GoogleSignInTask
 import church.thegrowpoint.foundations.auth.domain.usecases.RegisterUser
-import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithEmailAndPassword
+import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -37,18 +35,6 @@ internal object Module {
     @Singleton
     fun provideGetCurrentUser(authRepository: AuthRepository): GetCurrentUser {
         return GetCurrentUser(authRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetGoogleSignInClientIntent(@ApplicationContext context: Context): GetGoogleSignInClientIntent {
-        return GetGoogleSignInClientIntent(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGoogleSignInTask(authRepository: AuthRepository): GoogleSignInTask {
-        return GoogleSignInTask(authRepository)
     }
 
     @Provides
