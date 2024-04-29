@@ -1,8 +1,7 @@
 package church.thegrowpoint.foundations.auth.presentation
 
-import com.google.firebase.auth.FirebaseUser
+import church.thegrowpoint.foundations.auth.domain.models.User
 
 data class AuthState (
-    val currentUser: FirebaseUser? = null
+    val currentUser: User? = null
 )
-

@@ -2,7 +2,9 @@
 agp = "8.3.2"
 core = "1.5.0"
 firebaseBom = "32.8.1"
-hiltAndroid = "2.44"
+hiltAndroid = "2.49"
+hiltNavigation = "1.2.0"
+hiltCompiler = "1.2.0"
 junitKtx = "1.1.5"
 kotlin = "1.9.0"
 coreKtx = "1.13.0"
@@ -15,7 +17,7 @@ activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 lifecycleViewmodelCompose = "2.7.0"
 materialIconsExtended = "1.6.6"
-hilt = "2.44"
+hilt = "2.49"
 gms = "4.4.1"
 mockitoCore = "4.11.0"
 mockitoKotlin = "4.1.0"
@@ -27,6 +29,9 @@ runner = "1.5.2"
 [libraries]
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
+androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigation" }
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
