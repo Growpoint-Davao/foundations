@@ -1,10 +1,6 @@
 package church.thegrowpoint.foundations.auth.presentation
 
-import android.app.Activity
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -57,7 +53,7 @@ import java.util.Locale
 @Composable
 fun LoginScreen(
     authViewModel: AuthViewModel,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -68,20 +64,6 @@ fun LoginScreen(
     }
 
     enableSignInButton = pwLengthValid && isValidEmail && (email.isNotEmpty() && password.isNotEmpty())
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            authViewModel.googleSign(result) {
-                    user, exception ->
-
-                if (user != null) {
-                    Log.d("AUTH", user.email)
-                }
-            }
-        }
-    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -161,7 +143,9 @@ fun LoginScreen(
                 imageRes = R.drawable.google_logo,
                 labelRes = R.string.google
             ) {
-                launcher.launch(authViewModel.createGoogleSignInClientIntent())
+                authViewModel.signInWithGoogle {
+                    user, exception ->
+                }
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
@@ -258,9 +242,7 @@ fun LoginPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LoginScreen(
-                authViewModel = hiltViewModel()
-            )
+            LoginScreen(authViewModel = hiltViewModel())
         }
     }
 }

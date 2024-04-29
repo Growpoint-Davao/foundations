@@ -7,6 +7,7 @@ import church.thegrowpoint.foundations.auth.domain.usecases.GetCurrentUser
 import church.thegrowpoint.foundations.auth.domain.usecases.GetGoogleSignInClientIntent
 import church.thegrowpoint.foundations.auth.domain.usecases.GoogleSignInTask
 import church.thegrowpoint.foundations.auth.domain.usecases.RegisterUser
+import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
 import com.google.firebase.auth.FirebaseAuth
@@ -66,5 +67,14 @@ internal object Module {
     @Singleton
     fun provideSignOutUser(authRepository: AuthRepository): SignOutUser {
         return SignOutUser(authRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignInWithCredential(
+        authRepository: AuthRepository,
+        @ApplicationContext context: Context
+    ): SignInWithGoogle {
+        return SignInWithGoogle(authRepository, context)
     }
 }

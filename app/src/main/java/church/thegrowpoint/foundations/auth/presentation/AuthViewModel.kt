@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.auth.presentation
 
+import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
@@ -10,8 +11,10 @@ import church.thegrowpoint.foundations.auth.domain.usecases.GetGoogleSignInClien
 import church.thegrowpoint.foundations.auth.domain.usecases.GoogleSignInTask
 import church.thegrowpoint.foundations.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithEmailAndPassword
+import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,18 +29,23 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     getCurrentUser: GetCurrentUser,
     private val signOutUser: SignOutUser,
     private val registerUser: RegisterUser,
     private val getGoogleSignInClientIntent: GetGoogleSignInClientIntent,
     private val googleSignInTask: GoogleSignInTask,
-    private val signInWithEmailAndPassword: SignInWithEmailAndPassword
+    private val signInWithEmailAndPassword: SignInWithEmailAndPassword,
+    private val signInWithGoogle: SignInWithGoogle
 ) : ViewModel() {
     // auth state
     private val _authState = MutableStateFlow(AuthState())
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
+    private var appContext: Context
+
     init {
+        appContext = context
         setCurrentUser(getCurrentUser())
     }
 
@@ -74,7 +82,10 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun googleSign(result: ActivityResult, onGoogleSignIn: (user: User?, exception: Exception?) -> Unit) {
+    fun googleSign(
+        result: ActivityResult,
+        onGoogleSignIn: (user: User?, exception: Exception?) -> Unit
+    ) {
         viewModelScope.launch {
             result.data?.let {
                 val signInResult = googleSignInTask(it)
@@ -90,13 +101,26 @@ class AuthViewModel @Inject constructor(
         return getGoogleSignInClientIntent()
     }
 
-    fun signIn(email: String, password: String, onSignIn: (user: User?, exception: Exception?) -> Unit) {
+    fun signIn(
+        email: String,
+        password: String,
+        onSignIn: (user: User?, exception: Exception?) -> Unit
+    ) {
         viewModelScope.launch {
             val signInResult = signInWithEmailAndPassword(email = email, password = password)
             val user = signInResult?.user
             val exception = signInResult?.exception
             onSignIn(user, exception)
             setCurrentUser(user)
+        }
+    }
+
+    fun signInWithGoogle(onGoogleSignIn: (user: User?, exception: Exception?) -> Unit) {
+        viewModelScope.launch {
+            val userResult = signInWithGoogle()
+            if (userResult != null) {
+                onGoogleSignIn(userResult.user, userResult.exception)
+            }
         }
     }
 }
