@@ -8,6 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
+/**
+ * Creates a rounded and outlined text input field.
+ *
+ * It requires a [label], [supportingText] to be used when there is an error, initial [value], and trailing lambda [onValueChange] as a callback.
+ * It has optional arguments as well, [modifier] to modify the style if the input field, [keyboardOptions], and [isError].
+ */
 @Composable
 fun RoundedTextInputField(
     label: String,

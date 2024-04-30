@@ -50,6 +50,11 @@ import church.thegrowpoint.foundations.utils.extensions.validEmail
 import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
 import java.util.Locale
 
+/**
+ * Creates a login screen for the app.
+ *
+ * This function requires the [authViewModel] and optional [modifier]
+ */
 @Composable
 fun LoginScreen(
     authViewModel: AuthViewModel,
@@ -132,16 +137,16 @@ fun LoginScreen(
         Row(verticalAlignment = Alignment.CenterVertically) {
             WhiteIconButton(
                 modifier = Modifier.weight(1f),
-                imageRes = R.drawable.facebook_logo,
-                labelRes = R.string.facebook
+                icon = painterResource(R.drawable.facebook_logo),
+                text = stringResource(R.string.facebook)
             ) {
 
             }
             Spacer(modifier = Modifier.width(16.dp))
             WhiteIconButton(
                 modifier = Modifier.weight(1f),
-                imageRes = R.drawable.google_logo,
-                labelRes = R.string.google
+                icon = painterResource(R.drawable.google_logo),
+                text = stringResource(R.string.google)
             ) {
                 authViewModel.signInWithGoogle {
                     user, exception ->
