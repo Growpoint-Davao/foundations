@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.ErrorLabel
@@ -50,7 +51,10 @@ import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
 import java.util.Locale
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    authViewModel: AuthViewModel,
+    modifier: Modifier = Modifier
+) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isValidEmail by rememberSaveable { mutableStateOf(true) }
@@ -139,7 +143,9 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 imageRes = R.drawable.google_logo,
                 labelRes = R.string.google
             ) {
-
+                authViewModel.signInWithGoogle {
+                    user, exception ->
+                }
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
@@ -230,13 +236,13 @@ fun PasswordField(
     uiMode = UI_MODE_NIGHT_YES
 )
 @Composable
-fun GreetingPreview() {
+fun LoginPreview() {
     FoundationsTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LoginScreen()
+            LoginScreen(authViewModel = hiltViewModel())
         }
     }
 }

@@ -12,7 +12,7 @@ import com.google.firebase.auth.AuthCredential
  */
 interface AuthRepository {
     /**
-     * *UserResult*
+     * # UserResult
      *
      * A simple data class wrapper for a user and possible exception during authentication.
      *

@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
@@ -87,6 +90,13 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.fragment)
+    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    // testImplementation(libs.hilt.android.testing)
+    // kaptTest(libs.hilt.android.compiler.v244)
+    // androidTestImplementation(libs.hilt.android.testing)
+    // kaptAndroidTest(libs.hilt.android.compiler)
 
     // firebase
     implementation(platform(libs.firebase.bom))

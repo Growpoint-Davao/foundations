@@ -16,4 +16,5 @@
     <string name="foundations">Foundations</string>
     <string name="please_provide_a_valid_email">Please provide a valid email</string>
     <string name="password_is_too_short">Password is too short</string>
+    <string name="default_web_client_id">386568347764-r6v1hckj501pf6kkhqi1shrs1d44jsap.apps.googleusercontent.com</string>
 </resources>
