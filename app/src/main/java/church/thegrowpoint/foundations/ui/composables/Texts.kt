@@ -1,16 +1,20 @@
 package church.thegrowpoint.foundations.ui.composables
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 
+/**
+ * Creates a clickable label.
+ *
+ * It needs the [text] to show.
+ * It has optional arguments such as [modifier] to alter this composable, [fontWeight],
+ * [color], and trailing lambda [onClick] callback.
+ */
 @Composable
 fun ClickableLabel(
     text: String,
@@ -28,6 +32,11 @@ fun ClickableLabel(
     )
 }
 
+/**
+ * Creates error label.
+ *
+ * It needs the [text] to show and optional [modifier].
+ */
 @Composable
 fun ErrorLabel(
     text: String,
