@@ -15,31 +15,51 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.UUID
 import javax.inject.Inject
 
+/**
+ * # SignInWithGoogle
+ *
+ * The use case for singing user to the app using their Google account.
+ *
+ * @property authRepository the auth repository instance.
+ * @property appContext the instance of application context for creating auth credential and getting resources.
+ * @constructor creates an instance of the use case but usually done via dependency injection through hilt.
+ */
 class SignInWithGoogle @Inject constructor(
     private val authRepository: AuthRepository,
     @ApplicationContext context: Context
 ) {
+    /**
+     * Application context instance.
+     */
     private var appContext: Context
 
     init {
         appContext = context
     }
 
+    /**
+     * Executes signing of user using their Google account.
+     *
+     * The [attempt] is the number attempt, because this function is called recursively in case of failures.
+     */
     private suspend fun googleSignIn(attempt: Int = 1): GetCredentialResponse {
         if (attempt > 3) {
             throw Exception("Reached maximum retry attempts")
         }
 
         try {
-            val googleIdOption =
-                GetGoogleIdOption.Builder().setFilterByAuthorizedAccounts(attempt == 1)
+            val googleIdOption = GetGoogleIdOption.Builder()
+                    .setFilterByAuthorizedAccounts(attempt == 1)
                     .setServerClientId(appContext.getString(R.string.default_web_client_id))
-                    .setNonce("test").build()
+                    .setNonce(UUID.randomUUID().toString())
+                    .build()
 
-            val request: GetCredentialRequest =
-                GetCredentialRequest.Builder().addCredentialOption(googleIdOption).build()
+            val request = GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build()
 
             val credentialManager = CredentialManager.create(appContext)
 
@@ -59,6 +79,11 @@ class SignInWithGoogle @Inject constructor(
         }
     }
 
+    /**
+     * It handles google sign-in result and then will sign-in the user to firebase.
+     *
+     * The [result] argument is the credential response from Google sign-in.
+     */
     private suspend fun handleGoogleSignIn(result: GetCredentialResponse): AuthRepository.UserResult? {
         when (val credential = result.credential) {
             is CustomCredential -> {
@@ -90,6 +115,9 @@ class SignInWithGoogle @Inject constructor(
         return null
     }
 
+    /**
+     * This function enables the parent class to be callable / invokable like function.
+     */
     suspend operator fun invoke(): AuthRepository.UserResult? {
         val result = googleSignIn()
         return handleGoogleSignIn(result)

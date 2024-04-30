@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseUser
 import church.thegrowpoint.foundations.auth.domain.models.User as DomainUser
 
 /**
- * *User*
+ * # User
  *
  * This is the model wrapper class in the data layer.
  *

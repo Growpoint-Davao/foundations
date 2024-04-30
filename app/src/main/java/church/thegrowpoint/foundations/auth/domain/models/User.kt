@@ -1,7 +1,7 @@
 package church.thegrowpoint.foundations.auth.domain.models
 
 /**
- * *User*
+ * # User
  *
  * The model representation of user in the domain model
  *

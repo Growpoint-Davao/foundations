@@ -5,6 +5,8 @@ credentialsPlayServicesAuth = "1.2.2"
 firebaseBom = "32.8.1"
 googleid = "1.1.0"
 hiltAndroid = "2.49"
+hiltAndroidCompiler = "2.44"
+hiltAndroidTesting = "2.44"
 hiltNavigation = "1.2.0"
 hiltCompiler = "1.2.0"
 junitKtx = "1.1.5"
@@ -48,6 +50,8 @@ firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+hilt-android-compiler-v244 = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

@@ -9,6 +9,7 @@ import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithEmailAndPa
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +21,13 @@ import javax.inject.Inject
  * # AuthViewModel
  *
  * The auth view model class.
+ *
+ * @property signOutUser the use case for signing out user.
+ * @property registerUser the use case for registering the user.
+ * @property signInWithEmailAndPassword the use case for signing user with email and password.
+ * @property signInWithGoogle the use case for signing user with Google account.
+ * @property dispatcher an instance of coroutine dispatcher.
+ * @constructor this is usually being created via hilt.
  */
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -27,7 +35,8 @@ class AuthViewModel @Inject constructor(
     private val signOutUser: SignOutUser,
     private val registerUser: RegisterUser,
     private val signInWithEmailAndPassword: SignInWithEmailAndPassword,
-    private val signInWithGoogle: SignInWithGoogle
+    private val signInWithGoogle: SignInWithGoogle,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     // auth state
     private val _authState = MutableStateFlow(AuthState())
@@ -40,15 +49,16 @@ class AuthViewModel @Inject constructor(
     /**
      * Sets the current authenticated [user].
      */
-    fun setCurrentUser(user: User?) {
+    private fun setCurrentUser(user: User?) {
         // update the current user state
         _authState.update { currentState ->
-            currentState.copy(
-                currentUser = user
-            )
+            currentState.copy(currentUser = user)
         }
     }
 
+    /**
+     * Logs out the user.
+     */
     fun logout() {
         signOutUser()
         setCurrentUser(null)
@@ -59,7 +69,7 @@ class AuthViewModel @Inject constructor(
         password: String,
         onRegistrationComplete: (user: User?) -> Unit
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val result = registerUser(email = email, password = password)
             if (result != null) {
                 result.user?.let { onRegistrationComplete(it) }
@@ -75,7 +85,7 @@ class AuthViewModel @Inject constructor(
         password: String,
         onSignIn: (user: User?, exception: Exception?) -> Unit
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val signInResult = signInWithEmailAndPassword(email = email, password = password)
             val user = signInResult?.user
             val exception = signInResult?.exception
@@ -84,8 +94,14 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Signs user using their Google account.
+     *
+     * It accepts a call back function [onGoogleSignIn] which accepts user instance and exception.
+     * If the user is not null then the user has successfully signed-in otherwise exception will not be null.
+     */
     fun signInWithGoogle(onGoogleSignIn: (user: User?, exception: Exception?) -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             val userResult = signInWithGoogle()
             if (userResult != null) {
                 val user = userResult.user
