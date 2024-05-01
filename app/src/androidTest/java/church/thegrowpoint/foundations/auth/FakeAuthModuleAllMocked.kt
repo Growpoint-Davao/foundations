@@ -11,20 +11,27 @@ import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-internal object Module {
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [AuthModule::class]
+)
+class FakeAuthModuleAllMocked {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
+        val firebaseAuth = mockk<FirebaseAuth>()
+        every { firebaseAuth.currentUser } returns null
+        return firebaseAuth
     }
 
     @Provides
@@ -63,7 +70,7 @@ internal object Module {
         authRepository: AuthRepository,
         @ApplicationContext context: Context
     ): SignInWithGoogle {
-        return SignInWithGoogle(authRepository, context)
+        return SignInWithGoogle(authRepository = authRepository, context = context)
     }
 
     @Provides

@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.auth.presentation
 
+import church.thegrowpoint.foundations.auth.AuthModule
 import church.thegrowpoint.foundations.auth.domain.models.User
 import church.thegrowpoint.foundations.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.auth.domain.usecases.GetCurrentUser
@@ -7,6 +8,8 @@ import church.thegrowpoint.foundations.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.auth.domain.usecases.SignOutUser
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

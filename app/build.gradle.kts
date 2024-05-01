@@ -17,7 +17,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "church.thegrowpoint.foundations.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -48,8 +49,18 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
         }
     }
+
+     testOptions {
+         packagingOptions {
+             jniLibs {
+                 useLegacyPackaging = true
+             }
+         }
+     }
 }
 
 dependencies {
@@ -73,6 +84,7 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.mockk.android)
 
     androidTestImplementation(libs.androidx.core)
     androidTestImplementation(libs.core.ktx)
@@ -93,10 +105,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.fragment)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-    // testImplementation(libs.hilt.android.testing)
-    // kaptTest(libs.hilt.android.compiler.v244)
-    // androidTestImplementation(libs.hilt.android.testing)
-    // kaptAndroidTest(libs.hilt.android.compiler)
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.compiler.v244)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
 
     // firebase
     implementation(platform(libs.firebase.bom))

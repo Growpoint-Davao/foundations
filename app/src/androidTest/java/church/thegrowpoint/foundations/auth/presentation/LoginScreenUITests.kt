@@ -1,25 +1,51 @@
 package church.thegrowpoint.foundations.auth.presentation
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
+import androidx.hilt.navigation.compose.hiltViewModel
+import church.thegrowpoint.foundations.MainActivity
+import church.thegrowpoint.foundations.TestActivity
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.mockkStatic
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
+@HiltAndroidTest
 class LoginScreenUITests {
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
+    val composeTestRule = createAndroidComposeRule<TestActivity>()
+
+    @Before
+    fun setUp() {
+        // this avoid blocking of coEvery
+        // Similar issues:
+        // https://github.com/mockk/mockk/issues/766
+        // https://github.com/mockk/mockk/issues/344
+        mockkStatic("kotlinx.coroutines.tasks.TasksKt")
+
+        hiltRule.inject()
+    }
 
     @Test
     fun input_invalid_email() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+           LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Email")
@@ -32,9 +58,7 @@ class LoginScreenUITests {
     @Test
     fun input_valid_email() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Email")
@@ -47,9 +71,7 @@ class LoginScreenUITests {
     @Test
     fun input_too_short_password() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Password")
@@ -62,9 +84,7 @@ class LoginScreenUITests {
     @Test
     fun input_correct_length_password() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Password")
@@ -77,9 +97,7 @@ class LoginScreenUITests {
     @Test
     fun essential_composable_clickable_elements_exist() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Sign in")

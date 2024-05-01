@@ -26,6 +26,7 @@ gms = "4.4.1"
 mockitoCore = "4.11.0"
 mockitoKotlin = "4.1.0"
 mockk = "1.13.10"
+mockkAndroid = "1.13.10"
 orchestrator = "1.4.2"
 playServicesAuth = "21.1.0"
 runner = "1.5.2"
@@ -69,6 +70,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
 [plugins]

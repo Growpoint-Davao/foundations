@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.ErrorLabel
@@ -57,8 +58,8 @@ import java.util.Locale
  */
 @Composable
 fun LoginScreen(
-    authViewModel: AuthViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
