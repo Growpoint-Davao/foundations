@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+// TODO: Rewrite tests as proper UI and instrumentation test
 @HiltAndroidTest
 class LoginScreenUITests {
     @get:Rule(order = 0)
