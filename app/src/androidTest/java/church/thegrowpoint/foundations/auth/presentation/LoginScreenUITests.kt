@@ -27,8 +27,11 @@ class LoginScreenUITests {
         hiltRule.inject()
     }
 
+    /**
+     * Test email field if it will display a invalid email label when it is supplied with invalid email.
+     */
     @Test
-    fun emailField_invalid_email_input() {
+    fun emailField_invalidEmail_shouldDisplayInvalidEmailLabel() {
         composeTestRule.setContent {
            LoginScreen()
         }
@@ -40,8 +43,11 @@ class LoginScreenUITests {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test email field if it will not display any error label when email is valid
+     */
     @Test
-    fun emailField_valid_email_input() {
+    fun emailField_validEmail_shouldNotDisplayInvalidEmailLabel() {
         composeTestRule.setContent {
             LoginScreen()
         }
@@ -53,8 +59,11 @@ class LoginScreenUITests {
             .assertIsNotDisplayed()
     }
 
+    /**
+     * Test password field if it will display short password label when password is too short.
+     */
     @Test
-    fun passwordField_too_short_password_input() {
+    fun passwordField_shortPassword_shouldDisplayShortPasswordLabel() {
         composeTestRule.setContent {
             LoginScreen()
         }
@@ -66,8 +75,11 @@ class LoginScreenUITests {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test password field if it will not display short password label when password length is correct.
+     */
     @Test
-    fun passwordField_correct_length_password_input() {
+    fun passwordField_correctLengthPassword_shouldNotDisplayShortPasswordLabel() {
         composeTestRule.setContent {
             LoginScreen()
         }
@@ -79,8 +91,11 @@ class LoginScreenUITests {
             .assertIsNotDisplayed()
     }
 
+    /**
+     * TODO: Slowly replace this with actual instrumentation tests
+     */
     @Test
-    fun essential_composable_clickable_elements_exist() {
+    fun requiredComposeElements() {
         composeTestRule.setContent {
             LoginScreen()
         }

@@ -31,8 +31,11 @@ class AuthRepositoryImplementationTest {
         mockkStatic("kotlinx.coroutines.tasks.TasksKt")
     }
 
+    /**
+     * Test current user getter if it will return a user when there is a current user.
+     */
     @Test
-    fun currentUser_NotNullIfHasCurrentUser() {
+    fun currentUser_shouldReturnUserIfThereIsCurrentUser() {
         // set up mocked properties
         every { mockedFirebaseAuth.currentUser } returns mockedFirebaseUser
 
@@ -40,8 +43,11 @@ class AuthRepositoryImplementationTest {
         assertNotNull(authRepo.currentUser)
     }
 
+    /**
+     * Test current user getter if it will return a null user when there is no current user.
+     */
     @Test
-    fun currentUser_NullIfNoCurrentUser() {
+    fun currentUser_shouldReturnNullUserIfThereIsNoCurrentUser() {
         // set up mocked properties
         every { mockedFirebaseAuth.currentUser } returns null
 
@@ -49,8 +55,11 @@ class AuthRepositoryImplementationTest {
         assertNull(authRepo.currentUser)
     }
 
+    /**
+     * The signOut function of FirebaseAuth should be called when the signOut function of auth repository is called.
+     */
     @Test
-    fun signOut_VerifyIfFunctionIsCalled() {
+    fun signOut_firebaseSignOutShouldBeCalled() {
         every { mockedFirebaseAuth.signOut() } returns Unit
 
         val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
@@ -59,8 +68,11 @@ class AuthRepositoryImplementationTest {
         verify { mockedFirebaseAuth.signOut() }
     }
 
+    /**
+     * Test register method if it can register email and password.
+     */
     @Test
-    fun register_CanSuccessfullyRegister() = runTest {
+    fun register_emailPassword_shouldBeAbleToRegisterEmailAndPassword() = runTest {
         val email = "test@foo.com"
         val password = "Andr01d_bar_foo"
 
@@ -89,8 +101,11 @@ class AuthRepositoryImplementationTest {
         assertNull(exception)
     }
 
+    /**
+     * Test if it return null user when there is an exception.
+     */
     @Test
-    fun register_UserShouldBeNullWhenException() = runTest {
+    fun register_emailPassword_shouldReturnNullUserDuringException() = runTest {
         val email = "test@foo.com"
         val password = "Andr01d_bar_foo"
 
@@ -119,8 +134,11 @@ class AuthRepositoryImplementationTest {
         assertEquals("Foo Exception", exception!!.message)
     }
 
+    /**
+     * Test sign in with email and password if it will return a user when sign in is successful with no exception.
+     */
     @Test
-    fun signInWithEmailAndPassword_ShouldReturnResultWhenSuccessful() = runTest {
+    fun signInWithEmailAndPassword_emailPassword_shouldReturnUserAfterSignInWithNoException() = runTest {
         val email = "test@foo.com"
         val password = "Andr01d_bar_foo"
 
@@ -149,8 +167,11 @@ class AuthRepositoryImplementationTest {
         assertNull(exception)
     }
 
+    /**
+     * Test signInWithEmailAndPassword if it will return null user when there is exception.
+     */
     @Test
-    fun signInWithEmailAndPassword_ShouldReturnNullResultDuringException() = runTest {
+    fun signInWithEmailAndPassword_emailPassword_shouldReturnNullUseAfterSignInWhenExceptionIsThrown() = runTest {
         val email = "test@foo.com"
         val password = "Andr01d_bar_foo"
 
@@ -179,8 +200,11 @@ class AuthRepositoryImplementationTest {
         assertEquals("Foo Exception", exception!!.message)
     }
 
+    /**
+     * Test signInWithCredential if it will return a user after successful function call with no exception.
+     */
     @Test
-    fun signInWithCredential_ShouldReturnResultWhenSuccessful() = runTest {
+    fun signInWithCredential_credential_shouldReturnUserWhenNoException() = runTest {
         val email = "test@foo.com"
 
         // setup fake properties for mocked user
@@ -210,8 +234,11 @@ class AuthRepositoryImplementationTest {
         assertNull(exception)
     }
 
+    /**
+     * Test signInWithCredential if it will return a null user after function call with exception.
+     */
     @Test
-    fun signInWithCredential_ShouldReturnNullResultDuringException() = runTest {
+    fun signInWithCredential_credential_shouldReturnNullUserDuringException() = runTest {
         val email = "test@foo.com"
 
         // setup fake properties for mocked user

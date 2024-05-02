@@ -9,8 +9,11 @@ import org.junit.Test
 class UserTest {
     private val mockedFirebaseUser = mockk<FirebaseUser>()
 
+    /**
+     * Test if can create a new user from a firebase user instance.
+     */
     @Test
-    fun user_Constructor_CanCreateNewUser() {
+    fun constructor_firebaseUser_shouldBeAbleToCreateNewUser() {
         every { mockedFirebaseUser.uid } returns "11223344"
         every { mockedFirebaseUser.email } returns "foo@testing.com"
         every { mockedFirebaseUser.displayName } returns "Foo"
