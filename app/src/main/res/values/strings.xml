@@ -34,6 +34,7 @@
         If you are not authenticated, all your answers will not be stored to the cloud, and will not sync across devices.
     </string>
     <string name="toggle_navigation_drawer">Toggle Navigation Drawer</string>
+    <string name="established_for_growing">Established For Growing</string>
 
     <!-- drawer item strings -->
     <string name="introduction">Introduction</string>
