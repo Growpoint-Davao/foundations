@@ -86,6 +86,7 @@ fun LoginScreen(
 
             if (dialogAction == DialogAction.CONFIRM) {
                 // change the auth state to skipped
+                authViewModel.skipAuthentication()
             }
 
             // close the dialog

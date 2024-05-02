@@ -1,7 +1,9 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
+/**
+ * Base route names enum
+ */
 enum class Routes (val route: String) {
-    LOGIN("login"),
-    DASHBOARD("dashboard"),
-    GETTING_STARTED("getting_started")
+    GETTING_STARTED("getting_started"),
+    SALVATION("salvation")
 }

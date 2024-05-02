@@ -30,5 +30,14 @@
     <string name="confirm_question">Confirm?</string>
     <string name="please_confirm">Please confirm</string>
     <string name="skip_authentication_question">Skip Authentication?</string>
-    <string name="skip_authentication_text">If you are not authenticated, all your answers will not be stored to the cloud, and will not sync across devices.</string>
+    <string name="skip_authentication_text">
+        If you are not authenticated, all your answers will not be stored to the cloud, and will not sync across devices.
+    </string>
+    <string name="toggle_navigation_drawer">Toggle Navigation Drawer</string>
+
+    <!-- drawer item strings -->
+    <string name="introduction">Introduction</string>
+    <string name="getting_started">Getting Started</string>
+    <string name="salvation">Salvation</string>
+    <string name="lesson_1">Lesson 1</string>
 </resources>

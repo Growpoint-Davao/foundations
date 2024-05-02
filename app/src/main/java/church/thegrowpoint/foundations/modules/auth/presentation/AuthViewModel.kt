@@ -59,6 +59,12 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun skipAuthentication() {
+        _authState.update { currentState ->
+            currentState.copy(skipAuth = true)
+        }
+    }
+
     /**
      * Logs out the user.
      */
