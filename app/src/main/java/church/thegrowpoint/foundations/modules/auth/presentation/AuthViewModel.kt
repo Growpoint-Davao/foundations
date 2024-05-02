@@ -43,7 +43,10 @@ class AuthViewModel @Inject constructor(
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
     init {
+        // sets the current user
         setCurrentUser(getCurrentUser())
+
+        // TODO: read local storage to check if user did opted out authentication
     }
 
     /**
