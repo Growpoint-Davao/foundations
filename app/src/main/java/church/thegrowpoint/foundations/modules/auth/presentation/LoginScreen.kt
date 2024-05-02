@@ -39,7 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
+import church.thegrowpoint.foundations.ui.composables.ActionableDialog
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
+import church.thegrowpoint.foundations.ui.composables.DialogAction
 import church.thegrowpoint.foundations.ui.composables.ErrorLabel
 import church.thegrowpoint.foundations.ui.composables.LargeButton
 import church.thegrowpoint.foundations.ui.composables.RoundedTextInputField
@@ -69,6 +71,28 @@ fun LoginScreen(
     }
 
     enableSignInButton = pwLengthValid && isValidEmail && (email.isNotEmpty() && password.isNotEmpty())
+
+    val openSkipSignInDialog = rememberSaveable { mutableStateOf(false) }
+
+    if (openSkipSignInDialog.value) {
+        ActionableDialog(
+            dialogTitle = stringResource(R.string.skip_authentication_question),
+            dialogText = stringResource(R.string.skip_authentication_text),
+            confirmButtonText = stringResource(R.string.yes),
+            dismissButtonText = stringResource(R.string.no),
+            onDismissRequest = { openSkipSignInDialog.value = false }
+        ) {
+            dialogAction ->
+
+            if (dialogAction == DialogAction.CONFIRM) {
+                // change the auth state to skipped
+                authViewModel.skipAuthentication()
+            }
+
+            // close the dialog
+            openSkipSignInDialog.value = false
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -157,6 +181,21 @@ fun LoginScreen(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(R.string.do_not_have_an_account),
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            ClickableLabel(
+                text = stringResource(R.string.skip_sign_in),
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            ) {
+                // change the open dialog state
+                openSkipSignInDialog.value = true
+
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = stringResource(R.string.or),
                 style = MaterialTheme.typography.titleSmall
             )
             Spacer(modifier = Modifier.width(16.dp))

@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import church.thegrowpoint.foundations.TestActivity
 import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
@@ -92,6 +93,34 @@ class LoginScreenUITests {
             .assertIsNotDisplayed()
     }
 
+    @Test
+    fun skipSignInButton_shouldShowDialogBoxToConfirmSkippingOfAuthentication() {
+        composeTestRule.setContent {
+            LoginScreen()
+        }
+
+        composeTestRule.onNodeWithText("Skip sign in")
+            .performClick()
+
+        // assert dialog box has appeared
+        composeTestRule.onNodeWithText("Skip Authentication?")
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("If you are not authenticated, all your answers will not be stored to the cloud, and will not sync across devices.")
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Yes")
+            .assertIsDisplayed()
+
+        // click cancel
+        composeTestRule.onNodeWithText("No")
+            .performClick()
+
+        // dialog box should not be present anymore
+        composeTestRule.onNodeWithText("Skip authentication?")
+            .assertIsNotDisplayed()
+    }
+
     /**
      * TODO: Slowly replace this with actual instrumentation tests
      */
@@ -114,6 +143,10 @@ class LoginScreenUITests {
             .assertHasClickAction()
 
         composeTestRule.onNodeWithText("Google")
+            .assertIsDisplayed()
+            .assertHasClickAction()
+
+        composeTestRule.onNodeWithText("Skip sign in")
             .assertIsDisplayed()
             .assertHasClickAction()
 

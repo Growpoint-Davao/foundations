@@ -14,9 +14,11 @@ import io.mockk.mockkStatic
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -94,6 +96,28 @@ class AuthViewModelTest {
         assertEquals("tester@foo.com", currentUser!!.email)
         assertEquals("1122334455", currentUser.id)
         assertEquals("Foo Bar", currentUser.name)
+    }
+
+    /**
+     * Test if skip auth state will be set to true when skipAuthentication is called
+     */
+    @Test
+    fun skipAuthentication_shouldSetSkipAuthToTrueWhenCalled() {
+        // mock the current user
+        every { getCurrentUser() } returns null
+
+        val viewModel = AuthViewModel(
+            getCurrentUser = getCurrentUser,
+            signOutUser = signOutUser,
+            registerUser = registerUser,
+            signInWithEmailAndPassword = signInWithEmailAndPassword,
+            signInWithGoogle = signInWithGoogle,
+            dispatcher = testDispatcher
+        )
+
+        assertFalse(viewModel.authState.value.skipAuth)
+        viewModel.skipAuthentication()
+        assertTrue(viewModel.authState.value.skipAuth)
     }
 
     @Test
