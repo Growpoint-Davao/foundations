@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme

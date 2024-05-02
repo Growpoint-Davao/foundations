@@ -8,8 +8,11 @@ import org.junit.Assert.assertSame
 import org.junit.Test
 
 class GetCurrentUserTest {
+    /**
+     * Test getCurrentUser if it will return a user when there is current user.
+     */
     @Test
-    fun `Test if retrieves user when there is authenticated user`() {
+    fun getCurrentUser_shouldReturnAUserWhenThereIsCurrentUser() {
         val mockedAuthRepository = mockk<AuthRepository>()
         val mockedUser = mockk<User>()
 
@@ -20,8 +23,11 @@ class GetCurrentUserTest {
         assertSame(mockedUser, getCurrentUser())
     }
 
+    /**
+     * Test getCurrentUser if it will return a null user when there is no current user.
+     */
     @Test
-    fun `Test if returns null when there is not authenticated user`() {
+    fun getCurrentUser_shouldReturnANullUserWhenThereIsNoCurrentUser() {
         val mockedAuthRepository = mockk<AuthRepository>()
 
         every { mockedAuthRepository.currentUser } returns null

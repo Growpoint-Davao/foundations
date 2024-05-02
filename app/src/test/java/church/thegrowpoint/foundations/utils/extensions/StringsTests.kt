@@ -5,7 +5,7 @@ import org.junit.Test
 
 class StringsTests {
     @Test
-    fun invalid_emails() {
+    fun validEmail_returnsFalseIfInvalidEmail() {
         val invalidEmail1 = "test"
         val invalidEmail2 = "1122@nice"
         val invalidEmail3 = " "
@@ -16,7 +16,7 @@ class StringsTests {
     }
 
     @Test
-    fun valid_emails() {
+    fun validEmail_returnsTrueIfValidEmail() {
         val validEmail1 = "test@testing.com"
         val validEmail2 = "test.tester@testing.net"
         val validEmail3 = "test-dev@testing.io"
@@ -27,13 +27,13 @@ class StringsTests {
     }
 
     @Test
-    fun invalid_password() {
+    fun validPasswordLength_returnsFalseIfPasswordTooShort() {
         val invalidPW = "12345"
         assertEquals(false, invalidPW.validPasswordLength())
     }
 
     @Test
-    fun valid_password() {
+    fun validPasswordLength_returnsTrueIfPasswordIsLongEnough() {
         val validPW = "112233445566"
         assertEquals(true, validPW.validPasswordLength())
     }

@@ -3,23 +3,37 @@ package church.thegrowpoint.foundations.auth.presentation
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
-import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
+import church.thegrowpoint.foundations.TestActivity
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+// TODO: Rewrite tests as proper UI and instrumentation test
+@HiltAndroidTest
 class LoginScreenUITests {
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
 
+    @get:Rule(order = 1)
+    val composeTestRule = createAndroidComposeRule<TestActivity>()
+
+    @Before
+    fun setUp() {
+        hiltRule.inject()
+    }
+
+    /**
+     * Test email field if it will display a invalid email label when it is supplied with invalid email.
+     */
     @Test
-    fun input_invalid_email() {
+    fun emailField_invalidEmail_shouldDisplayInvalidEmailLabel() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+           LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Email")
@@ -29,12 +43,13 @@ class LoginScreenUITests {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test email field if it will not display any error label when email is valid
+     */
     @Test
-    fun input_valid_email() {
+    fun emailField_validEmail_shouldNotDisplayInvalidEmailLabel() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Email")
@@ -44,12 +59,13 @@ class LoginScreenUITests {
             .assertIsNotDisplayed()
     }
 
+    /**
+     * Test password field if it will display short password label when password is too short.
+     */
     @Test
-    fun input_too_short_password() {
+    fun passwordField_shortPassword_shouldDisplayShortPasswordLabel() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Password")
@@ -59,12 +75,13 @@ class LoginScreenUITests {
             .assertIsDisplayed()
     }
 
+    /**
+     * Test password field if it will not display short password label when password length is correct.
+     */
     @Test
-    fun input_correct_length_password() {
+    fun passwordField_correctLengthPassword_shouldNotDisplayShortPasswordLabel() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Password")
@@ -74,12 +91,13 @@ class LoginScreenUITests {
             .assertIsNotDisplayed()
     }
 
+    /**
+     * TODO: Slowly replace this with actual instrumentation tests
+     */
     @Test
-    fun essential_composable_clickable_elements_exist() {
+    fun requiredComposeElements() {
         composeTestRule.setContent {
-            FoundationsTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
 
         composeTestRule.onNodeWithText("Sign in")

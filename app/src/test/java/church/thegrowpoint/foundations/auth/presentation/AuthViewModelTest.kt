@@ -45,8 +45,11 @@ class AuthViewModelTest {
         every { getCurrentUser() } returns null
     }
 
+    /**
+     * Tests setCurrentUser if it can set null user whe there is no authenticated user
+     */
     @Test
-    fun `setCurrentUser - Test if sets null user during init when no authenticated user`() {
+    fun setCurrentUser_NullUser_shouldBeAbleToSetNullUser() {
         // mock the current user
         every { getCurrentUser() } returns null
 
@@ -64,8 +67,11 @@ class AuthViewModelTest {
         assertNull(currentUser)
     }
 
+    /**
+     * Tests setCurrentUser if it can set a user whe there is authenticated user
+     */
     @Test
-    fun `setCurrentUser - Test if sets a user during init when there is authenticated user`() {
+    fun setCurrentUser_user_shouldBeAbleToSetNonNullUser() {
         // mock the current user
         val mockedUser = mockk<User>()
         every { mockedUser.email } returns "tester@foo.com"
@@ -91,7 +97,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `logout - Test if current user becomes null after logout`() {
+    fun logout_ifCurrentUserBecomesNullAfterLogout() {
         // mock the current user
         val mockedUser = mockk<User>()
         every { mockedUser.email } returns "tester@foo.com"
@@ -117,7 +123,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `signInWithGoogle - Test if sign in with Google yields user`() = runTest {
+    fun signInWithGoogle_ifSignInWithGoogleYieldsUser() = runTest {
         val mockedUser = mockk<User>()
         val userResult = AuthRepository.UserResult(user = mockedUser)
 
@@ -142,7 +148,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `signInWithGoogle - Test if sign in with Google yields exception when there is error`() = runTest {
+    fun signInWithGoogle_ifSignInWithGoogleYieldsExceptionWhenThereIsError() = runTest {
         val testException = Exception("Foo exception")
         val userResult = AuthRepository.UserResult(exception = testException)
 
