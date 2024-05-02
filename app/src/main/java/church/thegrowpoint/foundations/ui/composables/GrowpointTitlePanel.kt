@@ -68,7 +68,7 @@ fun GrowpointTitlePanel(
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun Preview() {
+fun GrowpointTitlePanelPreview() {
     FoundationsTheme {
         GrowpointTitlePanel(
             title = stringResource(R.string.foundations),

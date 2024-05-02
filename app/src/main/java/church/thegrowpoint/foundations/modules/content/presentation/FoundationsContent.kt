@@ -11,7 +11,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
@@ -59,7 +58,8 @@ fun FoundationsContent(
                 Spacer(modifier = Modifier.height(8.dp))
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.getting_started),
-                    subTitle = stringResource(R.string.introduction)
+                    subTitle = stringResource(R.string.introduction),
+                    icon = painterResource(R.drawable.getting_started)
                 ) {
                     // close the drawer
                     navigationDrawerScope.launch {
@@ -68,7 +68,74 @@ fun FoundationsContent(
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.salvation),
-                    subTitle = stringResource(R.string.lesson_1)
+                    subTitle = stringResource(R.string.lesson_1),
+                    icon = painterResource(R.drawable.salvation)
+                ) {
+
+                    // close the drawer
+                    navigationDrawerScope.launch {
+                        drawerState.apply { close() }
+                    }
+                }
+                NavigationDrawerItemWithProgress(
+                    title = stringResource(R.string.lordship),
+                    subTitle = stringResource(R.string.lesson_2),
+                    icon = painterResource(R.drawable.lordship)
+                ) {
+
+                    // close the drawer
+                    navigationDrawerScope.launch {
+                        drawerState.apply { close() }
+                    }
+                }
+                NavigationDrawerItemWithProgress(
+                    title = stringResource(R.string.identity),
+                    subTitle = stringResource(R.string.lesson_3),
+                    icon = painterResource(R.drawable.identity)
+                ) {
+
+                    // close the drawer
+                    navigationDrawerScope.launch {
+                        drawerState.apply { close() }
+                    }
+                }
+                NavigationDrawerItemWithProgress(
+                    title = stringResource(R.string.power),
+                    subTitle = stringResource(R.string.lesson_4),
+                    icon = painterResource(R.drawable.power)
+                ) {
+
+                    // close the drawer
+                    navigationDrawerScope.launch {
+                        drawerState.apply { close() }
+                    }
+                }
+                NavigationDrawerItemWithProgress(
+                    title = stringResource(R.string.devotion),
+                    subTitle = stringResource(R.string.lesson_5),
+                    icon = painterResource(R.drawable.devotion)
+                ) {
+
+                    // close the drawer
+                    navigationDrawerScope.launch {
+                        drawerState.apply { close() }
+                    }
+                }
+                NavigationDrawerItemWithProgress(
+                    title = stringResource(R.string.church),
+                    subTitle = stringResource(R.string.lesson_6),
+                    icon = painterResource(R.drawable.church)
+                ) {
+
+                    // close the drawer
+                    navigationDrawerScope.launch {
+                        drawerState.apply { close() }
+                    }
+                }
+                NavigationDrawerItemWithProgress(
+                    title = stringResource(R.string.discipleship),
+                    subTitle = stringResource(R.string.lesson_7),
+                    icon = painterResource(R.drawable.discipleship)
                 ) {
 
                     // close the drawer
@@ -103,7 +170,7 @@ fun FoundationsContent(
                         .padding(innerPadding)
                         .fillMaxSize()
                 ) {
-                    Content(modifier = Modifier.fillMaxSize(), navController = navController)
+                    Content(navController = navController)
                 }
             }
         )
@@ -119,7 +186,7 @@ fun Content(
     val destination = Routes.GETTING_STARTED.name
 
     NavHost(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         navController = navController,
         startDestination = destination
     ) {

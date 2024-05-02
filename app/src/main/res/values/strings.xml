@@ -41,4 +41,16 @@
     <string name="getting_started">Getting Started</string>
     <string name="salvation">Salvation</string>
     <string name="lesson_1">Lesson 1</string>
+    <string name="lordship">Lordship</string>
+    <string name="lesson_2">Lesson 2</string>
+    <string name="identity">Identity</string>
+    <string name="lesson_3">Lesson 3</string>
+    <string name="power">Power</string>
+    <string name="lesson_4">Lesson 4</string>
+    <string name="devotion">Devotion</string>
+    <string name="lesson_5">Lesson 5</string>
+    <string name="church">Church</string>
+    <string name="lesson_6">Lesson 6</string>
+    <string name="discipleship">Discipleship</string>
+    <string name="lesson_7">Lesson 7</string>
 </resources>
