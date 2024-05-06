@@ -15,8 +15,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,6 +42,11 @@ fun FoundationsContent(
     authViewModel: AuthViewModel,
     navController: NavHostController = rememberNavController()
 ) {
+    val context = LocalContext.current
+    var topBarTitle by rememberSaveable {
+        mutableStateOf(context.getString(R.string.getting_started))
+    }
+
     // drawer must be initially closed
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navigationDrawerScope = rememberCoroutineScope()
@@ -63,7 +73,10 @@ fun FoundationsContent(
                 ) {
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.getting_started)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -74,7 +87,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.salvation)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -85,7 +101,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.lordship)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -96,7 +115,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.identity)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -107,7 +129,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.power)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -118,7 +143,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.devotion)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -129,7 +157,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.church)
+                        }
                     }
                 }
                 NavigationDrawerItemWithProgress(
@@ -140,7 +171,10 @@ fun FoundationsContent(
 
                     // close the drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply { close() }
+                        drawerState.apply {
+                            close()
+                            topBarTitle = context.getString(R.string.discipleship)
+                        }
                     }
                 }
             }
@@ -153,7 +187,7 @@ fun FoundationsContent(
         Scaffold(
             topBar = {
                 CenteredTopAppBar(
-                    title = stringResource(R.string.foundations),
+                    title = topBarTitle,
                     scrollBehavior = scrollBehavior
                 ) {
                     // toggle the navigation drawer
