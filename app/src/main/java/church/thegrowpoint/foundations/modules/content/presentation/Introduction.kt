@@ -8,5 +8,5 @@ import androidx.compose.ui.Modifier
 fun Introduction(
     modifier: Modifier = Modifier,
 ) {
-    Text(text = "Intro")
+    Text(text = "")
 }
