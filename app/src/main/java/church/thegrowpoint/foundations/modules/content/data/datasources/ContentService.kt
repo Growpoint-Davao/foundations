@@ -63,7 +63,7 @@ fun JSONArray.toList(): List<Any> {
  * @property assetService The asset service instance.
  */
 class ContentServiceImplementation @Inject constructor(
-    private val assetService: AssetService
+    private val assetService: AssetsService
 ) : ContentService {
     /**
      * The content model instance.
@@ -106,7 +106,7 @@ class ContentServiceImplementation @Inject constructor(
      * Parses the content from the asset.
      */
     private fun parseJsonContent(): Content? {
-        val jsonContent = assetService.readContentFromAsset(ContentService.CONTENT_FILENAME)
+        val jsonContent = assetService.readAsset(ContentService.CONTENT_FILENAME)
 
         try {
             // parse and convert to object

@@ -1,6 +1,5 @@
-package church.thegrowpoint.foundations.modules.content.models
+package church.thegrowpoint.foundations.modules.content.data.models
 
-import church.thegrowpoint.foundations.modules.content.data.models.Content
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test

@@ -1,8 +1,5 @@
-package church.thegrowpoint.foundations.modules.content.data
+package church.thegrowpoint.foundations.modules.content.data.datasources
 
-import church.thegrowpoint.foundations.modules.content.data.datasources.AssetService
-import church.thegrowpoint.foundations.modules.content.data.datasources.ContentService
-import church.thegrowpoint.foundations.modules.content.data.datasources.ContentServiceImplementation
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -33,14 +30,14 @@ class ContentServiceTest {
                 ]
             ]
         }
-    """
+    """.trimIndent()
 
     @Test
     fun constructor_shouldBeAbleToParseContent() {
-        val assetService = mockk<AssetService>()
-        every { assetService.readContentFromAsset(ContentService.FILENAME) } returns contentPayload
+        val assetsService = mockk<AssetsService>()
+        every { assetsService.readAsset(ContentService.CONTENT_FILENAME) } returns contentPayload
 
-        val contentService = ContentServiceImplementation(assetService)
+        val contentService = ContentServiceImplementation(assetsService)
         val gettingStarted = contentService.content?.gettingStarted?.get(0)
         val salvation = contentService.content?.salvation?.get(0)
 
