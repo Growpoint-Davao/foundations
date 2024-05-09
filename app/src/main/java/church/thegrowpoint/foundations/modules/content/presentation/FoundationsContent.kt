@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
@@ -28,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
@@ -40,6 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FoundationsContent(
     authViewModel: AuthViewModel,
+    contentViewModel: ContentViewModel,
     navController: NavHostController = rememberNavController()
 ) {
     val context = LocalContext.current
@@ -78,6 +82,16 @@ fun FoundationsContent(
                             topBarTitle = context.getString(R.string.getting_started)
                         }
                     }
+
+                    // navigate to new section
+                    val parentRoute = navController.currentDestination?.parent?.route
+                    navController.navigate(Routes.GETTING_STARTED.route) {
+                        if (parentRoute != null) {
+                            popUpTo(route = parentRoute) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.salvation),
@@ -90,6 +104,16 @@ fun FoundationsContent(
                         drawerState.apply {
                             close()
                             topBarTitle = context.getString(R.string.salvation)
+                        }
+                    }
+
+                    // navigate to new section
+                    val parentRoute = navController.currentDestination?.parent?.route
+                    navController.navigate(Routes.SALVATION.route) {
+                        if (parentRoute != null) {
+                            popUpTo(route = parentRoute) {
+                                inclusive = true
+                            }
                         }
                     }
                 }
@@ -204,7 +228,7 @@ fun FoundationsContent(
                         .padding(innerPadding)
                         .fillMaxSize()
                 ) {
-                    Content(navController = navController)
+                    Content(navController = navController, contentViewModel = contentViewModel)
                 }
             }
         )
@@ -214,18 +238,43 @@ fun FoundationsContent(
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
+    contentViewModel: ContentViewModel,
     navController: NavHostController = rememberNavController()
 ) {
     // TODO: resolve start destination
-    val destination = Routes.GETTING_STARTED.name
+    val startingSection = Routes.GETTING_STARTED.route
 
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = destination
+        startDestination = startingSection,
+        route = "page/1"
     ) {
-        composable(route = Routes.GETTING_STARTED.name) {
-            Introduction()
+        navigation(
+            startDestination = "page/0",
+            route = Routes.GETTING_STARTED.route
+        ) {
+            composable(route = "page/{id}") {
+                val destRoute = it.destination.route
+                val destArg = it.destination.arguments
+                val parent = it.destination.parent
+
+                // get the page
+                val page = it.arguments?.getString("id")?.toInt() ?: 0
+                val pageContents = contentViewModel.getGettingStartedPageContents(page)
+                PageContent(items = pageContents, modifier = Modifier.padding(all = 8.dp))
+            }
+        }
+
+        navigation(
+            startDestination = "page/0",
+            route = Routes.SALVATION.route
+        ) {
+            composable(route = "page/{id}") {
+                val page = it.arguments?.getString("id")?.toInt() ?: 0
+                val pageContents = contentViewModel.getSalvationContents(page)
+                PageContent(items = pageContents, modifier = Modifier.padding(all = 8.dp))
+            }
         }
     }
 }
