@@ -33,7 +33,7 @@ import javax.inject.Singleton
     components = [SingletonComponent::class],
     replaces = [AppModule::class]
 )
-class FakeAuthModuleAllMocked {
+class FakeAppModuleAllMocked {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
