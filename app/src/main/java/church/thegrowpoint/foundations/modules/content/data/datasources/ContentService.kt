@@ -82,6 +82,8 @@ class ContentServiceImplementation @Inject constructor(
 
     /**
      * Resolves any [content] to a [String].
+     *
+     * @return The resolved content.
      */
     private fun resolveContent(content: Any): String {
         if (content is String) {
@@ -95,6 +97,8 @@ class ContentServiceImplementation @Inject constructor(
 
     /**
      * Converts any [items] which are not [String] to a [List] of [String].
+     *
+     * @return The converted items.
      */
     private fun convertToStrings(items: List<*>): List<String> {
         return items.mapNotNull {
@@ -104,6 +108,8 @@ class ContentServiceImplementation @Inject constructor(
 
     /**
      * Parses the content from the asset.
+     *
+     * @return The parsed content.
      */
     private fun parseJsonContent(): Content? {
         val jsonContent = assetService.readAsset(ContentService.CONTENT_FILENAME)

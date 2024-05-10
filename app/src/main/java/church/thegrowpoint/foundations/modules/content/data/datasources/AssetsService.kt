@@ -29,6 +29,8 @@ class AssetsServiceImplementation @Inject constructor(
 ) : AssetsService {
     /**
      * Reads the content of an asset with the given [filename].
+     * \
+     * @return The content of the asset as a string.
      */
     override fun readAsset(filename: String): String? {
         try {
