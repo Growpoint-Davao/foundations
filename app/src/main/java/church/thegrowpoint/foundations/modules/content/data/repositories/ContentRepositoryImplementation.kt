@@ -26,9 +26,11 @@ class ContentRepositoryImplementation @Inject constructor(
         }
 
         try {
+            // use reflection to get the field by name
             val field = Content::class.java.getDeclaredField(name)
             field.isAccessible = true
 
+            // invoke the field's getter method to get the value
             val value = field.get(contentService.content) ?: return null
             return value as List<List<String>>?
         } catch (e: IllegalArgumentException) {

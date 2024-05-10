@@ -272,7 +272,7 @@ fun Content(
         ) {
             composable(route = "page/{id}") {
                 val page = it.arguments?.getString("id")?.toInt() ?: 0
-                val pageContents = contentViewModel.getSalvationContents(page)
+                val pageContents = contentViewModel.getSalvationPageContents(page)
                 PageContent(items = pageContents, modifier = Modifier.padding(all = 8.dp))
             }
         }
