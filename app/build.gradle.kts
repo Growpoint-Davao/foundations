@@ -59,7 +59,7 @@ android {
     }
 
      testOptions {
-         packagingOptions {
+         packaging {
              jniLibs {
                  useLegacyPackaging = true
              }
