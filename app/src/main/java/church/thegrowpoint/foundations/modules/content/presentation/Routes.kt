@@ -12,6 +12,6 @@ enum class Routes (val route: String) {
 
     // content routes
     CONTENT("content"),
-    GETTING_STARTED("getting_started"),
+    GETTING_STARTED("gettingStarted"),
     SALVATION("salvation")
 }
