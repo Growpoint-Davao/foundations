@@ -19,14 +19,14 @@ class ContentViewModel @Inject constructor(private val getContent: GetContent) :
      *
      * @return The getting started section.
      */
-    private fun getGettingStarted() = getContent("gettingStarted")
+    fun getGettingStarted() = getContent("gettingStarted")
 
     /**
      * Retrieves the salvation section.
      *
      * @return The salvation section.
      */
-    private fun getSalvation() = getContent("salvation")
+    fun getSalvation() = getContent("salvation")
 
     /**
      * The extension class that retrieves a list of strings from a list of lists using an [index].

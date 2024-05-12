@@ -13,5 +13,11 @@ enum class Routes (val route: String) {
     // content routes
     CONTENT("content"),
     GETTING_STARTED("gettingStarted"),
-    SALVATION("salvation")
+    SALVATION("salvation"),
+    LORDSHIP("lordship"),
+    IDENTITY("identity"),
+    POWER("power"),
+    DEVOTION("devotion"),
+    CHURCH("church"),
+    DISCIPLESHIP("discipleship"),
 }
