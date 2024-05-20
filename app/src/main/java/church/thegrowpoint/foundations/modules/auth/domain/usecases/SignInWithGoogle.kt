@@ -34,11 +34,7 @@ class SignInWithGoogle @Inject constructor(
     /**
      * Application context instance.
      */
-    private var appContext: Context
-
-    init {
-        appContext = context
-    }
+    private var appContext: Context = context
 
     /**
      * Executes signing of user using their Google account.

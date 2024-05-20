@@ -227,7 +227,7 @@ fun EmailField(
             imeAction = ImeAction.Next
         ),
         isError = isError,
-        supportingText = stringResource(R.string.please_provide_a_valid_email)
+        supportText = stringResource(R.string.please_provide_a_valid_email)
     )
 }
 
