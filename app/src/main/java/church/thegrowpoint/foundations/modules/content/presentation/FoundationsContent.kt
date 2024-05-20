@@ -36,10 +36,23 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation10
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation7
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation8
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation9
+import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.composables.GrowpointTitlePanel
 import church.thegrowpoint.foundations.ui.composables.NavigationDrawerItemWithProgress
-import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +60,7 @@ import kotlinx.coroutines.launch
 fun FoundationsContent(
     authViewModel: AuthViewModel,
     contentViewModel: ContentViewModel,
-    navController: NavHostController = rememberNavController()
+    appNavController: NavHostController = rememberNavController()
 ) {
     val context = LocalContext.current
     var topBarTitle by rememberSaveable {
@@ -57,6 +70,7 @@ fun FoundationsContent(
     // drawer must be initially closed
     val navigationDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navigationDrawerScope = rememberCoroutineScope()
+    val navController = rememberNavController()
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -171,7 +185,9 @@ fun FoundationsContent(
         val pageContentState = rememberLazyListState()
         val navFabVisibility by remember {
             derivedStateOf {
-                pageContentState.canScrollBackward
+                // show floating navigation buttons when the user is at the end of the list, or
+                // if user could not scroll because all the content are visible
+                pageContentState.canScrollBackward || (!pageContentState.canScrollBackward && !pageContentState.canScrollForward)
             }
         }
 
@@ -206,13 +222,38 @@ fun FoundationsContent(
                 AnimatedNavigationFloatingActionButtons(
                     isVisible = navFabVisibility,
                     onPreviousClick = {
-
+                        navController.popBackStack()
                     },
                     onNextClick = {
+                        val currentDestination = navController.currentDestination
+                        val currentRoute = currentDestination?.route
+                        val segments = currentRoute?.split('/')
+                        val section = segments?.get(0)
+                        val nextPage = segments?.get(1)?.toInt()?.plus(1) ?: 1
 
+                        if (section != null) {
+                            val sectionPageCount = contentViewModel.getSectionPages(section)
+
+                            if (nextPage > sectionPageCount) {
+                                val nextSection = contentViewModel.getNextSection(section)
+                                if (nextSection != null) {
+                                    val sectionTitle = contentViewModel.getTitleResource(nextSection)
+                                    if (sectionTitle != null) {
+                                        topBarTitle = sectionTitle
+                                    }
+                                    navController.navigate(nextSection) {
+                                        popUpTo(route = section) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            } else {
+                                navController.navigate("$section/$nextPage")
+                            }
+                        }
                     }
                 )
-            },
+            }
         )
     }
 }
@@ -225,47 +266,70 @@ fun Content(
     pageContentState: LazyListState = rememberLazyListState()
 ) {
     // TODO: resolve start destination
-    val startingSection = Routes.GETTING_STARTED.route
+    val initialSectionDestination = Routes.GETTING_STARTED.route
 
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = startingSection,
-        route = Routes.CONTENT.name
+        startDestination = initialSectionDestination
     ) {
-        val gettingStartedPages = contentViewModel.getGettingStarted()
-        if (gettingStartedPages != null) {
-            navigation(
-                startDestination = "0",
-                route = Routes.GETTING_STARTED.route
-            ) {
-                for ((page, pageContents) in gettingStartedPages.withIndex()) {
-                    composable(route = "${page}") {
-                        PageContent(
-                            items = pageContents,
-                            modifier = Modifier.padding(all = 8.dp),
-                            state = pageContentState
-                        )
-                    }
-                }
+        navigation(
+            startDestination = "${Routes.GETTING_STARTED.route}/1",
+            route = initialSectionDestination
+        ) {
+            composable(route = "${Routes.GETTING_STARTED.route}/1") {
+                GettingStartedPage1(state = pageContentState)
+            }
+            composable(route = "${Routes.GETTING_STARTED.route}/2") {
+                GettingStartedPage2(state = pageContentState)
+            }
+            composable(route = "${Routes.GETTING_STARTED.route}/3") {
+                GettingStartedPage3(state = pageContentState)
             }
         }
 
-        val salvationPages = contentViewModel.getSalvation()
-        if (salvationPages != null) {
-            navigation(
-                startDestination = "0",
-                route = Routes.SALVATION.route
-            ) {
-                for ((page, pageContents) in salvationPages.withIndex()) {
-                    composable(route = "${page}") {
-                        PageContent(
-                            items = pageContents,
-                            modifier = Modifier.padding(all = 8.dp),
-                            state = pageContentState
-                        )
-                    }
-                }
+        navigation(
+            startDestination = "${Routes.SALVATION.route}/1",
+            route = Routes.SALVATION.route
+        ) {
+            composable(route = "${Routes.SALVATION.route}/1") {
+                Salvation1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/2") {
+                Salvation2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/3") {
+                Salvation3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/4") {
+                Salvation4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/5") {
+                Salvation5(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/6") {
+                Salvation6(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/7") {
+                Salvation7(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/8") {
+                Salvation8(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/9") {
+                Salvation9(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/10") {
+                Salvation10(state = pageContentState)
             }
         }
     }
