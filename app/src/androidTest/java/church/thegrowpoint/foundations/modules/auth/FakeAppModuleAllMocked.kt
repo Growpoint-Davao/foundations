@@ -13,8 +13,6 @@ import church.thegrowpoint.foundations.modules.content.data.datasources.AssetsSe
 import church.thegrowpoint.foundations.modules.content.data.datasources.AssetsServiceImplementation
 import church.thegrowpoint.foundations.modules.content.data.datasources.ContentService
 import church.thegrowpoint.foundations.modules.content.data.datasources.ContentServiceImplementation
-import church.thegrowpoint.foundations.modules.content.data.repositories.ContentRepositoryImplementation
-import church.thegrowpoint.foundations.modules.content.domain.repositories.ContentRepository
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContent
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
