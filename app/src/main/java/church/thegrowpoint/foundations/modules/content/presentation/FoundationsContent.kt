@@ -232,7 +232,7 @@ fun FoundationsContent(
                         val nextPage = segments?.get(1)?.toInt()?.plus(1) ?: 1
 
                         if (section != null) {
-                            val sectionPageCount = contentViewModel.getSectionPages(section)
+                            val sectionPageCount = contentViewModel.getSectionPageCount(section)
 
                             if (nextPage > sectionPageCount) {
                                 val nextSection = contentViewModel.getNextSection(section)
