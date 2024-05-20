@@ -3,6 +3,8 @@ package church.thegrowpoint.foundations.modules.content.presentation
 import android.content.Context
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ContentViewModelTest {
@@ -32,5 +34,27 @@ class ContentViewModelTest {
         assertEquals("salvation", gettingStartedNextSection)
         assertEquals("lordship", salvationNextSection)
         assertEquals(null, unknownNextSection)
+    }
+
+    @Test
+    fun setNavigationDrawerItemSelected_shouldBeAbleToUpdateSelectedState() {
+        val contentViewModel = ContentViewModel(context = mockedContext)
+
+        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.gettingStartedSelected)
+        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.salvationSelected)
+
+        contentViewModel.setNavigationDrawerItemSelected(
+            salvationSelected = true
+        )
+
+        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.gettingStartedSelected)
+        assertTrue(contentViewModel.navigationDrawerItemsUIState.value.salvationSelected)
+
+        contentViewModel.setNavigationDrawerItemSelected(
+            gettingStartedSelected = true
+        )
+
+        assertTrue(contentViewModel.navigationDrawerItemsUIState.value.gettingStartedSelected)
+        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.salvationSelected)
     }
 }

@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,6 +73,9 @@ fun FoundationsContent(
     val navigationDrawerScope = rememberCoroutineScope()
     val navController = rememberNavController()
 
+    // drawer selected status state
+    val navDrawerItemsUIState = contentViewModel.navigationDrawerItemsUIState.collectAsState()
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -91,89 +95,105 @@ fun FoundationsContent(
                     title = stringResource(R.string.getting_started),
                     subTitle = stringResource(R.string.introduction),
                     icon = painterResource(R.drawable.getting_started),
+                    selected = navDrawerItemsUIState.value.gettingStartedSelected,
                     baseRoute = Routes.GETTING_STARTED.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.getting_started)
+                    contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.salvation),
                     subTitle = stringResource(R.string.lesson_1),
                     icon = painterResource(R.drawable.salvation),
+                    selected = navDrawerItemsUIState.value.salvationSelected,
                     baseRoute = Routes.SALVATION.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.salvation)
+                    contentViewModel.setNavigationDrawerItemSelected(salvationSelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.lordship),
                     subTitle = stringResource(R.string.lesson_2),
                     icon = painterResource(R.drawable.lordship),
+                    selected = navDrawerItemsUIState.value.lordshipSelected,
                     baseRoute = Routes.LORDSHIP.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.lordship)
+                    contentViewModel.setNavigationDrawerItemSelected(lordshipSelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.identity),
                     subTitle = stringResource(R.string.lesson_3),
                     icon = painterResource(R.drawable.identity),
+                    selected = navDrawerItemsUIState.value.identitySelected,
                     baseRoute = Routes.IDENTITY.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.identity)
+                    contentViewModel.setNavigationDrawerItemSelected(identitySelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.power),
                     subTitle = stringResource(R.string.lesson_4),
                     icon = painterResource(R.drawable.power),
+                    selected = navDrawerItemsUIState.value.powerSelected,
                     baseRoute = Routes.POWER.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.power)
+                    contentViewModel.setNavigationDrawerItemSelected(powerSelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.devotion),
                     subTitle = stringResource(R.string.lesson_5),
                     icon = painterResource(R.drawable.devotion),
+                    selected = navDrawerItemsUIState.value.devotionSelected,
                     baseRoute = Routes.DEVOTION.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.devotion)
+                    contentViewModel.setNavigationDrawerItemSelected(devotionSelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.church),
                     subTitle = stringResource(R.string.lesson_6),
                     icon = painterResource(R.drawable.church),
+                    selected = navDrawerItemsUIState.value.churchSelected,
                     baseRoute = Routes.CHURCH.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.church)
+                    contentViewModel.setNavigationDrawerItemSelected(churchSelected = true)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.discipleship),
                     subTitle = stringResource(R.string.lesson_7),
                     icon = painterResource(R.drawable.discipleship),
+                    selected = navDrawerItemsUIState.value.discipleshipSelected,
                     baseRoute = Routes.DISCIPLESHIP.route,
                     navController = navController,
                     navigationDrawerState = navigationDrawerState,
                     navigationDrawerScope = navigationDrawerScope
                 ) {
                     topBarTitle = context.getString(R.string.discipleship)
+                    contentViewModel.setNavigationDrawerItemSelected(discipleshipSelected = true)
                 }
             }
         },
@@ -241,10 +261,16 @@ fun FoundationsContent(
                                     if (sectionTitle != null) {
                                         topBarTitle = sectionTitle
                                     }
-                                    navController.navigate(nextSection) {
-                                        popUpTo(route = section) {
-                                            inclusive = true
+
+                                    try {
+                                        navController.navigate(nextSection) {
+                                            popUpTo(route = section) {
+                                                inclusive = true
+                                            }
                                         }
+                                    } catch (e: IllegalArgumentException) {
+                                        // probably no more section
+                                        e.printStackTrace()
                                     }
                                 }
                             } else {
@@ -267,6 +293,7 @@ fun Content(
 ) {
     // TODO: resolve start destination
     val initialSectionDestination = Routes.GETTING_STARTED.route
+    contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
 
     NavHost(
         modifier = modifier.fillMaxSize(),
