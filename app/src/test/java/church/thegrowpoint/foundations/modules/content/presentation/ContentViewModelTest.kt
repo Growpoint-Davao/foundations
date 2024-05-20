@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
+import android.content.Context
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContent
 import io.mockk.every
 import io.mockk.mockk
@@ -9,6 +10,7 @@ import org.junit.Test
 
 class ContentViewModelTest {
     private val mockedGetContent = mockk<GetContent>()
+    private val mockedContext = mockk<Context>()
     private val gettingStartedContent = listOf(
         listOf(
             "Foundations",
@@ -46,7 +48,10 @@ class ContentViewModelTest {
 
     @Test
     fun getGettingStartedPageContents_shouldReturnAListOfStringsIfIndexExist() {
-        val contentViewModel = ContentViewModel(mockedGetContent)
+        val contentViewModel = ContentViewModel(
+            getContent = mockedGetContent,
+            context = mockedContext
+        )
         val pageContent = contentViewModel.getGettingStartedPageContents(0)
 
         assertEquals("Foundations", pageContent[0])
@@ -55,7 +60,10 @@ class ContentViewModelTest {
 
     @Test
     fun getGettingStartedPageContents_shouldReturnEmptyListIfIndexDoesNotExist() {
-        val contentViewModel = ContentViewModel(mockedGetContent)
+        val contentViewModel = ContentViewModel(
+            getContent = mockedGetContent,
+            context = mockedContext
+        )
         val emptyPageContent = contentViewModel.getGettingStartedPageContents(10)
 
         assertTrue(emptyPageContent.isEmpty())
@@ -63,7 +71,10 @@ class ContentViewModelTest {
 
     @Test
     fun getSalvationPageContents_shouldReturnAListOfStringsIfIndexExist() {
-        val contentViewModel = ContentViewModel(mockedGetContent)
+        val contentViewModel = ContentViewModel(
+            getContent = mockedGetContent,
+            context = mockedContext
+        )
         val pageContent = contentViewModel.getSalvationPageContents(0)
 
         assertEquals("Jesus is Lord!", pageContent[0])
@@ -71,8 +82,11 @@ class ContentViewModelTest {
     }
 
     @Test
-    fun getSalvationPageContents_shouldReturnEmptyListIfIndexDoesNotExist(){
-        val contentViewModel = ContentViewModel(mockedGetContent)
+    fun getSalvationPageContents_shouldReturnEmptyListIfIndexDoesNotExist() {
+        val contentViewModel = ContentViewModel(
+            getContent = mockedGetContent,
+            context = mockedContext
+        )
         val emptyPageContent = contentViewModel.getSalvationPageContents(10)
 
         assertTrue(emptyPageContent.isEmpty())

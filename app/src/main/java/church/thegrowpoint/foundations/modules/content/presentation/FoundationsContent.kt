@@ -5,20 +5,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -34,6 +36,20 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation10
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation7
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation8
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation9
+import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.composables.GrowpointTitlePanel
 import church.thegrowpoint.foundations.ui.composables.NavigationDrawerItemWithProgress
@@ -44,7 +60,7 @@ import kotlinx.coroutines.launch
 fun FoundationsContent(
     authViewModel: AuthViewModel,
     contentViewModel: ContentViewModel,
-    navController: NavHostController = rememberNavController()
+    appNavController: NavHostController = rememberNavController()
 ) {
     val context = LocalContext.current
     var topBarTitle by rememberSaveable {
@@ -52,8 +68,9 @@ fun FoundationsContent(
     }
 
     // drawer must be initially closed
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val navigationDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navigationDrawerScope = rememberCoroutineScope()
+    val navController = rememberNavController()
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -73,140 +90,106 @@ fun FoundationsContent(
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.getting_started),
                     subTitle = stringResource(R.string.introduction),
-                    icon = painterResource(R.drawable.getting_started)
+                    icon = painterResource(R.drawable.getting_started),
+                    baseRoute = Routes.GETTING_STARTED.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.getting_started)
-                        }
-                    }
-
-                    // navigate to new section
-                    val parentRoute = navController.currentDestination?.parent?.route
-                    navController.navigate(Routes.GETTING_STARTED.route) {
-                        if (parentRoute != null) {
-                            popUpTo(route = parentRoute) {
-                                inclusive = true
-                            }
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.getting_started)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.salvation),
                     subTitle = stringResource(R.string.lesson_1),
-                    icon = painterResource(R.drawable.salvation)
+                    icon = painterResource(R.drawable.salvation),
+                    baseRoute = Routes.SALVATION.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.salvation)
-                        }
-                    }
-
-                    // navigate to new section
-                    val parentRoute = navController.currentDestination?.parent?.route
-                    navController.navigate(Routes.SALVATION.route) {
-                        if (parentRoute != null) {
-                            popUpTo(route = parentRoute) {
-                                inclusive = true
-                            }
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.salvation)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.lordship),
                     subTitle = stringResource(R.string.lesson_2),
-                    icon = painterResource(R.drawable.lordship)
+                    icon = painterResource(R.drawable.lordship),
+                    baseRoute = Routes.LORDSHIP.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.lordship)
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.lordship)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.identity),
                     subTitle = stringResource(R.string.lesson_3),
-                    icon = painterResource(R.drawable.identity)
+                    icon = painterResource(R.drawable.identity),
+                    baseRoute = Routes.IDENTITY.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.identity)
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.identity)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.power),
                     subTitle = stringResource(R.string.lesson_4),
-                    icon = painterResource(R.drawable.power)
+                    icon = painterResource(R.drawable.power),
+                    baseRoute = Routes.POWER.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.power)
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.power)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.devotion),
                     subTitle = stringResource(R.string.lesson_5),
-                    icon = painterResource(R.drawable.devotion)
+                    icon = painterResource(R.drawable.devotion),
+                    baseRoute = Routes.DEVOTION.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.devotion)
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.devotion)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.church),
                     subTitle = stringResource(R.string.lesson_6),
-                    icon = painterResource(R.drawable.church)
+                    icon = painterResource(R.drawable.church),
+                    baseRoute = Routes.CHURCH.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.church)
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.church)
                 }
                 NavigationDrawerItemWithProgress(
                     title = stringResource(R.string.discipleship),
                     subTitle = stringResource(R.string.lesson_7),
-                    icon = painterResource(R.drawable.discipleship)
+                    icon = painterResource(R.drawable.discipleship),
+                    baseRoute = Routes.DISCIPLESHIP.route,
+                    navController = navController,
+                    navigationDrawerState = navigationDrawerState,
+                    navigationDrawerScope = navigationDrawerScope
                 ) {
-
-                    // close the drawer
-                    navigationDrawerScope.launch {
-                        drawerState.apply {
-                            close()
-                            topBarTitle = context.getString(R.string.discipleship)
-                        }
-                    }
+                    topBarTitle = context.getString(R.string.discipleship)
                 }
             }
         },
-        drawerState = drawerState
+        drawerState = navigationDrawerState
     ) {
         // val authState by authViewModel.authState.collectAsState()
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
+        val pageContentState = rememberLazyListState()
+        val navFabVisibility by remember {
+            derivedStateOf {
+                // show floating navigation buttons when the user is at the end of the list, or
+                // if user could not scroll because all the content are visible
+                pageContentState.canScrollBackward || (!pageContentState.canScrollBackward && !pageContentState.canScrollForward)
+            }
+        }
 
         Scaffold(
             topBar = {
@@ -216,7 +199,7 @@ fun FoundationsContent(
                 ) {
                     // toggle the navigation drawer
                     navigationDrawerScope.launch {
-                        drawerState.apply {
+                        navigationDrawerState.apply {
                             if (isClosed) open() else close()
                         }
                     }
@@ -228,8 +211,48 @@ fun FoundationsContent(
                         .padding(innerPadding)
                         .fillMaxSize()
                 ) {
-                    Content(navController = navController, contentViewModel = contentViewModel)
+                    Content(
+                        navController = navController,
+                        contentViewModel = contentViewModel,
+                        pageContentState = pageContentState
+                    )
                 }
+            },
+            floatingActionButton = {
+                AnimatedNavigationFloatingActionButtons(
+                    isVisible = navFabVisibility,
+                    onPreviousClick = {
+                        navController.popBackStack()
+                    },
+                    onNextClick = {
+                        val currentDestination = navController.currentDestination
+                        val currentRoute = currentDestination?.route
+                        val segments = currentRoute?.split('/')
+                        val section = segments?.get(0)
+                        val nextPage = segments?.get(1)?.toInt()?.plus(1) ?: 1
+
+                        if (section != null) {
+                            val sectionPageCount = contentViewModel.getSectionPages(section)
+
+                            if (nextPage > sectionPageCount) {
+                                val nextSection = contentViewModel.getNextSection(section)
+                                if (nextSection != null) {
+                                    val sectionTitle = contentViewModel.getTitleResource(nextSection)
+                                    if (sectionTitle != null) {
+                                        topBarTitle = sectionTitle
+                                    }
+                                    navController.navigate(nextSection) {
+                                        popUpTo(route = section) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            } else {
+                                navController.navigate("$section/$nextPage")
+                            }
+                        }
+                    }
+                )
             }
         )
     }
@@ -239,41 +262,74 @@ fun FoundationsContent(
 fun Content(
     modifier: Modifier = Modifier,
     contentViewModel: ContentViewModel,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    pageContentState: LazyListState = rememberLazyListState()
 ) {
     // TODO: resolve start destination
-    val startingSection = Routes.GETTING_STARTED.route
+    val initialSectionDestination = Routes.GETTING_STARTED.route
 
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = startingSection,
-        route = "page/1"
+        startDestination = initialSectionDestination
     ) {
         navigation(
-            startDestination = "page/0",
-            route = Routes.GETTING_STARTED.route
+            startDestination = "${Routes.GETTING_STARTED.route}/1",
+            route = initialSectionDestination
         ) {
-            composable(route = "page/{id}") {
-                val destRoute = it.destination.route
-                val destArg = it.destination.arguments
-                val parent = it.destination.parent
-
-                // get the page
-                val page = it.arguments?.getString("id")?.toInt() ?: 0
-                val pageContents = contentViewModel.getGettingStartedPageContents(page)
-                PageContent(items = pageContents, modifier = Modifier.padding(all = 8.dp))
+            composable(route = "${Routes.GETTING_STARTED.route}/1") {
+                GettingStartedPage1(state = pageContentState)
+            }
+            composable(route = "${Routes.GETTING_STARTED.route}/2") {
+                GettingStartedPage2(state = pageContentState)
+            }
+            composable(route = "${Routes.GETTING_STARTED.route}/3") {
+                GettingStartedPage3(state = pageContentState)
             }
         }
 
         navigation(
-            startDestination = "page/0",
+            startDestination = "${Routes.SALVATION.route}/1",
             route = Routes.SALVATION.route
         ) {
-            composable(route = "page/{id}") {
-                val page = it.arguments?.getString("id")?.toInt() ?: 0
-                val pageContents = contentViewModel.getSalvationPageContents(page)
-                PageContent(items = pageContents, modifier = Modifier.padding(all = 8.dp))
+            composable(route = "${Routes.SALVATION.route}/1") {
+                Salvation1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/2") {
+                Salvation2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/3") {
+                Salvation3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/4") {
+                Salvation4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/5") {
+                Salvation5(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/6") {
+                Salvation6(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/7") {
+                Salvation7(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/8") {
+                Salvation8(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/9") {
+                Salvation9(state = pageContentState)
+            }
+
+            composable(route = "${Routes.SALVATION.route}/10") {
+                Salvation10(state = pageContentState)
             }
         }
     }

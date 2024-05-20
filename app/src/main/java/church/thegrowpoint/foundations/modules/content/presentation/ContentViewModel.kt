@@ -1,8 +1,11 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 /**
@@ -13,20 +16,66 @@ import javax.inject.Inject
  * @property getContent The use case for getting content section.
  */
 @HiltViewModel
-class ContentViewModel @Inject constructor(private val getContent: GetContent) : ViewModel() {
+class ContentViewModel @Inject constructor(
+    @ApplicationContext context: Context,
+    private val getContent: GetContent
+) : ViewModel() {
+    private val sectionPagesConfig = mapOf(
+        "gettingStarted" to mapOf(
+            "titleResID" to R.string.getting_started,
+            "pages" to 3,
+            "next" to "salvation"
+        ),
+        "salvation" to mapOf(
+            "titleResID" to R.string.salvation,
+            "previous" to "gettingStarted",
+            "pages" to 10,
+            "next" to "lordship"
+        )
+    )
+
+    private var appContext: Context = context
+
     /**
      * Retrieves the getting started section.
      *
      * @return The getting started section.
      */
-    private fun getGettingStarted() = getContent("gettingStarted")
+    fun getGettingStarted() = getContent("gettingStarted")
 
     /**
      * Retrieves the salvation section.
      *
      * @return The salvation section.
      */
-    private fun getSalvation() = getContent("salvation")
+    fun getSalvation() = getContent("salvation")
+
+    fun getSectionPages(name: String): Int {
+        val pages = sectionPagesConfig[name]?.get("pages")
+        if (pages is Int) {
+            return pages
+        }
+
+        return 0
+    }
+
+    fun getNextSection(name: String): String? {
+        val next = sectionPagesConfig[name]?.get("next")
+        if (next is String) {
+            return next
+        }
+
+        return null
+    }
+
+    fun getTitleResource(name: String): String? {
+        val id = sectionPagesConfig[name]?.get("titleResID")
+        if (id is Int) {
+            return appContext.getString(id)
+        }
+
+        return null
+    }
 
     /**
      * The extension class that retrieves a list of strings from a list of lists using an [index].

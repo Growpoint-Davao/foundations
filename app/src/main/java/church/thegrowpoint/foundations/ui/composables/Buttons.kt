@@ -1,12 +1,22 @@
 package church.thegrowpoint.foundations.ui.composables
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.twotone.NavigateBefore
+import androidx.compose.material.icons.automirrored.twotone.NavigateNext
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -16,8 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
 /**
@@ -80,5 +95,49 @@ fun LargeButton(
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge,
         )
+    }
+}
+
+/**
+ * Creates an animated two floating action buttons for navigation.
+ * The [onPreviousClick] callback will be called when you click previous button, and
+ * the [onNextClick] will be called when you click next button.
+ * To animate the auto hiding, you can set [isVisible] to false.
+ */
+@Composable
+fun AnimatedNavigationFloatingActionButtons(
+    modifier: Modifier = Modifier,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
+    isVisible: Boolean = true
+) {
+    val density = LocalDensity.current
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = isVisible,
+        enter = slideInVertically {
+            with(density) { 40.dp.roundToPx() }
+        } + fadeIn(),
+        exit = slideOutVertically(
+            animationSpec = keyframes {
+                this.durationMillis = 150
+            }
+        ) + fadeOut()
+    ) {
+        Row {
+            FloatingActionButton(shape = RoundedShapes.large, onClick = onPreviousClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.TwoTone.NavigateBefore,
+                    contentDescription = stringResource(R.string.previous)
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            FloatingActionButton(shape = RoundedShapes.large, onClick = onNextClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.TwoTone.NavigateNext,
+                    contentDescription = stringResource(R.string.next)
+                )
+            }
+        }
     }
 }

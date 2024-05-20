@@ -1,11 +1,16 @@
 package church.thegrowpoint.foundations.ui.composables
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
 /**
@@ -17,11 +22,37 @@ import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 @Composable
 fun RoundedTextInputField(
     label: String,
-    supportingText: String,
+    supportText: String,
     modifier: Modifier = Modifier,
     value: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     isError: Boolean = false,
+    onValueChange: (String) -> Unit
+) {
+    LabeledWithSupportTextOutlinedTextField(
+        label = label,
+        value = value,
+        supportText = supportText,
+        onValueChange = onValueChange,
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedShapes.large,
+        keyboardOptions = keyboardOptions,
+        isError = isError
+    )
+}
+
+@Composable
+fun LabeledWithSupportTextOutlinedTextField(
+    label: String,
+    modifier: Modifier = Modifier,
+    supportText: String = "",
+    value: String = "",
+    singleLine: Boolean = true,
+    maxLines: Int = 1,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    isError: Boolean = false,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
+    supportingText: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
@@ -29,16 +60,47 @@ fun RoundedTextInputField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedShapes.large,
+        shape = shape,
         keyboardOptions = keyboardOptions,
         isError = isError,
-        supportingText = {
+        singleLine = singleLine,
+        maxLines = maxLines,
+        supportingText = supportingText ?: {
             if (isError) {
                 ErrorLabel(
                     modifier = Modifier.fillMaxWidth(),
-                    text = supportingText
+                    text = supportText
                 )
             }
         }
     )
+}
+
+@Composable
+fun MultilineLabeledWithSupportTextOutlinedTextField(
+    label: String,
+    modifier: Modifier = Modifier,
+    supportText: String = "",
+    value: String = "",
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    isError: Boolean = false,
+    shape: Shape = OutlinedTextFieldDefaults.shape,
+    supportingText: @Composable (() -> Unit)? = null,
+    onValueChange: (String) -> Unit
+) {
+    Column (modifier = modifier.padding(horizontal = 32.dp)) {
+        LabeledWithSupportTextOutlinedTextField(
+            label = label,
+            modifier = Modifier.fillMaxWidth(),
+            supportText = supportText,
+            value = value,
+            singleLine = false,
+            maxLines = 3,
+            keyboardOptions = keyboardOptions,
+            isError = isError,
+            shape = shape,
+            supportingText = supportingText,
+            onValueChange = onValueChange
+        )
+    }
 }
