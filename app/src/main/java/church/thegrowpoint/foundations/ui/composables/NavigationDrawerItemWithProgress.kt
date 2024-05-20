@@ -41,7 +41,7 @@ fun NavigationDrawerItemWithProgress(
     onClick: () -> Unit,
 ) {
     NavigationDrawerItem(
-        modifier = modifier.padding(vertical = 8.dp),
+        modifier = modifier.padding(vertical = 8.dp, horizontal = 16.dp),
         icon = {
             if (icon != null) {
                 Image(
