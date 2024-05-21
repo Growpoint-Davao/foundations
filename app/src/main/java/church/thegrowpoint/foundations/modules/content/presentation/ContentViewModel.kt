@@ -39,6 +39,12 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
             "previous" to "gettingStarted",
             "pages" to 10,
             "next" to "lordship"
+        ),
+        "lordship" to mapOf(
+            "titleResID" to R.string.lordship,
+            "previous" to "salvation",
+            "pages" to 7,
+            "next" to "identity"
         )
     )
 
