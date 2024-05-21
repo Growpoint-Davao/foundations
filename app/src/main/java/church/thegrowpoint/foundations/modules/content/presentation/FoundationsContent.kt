@@ -40,6 +40,13 @@ import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation10
 import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation2
@@ -357,6 +364,39 @@ fun Content(
 
             composable(route = "${Routes.SALVATION.route}/10") {
                 Salvation10(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.LORDSHIP.route}/1",
+            route = Routes.LORDSHIP.route
+        ) {
+            composable(route = "${Routes.LORDSHIP.route}/1") {
+                Lordship1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.LORDSHIP.route}/2") {
+                Lordship2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.LORDSHIP.route}/3") {
+                Lordship3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.LORDSHIP.route}/4") {
+                Lordship4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.LORDSHIP.route}/5") {
+                Lordship5(state = pageContentState)
+            }
+
+            composable(route = "${Routes.LORDSHIP.route}/6") {
+                Lordship6(state = pageContentState)
+            }
+
+            composable(route = "${Routes.LORDSHIP.route}/7") {
+                Lordship7(state = pageContentState)
             }
         }
     }
