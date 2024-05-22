@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation
+package church.thegrowpoint.foundations.modules
 
 /**
  * Base route names enum

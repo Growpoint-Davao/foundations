@@ -38,7 +38,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
+import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.ui.composables.ActionableDialog
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.DialogAction
@@ -60,7 +63,8 @@ import java.util.Locale
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel = hiltViewModel(),
+    appNavController: NavHostController = rememberNavController()
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -204,7 +208,7 @@ fun LoginScreen(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             ) {
-
+                appNavController.navigate(Routes.REGISTER.route)
             }
         }
     }

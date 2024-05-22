@@ -30,12 +30,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
+import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage2
@@ -66,8 +68,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoundationsContent(
-    authViewModel: AuthViewModel,
     contentViewModel: ContentViewModel,
+    authViewModel: AuthViewModel = hiltViewModel(),
     appNavController: NavHostController = rememberNavController()
 ) {
     val context = LocalContext.current
@@ -222,7 +224,8 @@ fun FoundationsContent(
             topBar = {
                 CenteredTopAppBar(
                     title = topBarTitle,
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = scrollBehavior,
+                    navIconContentDescription = stringResource(R.string.toggle_navigation_drawer)
                 ) {
                     // toggle the navigation drawer
                     navigationDrawerScope.launch {

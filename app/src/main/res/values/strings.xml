@@ -35,6 +35,7 @@
     </string>
     <string name="toggle_navigation_drawer">Toggle Navigation Drawer</string>
     <string name="established_for_growing">Established For Growing</string>
+    <string name="register">Register</string>
 
     <!-- drawer item strings -->
     <string name="introduction">Introduction</string>

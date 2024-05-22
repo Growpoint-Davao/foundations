@@ -18,8 +18,9 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
+import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
-import church.thegrowpoint.foundations.modules.content.presentation.Routes
+import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,9 +42,9 @@ class MainActivity : ComponentActivity() {
                     val authState by authViewModel.authState.collectAsState()
                     val navController = rememberNavController()
 
-                    var startDestination = Routes.AUTH.name
+                    var startDestination = Routes.AUTH.route
                     if (authState.skipAuth || authState.currentUser != null) {
-                        startDestination = Routes.CONTENT.name
+                        startDestination = Routes.CONTENT.route
                     }
 
                     NavHost(
@@ -51,25 +52,30 @@ class MainActivity : ComponentActivity() {
                         startDestination = startDestination
                     ) {
                         navigation(
-                            startDestination = Routes.LOGIN.name,
-                            route = Routes.AUTH.name
+                            startDestination = Routes.LOGIN.route,
+                            route = Routes.AUTH.route
                         ) {
-                            composable(route = Routes.LOGIN.name) {
-                                LoginScreen(authViewModel = authViewModel)
+                            composable(route = Routes.LOGIN.route) {
+                                LoginScreen(
+                                    authViewModel = authViewModel,
+                                    appNavController = navController
+                                )
                             }
 
-                            composable(route = Routes.REGISTER.name) {
-                                // TODO: register
-                                Text(text = "Register")
+                            composable(route = Routes.REGISTER.route) {
+                                RegistrationScreen(
+                                    authViewModel = authViewModel,
+                                    appNavController = navController
+                                )
                             }
 
-                            composable(route = Routes.FORGOT_PASSWORD.name) {
+                            composable(route = Routes.FORGOT_PASSWORD.route) {
                                 // TODO: register
                                 Text(text = "Forgout Password")
                             }
                         }
 
-                        composable(route = Routes.CONTENT.name) {
+                        composable(route = Routes.CONTENT.route) {
                             FoundationsContent(
                                 authViewModel = authViewModel,
                                 contentViewModel = hiltViewModel()
