@@ -104,7 +104,9 @@ fun RegistrationScreen(
         },
         floatingActionButton = {
             FloatingActionButton(shape = RoundedShapes.large, onClick = {
+                authViewModel.register(email, password) {
 
+                }
             }) {
                 Icon(
                     imageVector = Icons.Rounded.Save,
