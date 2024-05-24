@@ -6,6 +6,7 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
 import church.thegrowpoint.foundations.R
@@ -41,8 +42,9 @@ class SignInWithGoogle @Inject constructor(
      *
      * The [attempt] is the number attempt, because this function is called recursively in case of failures.
      */
-    private suspend fun googleSignIn(attempt: Int = 1): GetCredentialResponse {
+    private suspend fun googleSignIn(attempt: Int = 1): GetCredentialResponse? {
         if (attempt > 3) {
+            // TODO: This means that there is no google account signed in the device, so ask user to log a google account
             throw Exception("Reached maximum retry attempts")
         }
 
@@ -50,6 +52,7 @@ class SignInWithGoogle @Inject constructor(
             val googleIdOption = GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(attempt == 1)
                     .setServerClientId(appContext.getString(R.string.default_web_client_id))
+                    .setAutoSelectEnabled(true)
                     .setNonce(UUID.randomUUID().toString())
                     .build()
 
@@ -69,10 +72,12 @@ class SignInWithGoogle @Inject constructor(
             if (e is NoCredentialException) {
                 // run again to force the un-authorize flag to false
                 return googleSignIn(attempt + 1)
-            } else {
+            } else if (e !is GetCredentialCancellationException) {
                 throw e
             }
         }
+
+        return null
     }
 
     /**
@@ -116,6 +121,6 @@ class SignInWithGoogle @Inject constructor(
      */
     suspend operator fun invoke(): AuthRepository.UserResult? {
         val result = googleSignIn()
-        return handleGoogleSignIn(result)
+        return result?.let { handleGoogleSignIn(it) }
     }
 }
