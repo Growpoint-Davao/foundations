@@ -1,5 +1,9 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -305,10 +309,11 @@ fun FoundationsContent(
                             if (nextPage > sectionPageCount) {
                                 val nextSection = contentViewModel.getNextSection(section)
                                 if (nextSection != null) {
-                                    val sectionTitle =
+                                    val nextSectionTitle =
                                         contentViewModel.getTitleResource(nextSection)
-                                    if (sectionTitle != null) {
-                                        topBarTitle = sectionTitle
+                                    if (nextSectionTitle != null) {
+                                        topBarTitle = nextSectionTitle
+                                        contentViewModel.setNavigationDrawerItemSelected(nextSection)
                                     }
 
                                     try {
@@ -347,7 +352,9 @@ fun Content(
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
-        startDestination = initialSectionDestination
+        startDestination = initialSectionDestination,
+        enterTransition = { fadeIn() + slideInHorizontally() },
+        exitTransition = { slideOutHorizontally() + fadeOut() }
     ) {
         navigation(
             startDestination = "${Routes.GETTING_STARTED.route}/1",
