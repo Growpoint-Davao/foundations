@@ -5,14 +5,21 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
@@ -99,110 +106,141 @@ fun FoundationsContent(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 HorizontalDivider()
-                Spacer(modifier = Modifier.height(8.dp))
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.getting_started),
-                    subTitle = stringResource(R.string.introduction),
-                    icon = painterResource(R.drawable.getting_started),
-                    selected = navDrawerItemsUIState.value.gettingStartedSelected,
-                    baseRoute = Routes.GETTING_STARTED.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
+                LazyColumn (
+                    modifier = Modifier.fillMaxSize(),
+                    state = rememberLazyListState()
                 ) {
-                    topBarTitle = context.getString(R.string.getting_started)
-                    contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.salvation),
-                    subTitle = stringResource(R.string.lesson_1),
-                    icon = painterResource(R.drawable.salvation),
-                    selected = navDrawerItemsUIState.value.salvationSelected,
-                    baseRoute = Routes.SALVATION.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.salvation)
-                    contentViewModel.setNavigationDrawerItemSelected(salvationSelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.lordship),
-                    subTitle = stringResource(R.string.lesson_2),
-                    icon = painterResource(R.drawable.lordship),
-                    selected = navDrawerItemsUIState.value.lordshipSelected,
-                    baseRoute = Routes.LORDSHIP.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.lordship)
-                    contentViewModel.setNavigationDrawerItemSelected(lordshipSelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.identity),
-                    subTitle = stringResource(R.string.lesson_3),
-                    icon = painterResource(R.drawable.identity),
-                    selected = navDrawerItemsUIState.value.identitySelected,
-                    baseRoute = Routes.IDENTITY.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.identity)
-                    contentViewModel.setNavigationDrawerItemSelected(identitySelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.power),
-                    subTitle = stringResource(R.string.lesson_4),
-                    icon = painterResource(R.drawable.power),
-                    selected = navDrawerItemsUIState.value.powerSelected,
-                    baseRoute = Routes.POWER.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.power)
-                    contentViewModel.setNavigationDrawerItemSelected(powerSelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.devotion),
-                    subTitle = stringResource(R.string.lesson_5),
-                    icon = painterResource(R.drawable.devotion),
-                    selected = navDrawerItemsUIState.value.devotionSelected,
-                    baseRoute = Routes.DEVOTION.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.devotion)
-                    contentViewModel.setNavigationDrawerItemSelected(devotionSelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.church),
-                    subTitle = stringResource(R.string.lesson_6),
-                    icon = painterResource(R.drawable.church),
-                    selected = navDrawerItemsUIState.value.churchSelected,
-                    baseRoute = Routes.CHURCH.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.church)
-                    contentViewModel.setNavigationDrawerItemSelected(churchSelected = true)
-                }
-                NavigationDrawerItemWithProgress(
-                    title = stringResource(R.string.discipleship),
-                    subTitle = stringResource(R.string.lesson_7),
-                    icon = painterResource(R.drawable.discipleship),
-                    selected = navDrawerItemsUIState.value.discipleshipSelected,
-                    baseRoute = Routes.DISCIPLESHIP.route,
-                    navController = navController,
-                    navigationDrawerState = navigationDrawerState,
-                    navigationDrawerScope = navigationDrawerScope
-                ) {
-                    topBarTitle = context.getString(R.string.discipleship)
-                    contentViewModel.setNavigationDrawerItemSelected(discipleshipSelected = true)
+                    item {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.getting_started),
+                            subTitle = stringResource(R.string.introduction),
+                            icon = painterResource(R.drawable.getting_started),
+                            selected = navDrawerItemsUIState.value.gettingStartedSelected,
+                            baseRoute = Routes.GETTING_STARTED.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.getting_started)
+                            contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.salvation),
+                            subTitle = stringResource(R.string.lesson_1),
+                            icon = painterResource(R.drawable.salvation),
+                            selected = navDrawerItemsUIState.value.salvationSelected,
+                            baseRoute = Routes.SALVATION.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.salvation)
+                            contentViewModel.setNavigationDrawerItemSelected(salvationSelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.lordship),
+                            subTitle = stringResource(R.string.lesson_2),
+                            icon = painterResource(R.drawable.lordship),
+                            selected = navDrawerItemsUIState.value.lordshipSelected,
+                            baseRoute = Routes.LORDSHIP.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.lordship)
+                            contentViewModel.setNavigationDrawerItemSelected(lordshipSelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.identity),
+                            subTitle = stringResource(R.string.lesson_3),
+                            icon = painterResource(R.drawable.identity),
+                            selected = navDrawerItemsUIState.value.identitySelected,
+                            baseRoute = Routes.IDENTITY.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.identity)
+                            contentViewModel.setNavigationDrawerItemSelected(identitySelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.power),
+                            subTitle = stringResource(R.string.lesson_4),
+                            icon = painterResource(R.drawable.power),
+                            selected = navDrawerItemsUIState.value.powerSelected,
+                            baseRoute = Routes.POWER.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.power)
+                            contentViewModel.setNavigationDrawerItemSelected(powerSelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.devotion),
+                            subTitle = stringResource(R.string.lesson_5),
+                            icon = painterResource(R.drawable.devotion),
+                            selected = navDrawerItemsUIState.value.devotionSelected,
+                            baseRoute = Routes.DEVOTION.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.devotion)
+                            contentViewModel.setNavigationDrawerItemSelected(devotionSelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.church),
+                            subTitle = stringResource(R.string.lesson_6),
+                            icon = painterResource(R.drawable.church),
+                            selected = navDrawerItemsUIState.value.churchSelected,
+                            baseRoute = Routes.CHURCH.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.church)
+                            contentViewModel.setNavigationDrawerItemSelected(churchSelected = true)
+                        }
+                        NavigationDrawerItemWithProgress(
+                            title = stringResource(R.string.discipleship),
+                            subTitle = stringResource(R.string.lesson_7),
+                            icon = painterResource(R.drawable.discipleship),
+                            selected = navDrawerItemsUIState.value.discipleshipSelected,
+                            baseRoute = Routes.DISCIPLESHIP.route,
+                            navController = navController,
+                            navigationDrawerState = navigationDrawerState,
+                            navigationDrawerScope = navigationDrawerScope
+                        ) {
+                            topBarTitle = context.getString(R.string.discipleship)
+                            contentViewModel.setNavigationDrawerItemSelected(discipleshipSelected = true)
+                        }
+
+                        // other drawer items
+                        Spacer(modifier = Modifier.height(8.dp))
+                        HorizontalDivider()
+                        Spacer(modifier = Modifier.height(8.dp))
+                        NavigationDrawerItem(
+                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                            label = {
+                                Text(
+                                    text = stringResource(R.string.logout),
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Rounded.Logout,
+                                    contentDescription = stringResource(R.string.logout)
+                                )
+                            },
+                            selected = false,
+                            onClick = {
+                                authViewModel.logout()
+                            }
+                        )
+                    }
                 }
             }
         },
@@ -267,7 +305,8 @@ fun FoundationsContent(
                             if (nextPage > sectionPageCount) {
                                 val nextSection = contentViewModel.getNextSection(section)
                                 if (nextSection != null) {
-                                    val sectionTitle = contentViewModel.getTitleResource(nextSection)
+                                    val sectionTitle =
+                                        contentViewModel.getTitleResource(nextSection)
                                     if (sectionTitle != null) {
                                         topBarTitle = sectionTitle
                                     }
