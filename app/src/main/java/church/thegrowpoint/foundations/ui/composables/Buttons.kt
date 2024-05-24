@@ -24,25 +24,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
 /**
- * Creates white button with icon.
+ * Creates and icon button that complements the color of the surface.
  *
  * I needs a [icon], [text], and [contentDescription].
  * It has an optional [modifier] parameter.
  */
 @Composable
-fun WhiteIconButton(
+fun SurfaceThemedIconButton(
     modifier: Modifier = Modifier,
     icon: Painter,
     text: String,
@@ -51,7 +48,8 @@ fun WhiteIconButton(
 ) {
     IconButton(
         modifier = modifier
-            .background(Color.White, shape = RoundedShapes.large)
+            // .background(Color.White, shape = RoundedShapes.large)
+            .background(MaterialTheme.colorScheme.inverseSurface, shape = RoundedShapes.large)
             .fillMaxWidth()
             .padding(all = 8.dp),
         onClick = onClick
@@ -62,14 +60,14 @@ fun WhiteIconButton(
             Icon(
                 painter = icon,
                 contentDescription = contentDescription,
-                tint = MaterialTheme.colorScheme.secondary
+                tint = MaterialTheme.colorScheme.surface
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = text,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.surface
             )
         }
     }
