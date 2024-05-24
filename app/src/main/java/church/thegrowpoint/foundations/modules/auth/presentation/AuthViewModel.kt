@@ -81,11 +81,13 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             val result = registerUser(email = email, password = password)
             if (result != null) {
-                result.user?.let { onRegistrationComplete(it) }
+                result.user?.let {
+                    onRegistrationComplete(it)
+                    setCurrentUser(it)
+                }
             }
 
-            // logout after registration because firebase logs the user after registration
-            logout()
+            // TODO: send email verification and logout the user
         }
     }
 

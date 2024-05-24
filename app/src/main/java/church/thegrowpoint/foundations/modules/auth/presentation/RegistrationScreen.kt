@@ -1,5 +1,7 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
+import android.os.Looper
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,12 +16,15 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -31,6 +36,7 @@ import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 import church.thegrowpoint.foundations.utils.extensions.validEmail
 import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +51,8 @@ fun RegistrationScreen(
     var isValidEmail by rememberSaveable { mutableStateOf(true) }
     var pwLengthValid by rememberSaveable { mutableStateOf(true) }
     var confirmPwLengthValid by rememberSaveable { mutableStateOf(true) }
+
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -66,7 +74,7 @@ fun RegistrationScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Column (modifier = modifier.padding(horizontal = 32.dp)) {
+                Column(modifier = modifier.padding(horizontal = 32.dp)) {
                     Spacer(modifier = Modifier.height(32.dp))
                     EmailField(
                         value = email,
@@ -85,7 +93,9 @@ fun RegistrationScreen(
                         },
                         imeAction = ImeAction.Next,
                         isError = !pwLengthValid || (password != confirmPassword),
-                        supportingText = if (!pwLengthValid) stringResource(R.string.password_is_too_short) else stringResource(R.string.passwords_do_not_match)
+                        supportingText = if (!pwLengthValid) stringResource(R.string.password_is_too_short) else stringResource(
+                            R.string.passwords_do_not_match
+                        )
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     PasswordField(
@@ -104,7 +114,25 @@ fun RegistrationScreen(
         },
         floatingActionButton = {
             FloatingActionButton(shape = RoundedShapes.large, onClick = {
+                authViewModel.register(email, password) { user ->
 
+                    if (user != null) {
+                        val thread = Thread {
+                            // Initialize the message queue for the thread
+                            Looper.prepare()
+
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.registration_is_successful),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            Looper.loop()
+                        }
+
+                        thread.start()
+                    }
+                }
             }) {
                 Icon(
                     imageVector = Icons.Rounded.Save,
