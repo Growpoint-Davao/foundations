@@ -35,7 +35,7 @@ import church.thegrowpoint.foundations.ui.composables.ActionableDialog
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.DialogAction
 import church.thegrowpoint.foundations.ui.composables.LargeButton
-import church.thegrowpoint.foundations.ui.composables.WhiteIconButton
+import church.thegrowpoint.foundations.ui.composables.SurfaceThemedIconButton
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import church.thegrowpoint.foundations.utils.extensions.validEmail
 import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
@@ -149,7 +149,7 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            WhiteIconButton(
+            SurfaceThemedIconButton(
                 modifier = Modifier.weight(1f),
                 icon = painterResource(R.drawable.facebook_logo),
                 text = stringResource(R.string.facebook)
@@ -157,7 +157,7 @@ fun LoginScreen(
 
             }
             Spacer(modifier = Modifier.width(16.dp))
-            WhiteIconButton(
+            SurfaceThemedIconButton(
                 modifier = Modifier.weight(1f),
                 icon = painterResource(R.drawable.google_logo),
                 text = stringResource(R.string.google)
