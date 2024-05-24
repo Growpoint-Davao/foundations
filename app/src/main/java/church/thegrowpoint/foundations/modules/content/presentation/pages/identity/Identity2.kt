@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation.pages
+package church.thegrowpoint.foundations.modules.content.presentation.pages.identity
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -15,14 +15,14 @@ import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkd
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
-fun Lordship4(
+fun Identity2(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
     LazyColumn(state = state) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_4_part_1),
+                markdown = stringResource(R.string.identity_page_2_part_1),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -37,7 +37,7 @@ fun Lordship4(
 
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_4_part_2),
+                markdown = stringResource(R.string.identity_page_2_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -51,6 +51,30 @@ fun Lordship4(
             ) {
 
             }
+            ContentMarkdown(
+                markdown = stringResource(R.string.identity_page_2_part_3),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = ""
+            ) {
+
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.identity_page_2_part_4),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

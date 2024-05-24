@@ -34,19 +34,25 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
         Routes.GETTING_STARTED.route to mapOf(
             "titleResID" to R.string.getting_started,
             "pages" to 3,
-            "next" to "salvation"
+            "next" to Routes.SALVATION.route
         ),
         Routes.SALVATION.route to mapOf(
             "titleResID" to R.string.salvation,
-            "previous" to "gettingStarted",
+            "previous" to Routes.GETTING_STARTED.route,
             "pages" to 10,
-            "next" to "lordship"
+            "next" to Routes.LORDSHIP.route
         ),
         Routes.LORDSHIP.route to mapOf(
             "titleResID" to R.string.lordship,
-            "previous" to "salvation",
+            "previous" to Routes.SALVATION.route,
             "pages" to 7,
-            "next" to "identity"
+            "next" to Routes.IDENTITY.route
+        ),
+        Routes.IDENTITY.route to mapOf(
+            "titleResID" to R.string.identity,
+            "previous" to Routes.LORDSHIP.route,
+            "pages" to 7,
+            "next" to Routes.POWER.route
         )
     )
 

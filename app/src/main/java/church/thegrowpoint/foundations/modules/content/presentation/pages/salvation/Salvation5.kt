@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation.pages
+package church.thegrowpoint.foundations.modules.content.presentation.pages.salvation
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

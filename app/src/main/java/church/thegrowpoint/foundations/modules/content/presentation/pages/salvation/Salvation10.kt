@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation.pages
+package church.thegrowpoint.foundations.modules.content.presentation.pages.salvation
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -14,14 +14,14 @@ import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 
 @Composable
-fun Lordship1(
+fun Salvation10(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
     LazyColumn(state = state) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_1),
+                markdown = stringResource(R.string.salvation_page_10),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

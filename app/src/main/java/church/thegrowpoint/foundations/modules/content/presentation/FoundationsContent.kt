@@ -50,26 +50,31 @@ import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
-import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.GettingStartedPage3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Lordship7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation10
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation8
-import church.thegrowpoint.foundations.modules.content.presentation.pages.Salvation9
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship7
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation10
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation7
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
 import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.composables.GrowpointTitlePanel
@@ -446,6 +451,31 @@ fun Content(
 
             composable(route = "${Routes.LORDSHIP.route}/7") {
                 Lordship7(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.IDENTITY.route}/1",
+            route = Routes.IDENTITY.route
+        ) {
+            composable(route = "${Routes.IDENTITY.route}/1") {
+                Identity1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/2") {
+                Identity2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/3") {
+                Identity3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/4") {
+                Identity4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/5") {
+                Identity5(state = pageContentState)
             }
         }
     }
