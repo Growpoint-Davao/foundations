@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation.pages
+package church.thegrowpoint.foundations.modules.content.presentation.pages.lordship
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -15,14 +15,14 @@ import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkd
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
-fun Lordship7(
+fun Lordship3(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
     LazyColumn(state = state) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_7_part_1),
+                markdown = stringResource(R.string.lordship_page_3_part_1),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -37,7 +37,7 @@ fun Lordship7(
 
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_7_part_2),
+                markdown = stringResource(R.string.lordship_page_3_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -52,7 +52,7 @@ fun Lordship7(
 
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_7_part_3),
+                markdown = stringResource(R.string.lordship_page_3_part_3),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -60,6 +60,12 @@ fun Lordship7(
                     end = 16.dp
                 )
             )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = ""
+            ) {
+
+            }
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

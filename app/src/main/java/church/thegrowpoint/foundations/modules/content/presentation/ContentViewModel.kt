@@ -3,12 +3,14 @@ package church.thegrowpoint.foundations.modules.content.presentation
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import church.thegrowpoint.foundations.R
+import church.thegrowpoint.foundations.modules.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import okhttp3.Route
 import javax.inject.Inject
 
 /**
@@ -29,22 +31,28 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
      * The section pages configuration.
      */
     private val sectionPagesConfig = mapOf(
-        "gettingStarted" to mapOf(
+        Routes.GETTING_STARTED.route to mapOf(
             "titleResID" to R.string.getting_started,
             "pages" to 3,
-            "next" to "salvation"
+            "next" to Routes.SALVATION.route
         ),
-        "salvation" to mapOf(
+        Routes.SALVATION.route to mapOf(
             "titleResID" to R.string.salvation,
-            "previous" to "gettingStarted",
+            "previous" to Routes.GETTING_STARTED.route,
             "pages" to 10,
-            "next" to "lordship"
+            "next" to Routes.LORDSHIP.route
         ),
-        "lordship" to mapOf(
+        Routes.LORDSHIP.route to mapOf(
             "titleResID" to R.string.lordship,
-            "previous" to "salvation",
+            "previous" to Routes.SALVATION.route,
             "pages" to 7,
-            "next" to "identity"
+            "next" to Routes.IDENTITY.route
+        ),
+        Routes.IDENTITY.route to mapOf(
+            "titleResID" to R.string.identity,
+            "previous" to Routes.LORDSHIP.route,
+            "pages" to 7,
+            "next" to Routes.POWER.route
         )
     )
 
@@ -128,6 +136,19 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
                 churchSelected = churchSelected,
                 discipleshipSelected = discipleshipSelected
             )
+        }
+    }
+
+    fun setNavigationDrawerItemSelected(section: String) {
+        when (section) {
+            Routes.GETTING_STARTED.route -> setNavigationDrawerItemSelected(gettingStartedSelected = true)
+            Routes.SALVATION.route -> setNavigationDrawerItemSelected(salvationSelected = true)
+            Routes.LORDSHIP.route -> setNavigationDrawerItemSelected(lordshipSelected = true)
+            Routes.IDENTITY.route -> setNavigationDrawerItemSelected(identitySelected = true)
+            Routes.POWER.route -> setNavigationDrawerItemSelected(powerSelected = true)
+            Routes.DEVOTION.route -> setNavigationDrawerItemSelected(devotionSelected = true)
+            Routes.CHURCH.route -> setNavigationDrawerItemSelected(churchSelected = true)
+            else -> setNavigationDrawerItemSelected(discipleshipSelected = true)
         }
     }
 
