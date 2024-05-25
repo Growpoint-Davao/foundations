@@ -65,6 +65,11 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.lordsh
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship6
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship7
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation10
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation2
@@ -476,6 +481,31 @@ fun Content(
 
             composable(route = "${Routes.IDENTITY.route}/5") {
                 Identity5(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.POWER.route}/1",
+            route = Routes.POWER.route
+        ) {
+            composable(route = "${Routes.POWER.route}/1") {
+                Power1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/2") {
+                Power2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/3") {
+                Power3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/4") {
+                Power4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/5") {
+                Power5(state = pageContentState)
             }
         }
     }
