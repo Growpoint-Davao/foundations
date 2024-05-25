@@ -59,6 +59,12 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
             "previous" to Routes.IDENTITY.route,
             "pages" to 5,
             "next" to Routes.DEVOTION.route
+        ),
+        Routes.DEVOTION.route to mapOf(
+            "titleResID" to R.string.devotion,
+            "previous" to Routes.POWER.route,
+            "pages" to 5,
+            "next" to Routes.CHURCH.route
         )
     )
 
