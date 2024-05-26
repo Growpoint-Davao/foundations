@@ -50,11 +50,19 @@ import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
@@ -536,6 +544,48 @@ fun Content(
 
             composable(route = "${Routes.DEVOTION.route}/5") {
                 Devotion5(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.CHURCH.route}/1",
+            route = Routes.CHURCH.route
+        ) {
+            composable(route = "${Routes.CHURCH.route}/1") {
+                Church1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/2") {
+                Church2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/3") {
+                Church3(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.DISCIPLESHIP.route}/1",
+            route = Routes.DISCIPLESHIP.route
+        ) {
+            composable(route = "${Routes.DISCIPLESHIP.route}/1") {
+                Discipleship1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DISCIPLESHIP.route}/2") {
+                Discipleship2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DISCIPLESHIP.route}/3") {
+                Discipleship3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DISCIPLESHIP.route}/4") {
+                Discipleship4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DISCIPLESHIP.route}/5") {
+                Discipleship5(state = pageContentState)
             }
         }
     }

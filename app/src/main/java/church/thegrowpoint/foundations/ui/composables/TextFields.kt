@@ -82,6 +82,7 @@ fun MultilineLabeledWithSupportTextOutlinedTextField(
     modifier: Modifier = Modifier,
     supportText: String = "",
     value: String = "",
+    maxLines: Int = 3,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     isError: Boolean = false,
     shape: Shape = OutlinedTextFieldDefaults.shape,
