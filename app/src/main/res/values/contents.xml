@@ -1,35 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- getting started strings -->
-    <string name="getting_started_page_1">
-        *“And Jesus said to them, follow me, and I will make you become fishers of men.” (Mark 1:17)*\n\n
-
-        These five steps will get you off to the right start, as you follow Christ.\n\n
-
-        1. **Stop trusting yourself and your good works and start trusting in Christ alone for Salvation**. *“And by grace you have been saved through faith. And this is not your own doing, it is the gift of God, not a result of works, Tso that no one may boast.” (Ephesians 2:8-9)*\n
-        2. **Turn away from everything the Bible calls sin**. *“But God’s firm foundation stands, bearing this steel, the Lord knows those are who are his and let everyone who names the name of the Lord depart from iniquity.” (2 Timothy 2:19)*\n
-        3. **Attend a small group for personal discipleship and weekly worship service**. *And let us consider how to stir up one another to love and good works, not neglecting to meet together, as is the habit of some, but encouraging one another, and all the more as you see the day drawing near”. (Hebrews 10: 24-25)*\n
-        4. **Read and obey your Bible every day**. *This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night, so that you may be careful to do according to all that is written in it. For then you will make your way prosperous, and then you will have good success. (Joshua 1:8)*\n
-        5. **Tell others about your new relationship with Christ**. *“And he did not permit him but said to him, go home to your friends and tell them how much the Lord has done for you, and how he has had mercy on you. And he went away and began to proclaim in the Decapolis how much Jesus had done for him, and everyone marveled” (Mark 5:19-20)*
-    </string>
-    <string name="getting_started_page_2">
-        In every physical structure, the foundation is important. A building that has no strong foundation inevitably collapses. Likewise, a Christian that has no strong spiritual foundation is also in danger of spiritual collapse. Jesus reminds us of its importance at the end of the Sermon on the Mount.\n\n
-
-        > *…Everyone then who hears these words of mine and does them will be like a wise man **who built his house on the rock**. And the rain fell, and the floods came, and the winds blew and beat on that house, but it did not fall, because it had been founded on the rock. And everyone who hears these words of mine and does not do them will be like a foolish man who **built his house on the sand**. And the rain fell, and the floods came, and the winds blew and beat against that house, and it fell, and great was the fall of it. (Matthew 7:24-27)*\n\n
-
-        In this parable, Jesus gives two kinds of foundation. One is the rock foundation; the other is the sand foundation. One can build his life on the rock by knowing and obeying the Word. Or one can build his life on the sand by simply ignoring it.\n
-        I believe that you want to start this journey because you want to build your life on the rock. And that rock is the Lord Jesus Christ. He is our foundation.
-    </string>
-    <string name="getting_started_page_3">
-        How the Lessons Are Structured\n\n
-
-        * **CONNECT** – Understand that discipleship isn’t just finishing the material. It’s about building a relationship.\n
-        * **STUDY** – Discipleship is built on the Word of God, not on the opinion of man. Learn how to read and study the Bible and discover God’s answer to our every spiritual need.\n
-        * **APPLY** – Discipleship is about obedience. It’s not about how much you know but how much you obey.\n\n
-
-        We are excited about how God will use this journey to help you grow in your relationship with Jesus.
-    </string>
-
     <!-- salvation strings -->
     <string name="salvation_page_1">
         ## CONNECT\n
