@@ -50,6 +50,9 @@ import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
@@ -536,6 +539,23 @@ fun Content(
 
             composable(route = "${Routes.DEVOTION.route}/5") {
                 Devotion5(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.CHURCH.route}/1",
+            route = Routes.CHURCH.route
+        ) {
+            composable(route = "${Routes.CHURCH.route}/1") {
+                Church1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/2") {
+                Church2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/3") {
+                Church3(state = pageContentState)
             }
         }
     }
