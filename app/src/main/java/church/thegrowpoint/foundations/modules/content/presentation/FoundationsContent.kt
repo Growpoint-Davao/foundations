@@ -50,6 +50,11 @@ import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
@@ -65,6 +70,11 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.lordsh
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship6
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship7
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation10
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation2
@@ -476,6 +486,56 @@ fun Content(
 
             composable(route = "${Routes.IDENTITY.route}/5") {
                 Identity5(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.POWER.route}/1",
+            route = Routes.POWER.route
+        ) {
+            composable(route = "${Routes.POWER.route}/1") {
+                Power1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/2") {
+                Power2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/3") {
+                Power3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/4") {
+                Power4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.POWER.route}/5") {
+                Power5(state = pageContentState)
+            }
+        }
+
+        navigation(
+            startDestination = "${Routes.DEVOTION.route}/1",
+            route = Routes.DEVOTION.route
+        ) {
+            composable(route = "${Routes.DEVOTION.route}/1") {
+                Devotion1(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/2") {
+                Devotion2(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/3") {
+                Devotion3(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/4") {
+                Devotion4(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/5") {
+                Devotion5(state = pageContentState)
             }
         }
     }
