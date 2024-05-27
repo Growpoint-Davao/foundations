@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 
@@ -83,7 +84,9 @@ fun MultilineLabeledWithSupportTextOutlinedTextField(
     supportText: String = "",
     value: String = "",
     maxLines: Int = 3,
-    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        imeAction = ImeAction.Next
+    ),
     isError: Boolean = false,
     shape: Shape = OutlinedTextFieldDefaults.shape,
     supportingText: @Composable (() -> Unit)? = null,
@@ -96,7 +99,7 @@ fun MultilineLabeledWithSupportTextOutlinedTextField(
             supportText = supportText,
             value = value,
             singleLine = false,
-            maxLines = 3,
+            maxLines = maxLines,
             keyboardOptions = keyboardOptions,
             isError = isError,
             shape = shape,
