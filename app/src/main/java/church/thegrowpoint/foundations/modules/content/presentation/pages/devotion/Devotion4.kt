@@ -6,9 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
@@ -19,6 +25,11 @@ fun Devotion4(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
+    var textField1 by rememberSaveable { mutableStateOf("") }
+    var textField2 by rememberSaveable { mutableStateOf("") }
+    var textField3 by rememberSaveable { mutableStateOf("") }
+    var textField4 by rememberSaveable { mutableStateOf("") }
+
     LazyColumn(state = state) {
         item {
             ContentMarkdown(
@@ -34,7 +45,7 @@ fun Devotion4(
                 label = "",
                 supportText = ""
             ) {
-
+                textField1 = it
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_4_part_2),
@@ -49,7 +60,7 @@ fun Devotion4(
                 label = "",
                 supportText = ""
             ) {
-
+                textField2 = it
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_4_part_3),
@@ -64,7 +75,7 @@ fun Devotion4(
                 label = "",
                 supportText = ""
             ) {
-
+                textField3 = it
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_4_part_4),
@@ -77,9 +88,12 @@ fun Devotion4(
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
-                supportText = ""
+                supportText = "",
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
             ) {
-
+                textField4 = it
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_4_part_5),
