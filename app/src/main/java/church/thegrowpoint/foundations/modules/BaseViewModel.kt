@@ -25,7 +25,7 @@ abstract class BaseViewModel (@ApplicationContext context: Context): ViewModel()
      * @param message the toast message to show.
      * @param duration the duration of the toast message.
      */
-    protected fun showToastMessage(message: String, duration: Int = Toast.LENGTH_SHORT) {
+    fun showToastMessage(message: String, duration: Int = Toast.LENGTH_SHORT) {
         val thread = Thread {
             // Initialize the message queue for the thread
             Looper.prepare()

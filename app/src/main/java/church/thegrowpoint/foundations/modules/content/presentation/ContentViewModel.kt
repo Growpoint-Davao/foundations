@@ -1,8 +1,8 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
 import church.thegrowpoint.foundations.R
+import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import okhttp3.Route
 import javax.inject.Inject
 
 /**
@@ -21,7 +20,9 @@ import javax.inject.Inject
  * @property appContext The application context.
  */
 @HiltViewModel
-class ContentViewModel @Inject constructor(@ApplicationContext context: Context) : ViewModel() {
+class ContentViewModel @Inject constructor(
+    @ApplicationContext context: Context
+) : BaseViewModel(context) {
     // auth state
     private val _navigationDrawerItemsUIState = MutableStateFlow(NavigationDrawerItemsUIState())
     val navigationDrawerItemsUIState: StateFlow<NavigationDrawerItemsUIState> =
@@ -78,11 +79,6 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
             "pages" to 5
         )
     )
-
-    /**
-     * The application context.
-     */
-    private var appContext: Context = context
 
     /**
      * Retrieves the number of pages in a section.
@@ -162,6 +158,11 @@ class ContentViewModel @Inject constructor(@ApplicationContext context: Context)
         }
     }
 
+    /**
+     * Sets the currently selected navigation drawer item.
+     *
+     * @param section The section name.
+     */
     fun setNavigationDrawerItemSelected(section: String) {
         when (section) {
             Routes.GETTING_STARTED.route -> setNavigationDrawerItemSelected(gettingStartedSelected = true)
