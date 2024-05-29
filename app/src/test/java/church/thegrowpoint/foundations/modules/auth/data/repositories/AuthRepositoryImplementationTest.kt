@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.auth.data.repositories
 
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
@@ -21,6 +22,7 @@ import org.junit.Test
 class AuthRepositoryImplementationTest {
     private val mockedFirebaseAuth = mockk<FirebaseAuth>()
     private val mockedFirebaseUser = mockk<FirebaseUser>()
+    private val mockedAuthLocalDataSource = mockk<AuthLocalDataSource>()
 
     @Before
     fun setUp() {
@@ -39,7 +41,10 @@ class AuthRepositoryImplementationTest {
         // set up mocked properties
         every { mockedFirebaseAuth.currentUser } returns mockedFirebaseUser
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
         assertNotNull(authRepo.currentUser)
     }
 
@@ -51,7 +56,10 @@ class AuthRepositoryImplementationTest {
         // set up mocked properties
         every { mockedFirebaseAuth.currentUser } returns null
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
         assertNull(authRepo.currentUser)
     }
 
@@ -62,7 +70,10 @@ class AuthRepositoryImplementationTest {
     fun signOut_firebaseSignOutShouldBeCalled() {
         every { mockedFirebaseAuth.signOut() } returns Unit
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
         authRepo.signOut()
 
         verify { mockedFirebaseAuth.signOut() }
@@ -92,7 +103,10 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.createUserWithEmailAndPassword(email, password) } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
 
         val result = authRepo.register(email, password)
         val resultingUser = result!!.user
@@ -125,7 +139,10 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.createUserWithEmailAndPassword(email, password) } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
 
         val result = authRepo.register(email, password)
         val resultingUser = result!!.user
@@ -158,7 +175,10 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.signInWithEmailAndPassword(email, password) } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
 
         val result = authRepo.signInWithEmailAndPassword(email, password)
         val resultingUser = result!!.user
@@ -191,7 +211,10 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.signInWithEmailAndPassword(email, password) } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
 
         val result = authRepo.signInWithEmailAndPassword(email, password)
         val resultingUser = result!!.user
@@ -225,7 +248,10 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.signInWithCredential(mockedCredential) } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
 
         val result = authRepo.signInWithCredential(mockedCredential)
         val resultingUser = result!!.user
@@ -259,7 +285,10 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.signInWithCredential(mockedCredential) } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(mockedFirebaseAuth)
+        val authRepo = AuthRepositoryImplementation(
+            firebaseAuth = mockedFirebaseAuth,
+            authLocalDataSource = mockedAuthLocalDataSource
+        )
 
         val result = authRepo.signInWithCredential(mockedCredential)
         val resultingUser = result!!.user

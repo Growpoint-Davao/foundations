@@ -50,8 +50,7 @@ fun SurfaceThemedIconButton(
         modifier = modifier
             // .background(Color.White, shape = RoundedShapes.large)
             .background(MaterialTheme.colorScheme.inverseSurface, shape = RoundedShapes.large)
-            .fillMaxWidth()
-            .padding(all = 8.dp),
+            .fillMaxWidth(),
         onClick = onClick
     ) {
         Row(

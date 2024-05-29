@@ -2,6 +2,8 @@ package church.thegrowpoint.foundations.modules.auth
 
 import android.content.Context
 import church.thegrowpoint.foundations.modules.AppModule
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.repositories.AuthRepositoryImplementation
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
@@ -37,8 +39,22 @@ class FakeAppModuleAllMocked {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
-        return AuthRepositoryImplementation(firebaseAuth)
+    fun provideAuthLocalDataSource(
+        @ApplicationContext context: Context
+    ): AuthLocalDataSource {
+        return AuthLocalDataSourceImplementation(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        firebaseAuth: FirebaseAuth,
+        authLocalDataSource: AuthLocalDataSource
+    ): AuthRepository {
+        return AuthRepositoryImplementation(
+            firebaseAuth = firebaseAuth,
+            authLocalDataSource = authLocalDataSource
+        )
     }
 
     @Provides

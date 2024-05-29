@@ -1,10 +1,12 @@
 package church.thegrowpoint.foundations.modules.auth.data.repositories
 
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
 import church.thegrowpoint.foundations.modules.auth.data.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository.UserResult
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import church.thegrowpoint.foundations.modules.auth.domain.models.User as DomainUser
@@ -18,7 +20,8 @@ import church.thegrowpoint.foundations.modules.auth.domain.models.User as Domain
  * @property firebaseAuth the instance of firebase auth.
  */
 class AuthRepositoryImplementation @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val authLocalDataSource: AuthLocalDataSource
 ) : AuthRepository {
     /**
      * Retrieves the current authenticated user
@@ -31,6 +34,22 @@ class AuthRepositoryImplementation @Inject constructor(
 
             return User(firebaseAuth.currentUser!!)
         }
+
+    /**
+     * Retrieves skip auth flow for skip auth state.
+     *
+     * @return returns a flow of int which represents the skip auth state.
+     */
+    override fun getSkipAuthFlow(): Flow<Int> {
+        return authLocalDataSource.getSkipAuthFlow()
+    }
+
+    /**
+     * Updates skip auth flow for skip auth state.
+     */
+    override suspend fun updateSkipAuthFlow(value: Int) {
+        return authLocalDataSource.updateSkipAuth(value)
+    }
 
     /**
      * Executes firebase sign-out.

@@ -2,6 +2,7 @@ package church.thegrowpoint.foundations.modules.auth.domain.repositories
 
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import com.google.firebase.auth.AuthCredential
+import kotlinx.coroutines.flow.Flow
 
 /**
  * # AuthRepository
@@ -24,7 +25,22 @@ interface AuthRepository {
         val exception: java.lang.Exception? = null
     )
 
+    /**
+     * The current authenticated user.
+     */
     val currentUser: User?
+
+    /**
+     * Retrieves skip auth flow for skip auth state.
+     *
+     * @return returns a flow of int which represents the skip auth state.
+     */
+    fun getSkipAuthFlow(): Flow<Int>
+
+    /**
+     * Updates skip auth flow for skip auth state.
+     */
+    suspend fun updateSkipAuthFlow(value: Int)
 
     /**
      * Signs out the current user.

@@ -21,3 +21,9 @@ enum class Routes (val route: String) {
     CHURCH("church"),
     DISCIPLESHIP("discipleship"),
 }
+
+enum class SkipAuthCodes (val code: Int) {
+    INITIAL(2),
+    SKIPPED(1),
+    NOT_SKIPPED(0),
+}
