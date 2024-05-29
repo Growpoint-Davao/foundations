@@ -3,6 +3,7 @@ package church.thegrowpoint.foundations
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -21,6 +22,7 @@ import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
 import church.thegrowpoint.foundations.modules.Routes
+import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,58 +32,68 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
         setContent {
             FoundationsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    // color = MaterialTheme.colorScheme.background
-                ) {
-                    val authState by authViewModel.authState.collectAsState()
-                    val navController = rememberNavController()
+                val skipAuth = authViewModel.skipAuthFlow().collectAsState(
+                    initial = SkipAuthCodes.INITIAL.code
+                )
 
-                    var startDestination = Routes.AUTH.route
-                    if (authState.skipAuth || authState.currentUser != null) {
-                        startDestination = Routes.CONTENT.route
-                    }
-
-                    NavHost(
-                        navController = navController,
-                        startDestination = startDestination
+                if (skipAuth.value != SkipAuthCodes.INITIAL.code) {
+                    // A surface container using the 'background' color from the theme
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        // color = MaterialTheme.colorScheme.background
                     ) {
-                        navigation(
-                            startDestination = Routes.LOGIN.route,
-                            route = Routes.AUTH.route
-                        ) {
-                            composable(route = Routes.LOGIN.route) {
-                                LoginScreen(
-                                    authViewModel = authViewModel,
-                                    appNavController = navController
-                                )
-                            }
+                        val authState by authViewModel.authState.collectAsState()
+                        val navController = rememberNavController()
 
-                            composable(route = Routes.REGISTER.route) {
-                                RegistrationScreen(
-                                    authViewModel = authViewModel,
-                                    appNavController = navController
-                                )
-                            }
-
-                            composable(route = Routes.FORGOT_PASSWORD.route) {
-                                // TODO: register
-                                Text(text = "Forgout Password")
-                            }
+                        var startDestination = Routes.AUTH.route
+                        if (skipAuth.value == SkipAuthCodes.SKIPPED.code || authState.currentUser != null) {
+                            startDestination = Routes.CONTENT.route
                         }
 
-                        composable(route = Routes.CONTENT.route) {
-                            FoundationsContent(
-                                authViewModel = authViewModel,
-                                contentViewModel = hiltViewModel()
-                            )
+                        NavHost(
+                            navController = navController,
+                            startDestination = startDestination
+                        ) {
+                            navigation(
+                                startDestination = Routes.LOGIN.route,
+                                route = Routes.AUTH.route
+                            ) {
+                                composable(route = Routes.LOGIN.route) {
+                                    LoginScreen(
+                                        authViewModel = authViewModel,
+                                        appNavController = navController
+                                    )
+                                }
+
+                                composable(route = Routes.REGISTER.route) {
+                                    RegistrationScreen(
+                                        authViewModel = authViewModel,
+                                        appNavController = navController
+                                    )
+                                }
+
+                                composable(route = Routes.FORGOT_PASSWORD.route) {
+                                    // TODO: register
+                                    Text(text = "Forgout Password")
+                                }
+                            }
+
+                            composable(route = Routes.CONTENT.route) {
+                                FoundationsContent(
+                                    authViewModel = authViewModel,
+                                    contentViewModel = hiltViewModel()
+                                )
+                            }
                         }
                     }
+                } else {
+                    // skip auth is at initial state so display a blank surface for now
+                    Surface(modifier = Modifier.fillMaxSize()) {}
                 }
             }
         }

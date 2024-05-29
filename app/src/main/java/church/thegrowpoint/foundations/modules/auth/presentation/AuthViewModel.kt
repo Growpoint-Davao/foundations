@@ -2,14 +2,18 @@ package church.thegrowpoint.foundations.modules.auth.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateSkipAuthFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,6 +40,8 @@ class AuthViewModel @Inject constructor(
     private val registerUser: RegisterUser,
     private val signInWithEmailAndPassword: SignInWithEmailAndPassword,
     private val signInWithGoogle: SignInWithGoogle,
+    private val getSkipAuthFlow: GetSkipAuthFlow,
+    private val updateSkipAuthFlow: UpdateSkipAuthFlow,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     // auth state
@@ -47,6 +53,10 @@ class AuthViewModel @Inject constructor(
         setCurrentUser(getCurrentUser())
 
         // TODO: read local storage to check if user did opted out authentication
+    }
+
+    fun skipAuthFlow(): Flow<Int> {
+        return getSkipAuthFlow()
     }
 
     /**
@@ -63,6 +73,10 @@ class AuthViewModel @Inject constructor(
         _authState.update { currentState ->
             currentState.copy(skipAuth = true)
         }
+
+        viewModelScope.launch(dispatcher) {
+            updateSkipAuthFlow(1)
+        }
     }
 
     /**
@@ -71,6 +85,15 @@ class AuthViewModel @Inject constructor(
     fun logout() {
         signOutUser()
         setCurrentUser(null)
+
+        // make sure skip auth is false
+        _authState.update { currentState ->
+            currentState.copy(skipAuth = false)
+        }
+
+        viewModelScope.launch {
+            updateSkipAuthFlow(SkipAuthCodes.NOT_SKIPPED.code)
+        }
     }
 
     fun register(
