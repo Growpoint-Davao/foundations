@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.auth.domain.usecases
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.credentials.CredentialManager
@@ -119,7 +120,12 @@ class SignInWithGoogle @Inject constructor(
     /**
      * This function enables the parent class to be callable / invokable like function.
      */
-    suspend operator fun invoke(): AuthRepository.UserResult? {
+    suspend operator fun invoke(activity: Activity? = null): AuthRepository.UserResult? {
+        if (activity != null) {
+            // replace the app context since the app provided an activity context
+            appContext = activity
+        }
+
         val result = googleSignIn()
         return result?.let { handleGoogleSignIn(it) }
     }

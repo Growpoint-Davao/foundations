@@ -1,7 +1,9 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
-import androidx.lifecycle.ViewModel
+import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.viewModelScope
+import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
@@ -12,6 +14,7 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGo
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateSkipAuthFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,24 +29,25 @@ import javax.inject.Inject
  *
  * The auth view model class.
  *
- * @property signOutUser the use case for signing out user.
- * @property registerUser the use case for registering the user.
- * @property signInWithEmailAndPassword the use case for signing user with email and password.
- * @property signInWithGoogle the use case for signing user with Google account.
+ * @property signOutUserUseCase the use case for signing out user.
+ * @property registerUserUseCase the use case for registering the user.
+ * @property signInWithEmailAndPasswordUseCase the use case for signing user with email and password.
+ * @property signInWithGoogleUseCase the use case for signing user with Google account.
  * @property dispatcher an instance of coroutine dispatcher.
  * @constructor this is usually being created via hilt.
  */
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     getCurrentUser: GetCurrentUser,
-    private val signOutUser: SignOutUser,
-    private val registerUser: RegisterUser,
-    private val signInWithEmailAndPassword: SignInWithEmailAndPassword,
-    private val signInWithGoogle: SignInWithGoogle,
-    private val getSkipAuthFlow: GetSkipAuthFlow,
-    private val updateSkipAuthFlow: UpdateSkipAuthFlow,
+    private val signOutUserUseCase: SignOutUser,
+    private val registerUserUseCase: RegisterUser,
+    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPassword,
+    private val signInWithGoogleUseCase: SignInWithGoogle,
+    private val getSkipAuthFlowUseCase: GetSkipAuthFlow,
+    private val updateSkipAuthFlowUseCase: UpdateSkipAuthFlow,
     private val dispatcher: CoroutineDispatcher
-) : ViewModel() {
+) : BaseViewModel(context) {
     // auth state
     private val _authState = MutableStateFlow(AuthState())
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
@@ -55,8 +59,26 @@ class AuthViewModel @Inject constructor(
         // TODO: read local storage to check if user did opted out authentication
     }
 
+    /**
+     * Retrieves the skip auth flow.
+     *
+     * @return the skip auth flow.
+     */
     fun skipAuthFlow(): Flow<Int> {
-        return getSkipAuthFlow()
+        return getSkipAuthFlowUseCase()
+    }
+
+    /**
+     * Skips the authentication.
+     */
+    fun skipAuthentication() {
+        _authState.update { currentState ->
+            currentState.copy(skipAuth = true)
+        }
+
+        viewModelScope.launch(dispatcher) {
+            updateSkipAuthFlowUseCase(1)
+        }
     }
 
     /**
@@ -69,21 +91,11 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun skipAuthentication() {
-        _authState.update { currentState ->
-            currentState.copy(skipAuth = true)
-        }
-
-        viewModelScope.launch(dispatcher) {
-            updateSkipAuthFlow(1)
-        }
-    }
-
     /**
      * Logs out the user.
      */
     fun logout() {
-        signOutUser()
+        signOutUserUseCase()
         setCurrentUser(null)
 
         // make sure skip auth is false
@@ -92,7 +104,7 @@ class AuthViewModel @Inject constructor(
         }
 
         viewModelScope.launch(dispatcher) {
-            updateSkipAuthFlow(SkipAuthCodes.NOT_SKIPPED.code)
+            updateSkipAuthFlowUseCase(SkipAuthCodes.NOT_SKIPPED.code)
         }
     }
 
@@ -102,7 +114,7 @@ class AuthViewModel @Inject constructor(
         onRegistrationComplete: (user: User?) -> Unit
     ) {
         viewModelScope.launch(dispatcher) {
-            val result = registerUser(email = email, password = password)
+            val result = registerUserUseCase(email = email, password = password)
             if (result != null) {
                 result.user?.let {
                     onRegistrationComplete(it)
@@ -120,7 +132,7 @@ class AuthViewModel @Inject constructor(
         onSignIn: (user: User?, exception: Exception?) -> Unit
     ) {
         viewModelScope.launch(dispatcher) {
-            val signInResult = signInWithEmailAndPassword(email = email, password = password)
+            val signInResult = signInWithEmailAndPasswordUseCase(email = email, password = password)
             val user = signInResult?.user
             val exception = signInResult?.exception
             onSignIn(user, exception)
@@ -131,16 +143,34 @@ class AuthViewModel @Inject constructor(
     /**
      * Signs user using their Google account.
      *
-     * It accepts a call back function [onGoogleSignIn] which accepts user instance and exception.
-     * If the user is not null then the user has successfully signed-in otherwise exception will not be null.
+     * @param activity the optional activity instance being used in case it is needed when signing with Google.
+     * @param onErrorMessage the optional notification error message to show.
+     * @param onGoogleSignIn the optional function to be called when the user is signed-in.
      */
-    fun signInWithGoogle(onGoogleSignIn: (user: User?, exception: Exception?) -> Unit) {
+    fun signInWithGoogle(
+        activity: Activity? = null,
+        onErrorMessage: String? = null,
+        onGoogleSignIn: ((user: User?, exception: Exception?) -> Unit)? = null
+    ) {
         viewModelScope.launch(dispatcher) {
-            val userResult = signInWithGoogle()
-            if (userResult != null) {
-                val user = userResult.user
-                setCurrentUser(user)
-                onGoogleSignIn(userResult.user, userResult.exception)
+            try {
+                val userResult = signInWithGoogleUseCase(activity)
+                if (userResult != null) {
+                    val user = userResult.user
+                    setCurrentUser(user)
+
+                    if (onGoogleSignIn != null) {
+                        onGoogleSignIn(userResult.user, userResult.exception)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+                (onErrorMessage ?: e.message)?.let { showToastMessage(it) }
+
+                if (onGoogleSignIn != null) {
+                    onGoogleSignIn(null, e)
+                }
             }
         }
     }
