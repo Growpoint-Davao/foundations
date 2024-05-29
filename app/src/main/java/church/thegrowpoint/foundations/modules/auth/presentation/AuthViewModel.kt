@@ -111,14 +111,22 @@ class AuthViewModel @Inject constructor(
     fun register(
         email: String,
         password: String,
-        onRegistrationComplete: (user: User?) -> Unit
+        onSuccessMessage: String? = null,
+        onRegistrationComplete: ((user: User?) -> Unit)? = null
     ) {
         viewModelScope.launch(dispatcher) {
             val result = registerUserUseCase(email = email, password = password)
             if (result != null) {
                 result.user?.let {
-                    onRegistrationComplete(it)
+                    if (onRegistrationComplete != null) {
+                        onRegistrationComplete(it)
+                    }
+
                     setCurrentUser(it)
+
+                    if (onSuccessMessage != null) {
+                        showToastMessage(onSuccessMessage)
+                    }
                 }
             }
 

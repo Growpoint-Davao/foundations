@@ -1,7 +1,5 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
-import android.os.Looper
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,10 +14,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,7 +32,6 @@ import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 import church.thegrowpoint.foundations.utils.extensions.validEmail
 import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -114,25 +109,11 @@ fun RegistrationScreen(
         },
         floatingActionButton = {
             FloatingActionButton(shape = RoundedShapes.large, onClick = {
-                authViewModel.register(email, password) { user ->
-
-                    if (user != null) {
-                        val thread = Thread {
-                            // Initialize the message queue for the thread
-                            Looper.prepare()
-
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.registration_is_successful),
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            Looper.loop()
-                        }
-
-                        thread.start()
-                    }
-                }
+                authViewModel.register(
+                    email = email,
+                    password = password,
+                    onSuccessMessage = context.getString(R.string.registration_is_successful)
+                )
             }) {
                 Icon(
                     imageVector = Icons.Rounded.Save,
