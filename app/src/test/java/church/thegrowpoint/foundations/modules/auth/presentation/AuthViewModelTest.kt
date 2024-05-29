@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
+import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
@@ -133,7 +134,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun logout_ifCurrentUserBecomesNullAfterLogout() {
+    fun logout_ifCurrentUserBecomesNullAfterLogout() = runTest {
         // mock the current user
         val mockedUser = mockk<User>()
         every { mockedUser.email } returns "tester@foo.com"
@@ -141,6 +142,8 @@ class AuthViewModelTest {
         every { mockedUser.name } returns "Foo Bar"
         every { getCurrentUser() } returns mockedUser
         every { signOutUser() } returns Unit
+
+        coEvery { updateSkipAuthFlow(SkipAuthCodes.NOT_SKIPPED.code) } returns Unit
 
         val viewModel = AuthViewModel(
             getCurrentUser = getCurrentUser,
