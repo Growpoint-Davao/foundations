@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
+import android.content.Context
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
@@ -26,6 +27,8 @@ import org.junit.Before
 import org.junit.Test
 
 class AuthViewModelTest {
+    // Mock dependencies
+    private val context = mockk<Context>()
     private lateinit var getCurrentUser: GetCurrentUser
     private lateinit var signOutUser: SignOutUser
     private lateinit var registerUser: RegisterUser
@@ -63,14 +66,15 @@ class AuthViewModelTest {
         every { getCurrentUser() } returns null
 
         val viewModel = AuthViewModel(
+            context = context,
             getCurrentUser = getCurrentUser,
-            signOutUser = signOutUser,
-            registerUser = registerUser,
-            signInWithEmailAndPassword = signInWithEmailAndPassword,
-            signInWithGoogle = signInWithGoogle,
+            signOutUserUseCase = signOutUser,
+            registerUserUseCase = registerUser,
+            signInWithEmailAndPasswordUseCase = signInWithEmailAndPassword,
+            signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
-            getSkipAuthFlow = getSkipAuthFlow,
-            updateSkipAuthFlow = updateSkipAuthFlow
+            getSkipAuthFlowUseCase = getSkipAuthFlow,
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow
         )
 
         val currentUser = viewModel.authState.value.currentUser
@@ -91,14 +95,15 @@ class AuthViewModelTest {
         every { getCurrentUser() } returns mockedUser
 
         val viewModel = AuthViewModel(
+            context = context,
             getCurrentUser = getCurrentUser,
-            signOutUser = signOutUser,
-            registerUser = registerUser,
-            signInWithEmailAndPassword = signInWithEmailAndPassword,
-            signInWithGoogle = signInWithGoogle,
+            signOutUserUseCase = signOutUser,
+            registerUserUseCase = registerUser,
+            signInWithEmailAndPasswordUseCase = signInWithEmailAndPassword,
+            signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
-            getSkipAuthFlow = getSkipAuthFlow,
-            updateSkipAuthFlow = updateSkipAuthFlow
+            getSkipAuthFlowUseCase = getSkipAuthFlow,
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow
         )
 
         val currentUser = viewModel.authState.value.currentUser
@@ -118,14 +123,15 @@ class AuthViewModelTest {
         every { getCurrentUser() } returns null
 
         val viewModel = AuthViewModel(
+            context = context,
             getCurrentUser = getCurrentUser,
-            signOutUser = signOutUser,
-            registerUser = registerUser,
-            signInWithEmailAndPassword = signInWithEmailAndPassword,
-            signInWithGoogle = signInWithGoogle,
+            signOutUserUseCase = signOutUser,
+            registerUserUseCase = registerUser,
+            signInWithEmailAndPasswordUseCase = signInWithEmailAndPassword,
+            signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
-            getSkipAuthFlow = getSkipAuthFlow,
-            updateSkipAuthFlow = updateSkipAuthFlow
+            getSkipAuthFlowUseCase = getSkipAuthFlow,
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow
         )
 
         assertFalse(viewModel.authState.value.skipAuth)
@@ -146,14 +152,15 @@ class AuthViewModelTest {
         coEvery { updateSkipAuthFlow(SkipAuthCodes.NOT_SKIPPED.code) } returns Unit
 
         val viewModel = AuthViewModel(
+            context = context,
             getCurrentUser = getCurrentUser,
-            signOutUser = signOutUser,
-            registerUser = registerUser,
-            signInWithEmailAndPassword = signInWithEmailAndPassword,
-            signInWithGoogle = signInWithGoogle,
+            signOutUserUseCase = signOutUser,
+            registerUserUseCase = registerUser,
+            signInWithEmailAndPasswordUseCase = signInWithEmailAndPassword,
+            signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
-            getSkipAuthFlow = getSkipAuthFlow,
-            updateSkipAuthFlow = updateSkipAuthFlow
+            getSkipAuthFlowUseCase = getSkipAuthFlow,
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow
         )
 
         viewModel.logout()
@@ -177,17 +184,18 @@ class AuthViewModelTest {
         }
 
         val viewModel = AuthViewModel(
+            context = context,
             getCurrentUser = getCurrentUser,
-            signOutUser = signOutUser,
-            registerUser = registerUser,
-            signInWithEmailAndPassword = signInWithEmailAndPassword,
-            signInWithGoogle = signInWithGoogle,
+            signOutUserUseCase = signOutUser,
+            registerUserUseCase = registerUser,
+            signInWithEmailAndPasswordUseCase = signInWithEmailAndPassword,
+            signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
-            getSkipAuthFlow = getSkipAuthFlow,
-            updateSkipAuthFlow = updateSkipAuthFlow
+            getSkipAuthFlowUseCase = getSkipAuthFlow,
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow
         )
 
-        viewModel.signInWithGoogle(onGoogleSignIn)
+        viewModel.signInWithGoogle(onGoogleSignIn = onGoogleSignIn)
     }
 
     @Test
@@ -204,16 +212,17 @@ class AuthViewModelTest {
         }
 
         val viewModel = AuthViewModel(
+            context = context,
             getCurrentUser = getCurrentUser,
-            signOutUser = signOutUser,
-            registerUser = registerUser,
-            signInWithEmailAndPassword = signInWithEmailAndPassword,
-            signInWithGoogle = signInWithGoogle,
+            signOutUserUseCase = signOutUser,
+            registerUserUseCase = registerUser,
+            signInWithEmailAndPasswordUseCase = signInWithEmailAndPassword,
+            signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
-            getSkipAuthFlow = getSkipAuthFlow,
-            updateSkipAuthFlow = updateSkipAuthFlow
+            getSkipAuthFlowUseCase = getSkipAuthFlow,
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow
         )
 
-        viewModel.signInWithGoogle(onGoogleSignIn)
+        viewModel.signInWithGoogle(onGoogleSignIn = onGoogleSignIn)
     }
 }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +22,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +39,7 @@ import church.thegrowpoint.foundations.ui.composables.DialogAction
 import church.thegrowpoint.foundations.ui.composables.LargeButton
 import church.thegrowpoint.foundations.ui.composables.SurfaceThemedIconButton
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
+import church.thegrowpoint.foundations.utils.extensions.getActivity
 import church.thegrowpoint.foundations.utils.extensions.validEmail
 import church.thegrowpoint.foundations.utils.extensions.validPasswordLength
 import java.util.Locale
@@ -54,6 +55,8 @@ fun LoginScreen(
     authViewModel: AuthViewModel = hiltViewModel(),
     appNavController: NavHostController = rememberNavController()
 ) {
+    val context = LocalContext.current
+
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isValidEmail by rememberSaveable { mutableStateOf(true) }
@@ -62,7 +65,8 @@ fun LoginScreen(
         mutableStateOf((email.isNotEmpty() && password.isNotEmpty()))
     }
 
-    enableSignInButton = pwLengthValid && isValidEmail && (email.isNotEmpty() && password.isNotEmpty())
+    enableSignInButton =
+        pwLengthValid && isValidEmail && (email.isNotEmpty() && password.isNotEmpty())
 
     val openSkipSignInDialog = rememberSaveable { mutableStateOf(false) }
 
@@ -73,8 +77,7 @@ fun LoginScreen(
             confirmButtonText = stringResource(R.string.yes),
             dismissButtonText = stringResource(R.string.no),
             onDismissRequest = { openSkipSignInDialog.value = false }
-        ) {
-            dialogAction ->
+        ) { dialogAction ->
 
             if (dialogAction == DialogAction.CONFIRM) {
                 // change the auth state to skipped
@@ -89,7 +92,8 @@ fun LoginScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier.padding(horizontal = 32.dp)
+        modifier = modifier
+            .padding(horizontal = 32.dp)
             .safeDrawingPadding()
     ) {
         Text(
@@ -165,9 +169,10 @@ fun LoginScreen(
                 icon = painterResource(R.drawable.google_logo),
                 text = stringResource(R.string.google)
             ) {
-                authViewModel.signInWithGoogle {
-                    user, exception ->
-                }
+                authViewModel.signInWithGoogle(
+                    activity = context.getActivity(),
+                    onErrorMessage = context.getString(R.string.unable_to_sign_in_with_google_the_device_probable_not_supported)
+                )
             }
         }
         Spacer(modifier = Modifier.height(32.dp))
