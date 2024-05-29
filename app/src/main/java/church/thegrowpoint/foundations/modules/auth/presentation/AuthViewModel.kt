@@ -91,7 +91,7 @@ class AuthViewModel @Inject constructor(
             currentState.copy(skipAuth = false)
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             updateSkipAuthFlow(SkipAuthCodes.NOT_SKIPPED.code)
         }
     }
