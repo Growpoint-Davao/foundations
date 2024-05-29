@@ -33,14 +33,6 @@ internal object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthLocalDataSource(
-        @ApplicationContext context: Context
-    ): AuthLocalDataSource {
-        return AuthLocalDataSourceImplementation(context)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(
         firebaseAuth: FirebaseAuth,
         authLocalDataSource: AuthLocalDataSource
@@ -94,6 +86,14 @@ internal object AppModule {
     @Singleton
     fun provideUpdateSkipAuthFlow(authRepository: AuthRepository): UpdateSkipAuthFlow {
         return UpdateSkipAuthFlow(authRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthLocalDataSource(
+        @ApplicationContext context: Context
+    ): AuthLocalDataSource {
+        return AuthLocalDataSourceImplementation(context)
     }
 
     @Provides

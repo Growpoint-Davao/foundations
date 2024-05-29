@@ -20,29 +20,22 @@ fun Flow<Preferences>.flowData(key: Preferences.Key<Int>): Flow<Int> {
 /**
  * # AuthLocalDataSource
  *
- * @property appContext Application context instance.
+ * The auth local data source interface.
  */
-abstract class AuthLocalDataSource(
-    @ApplicationContext context: Context
-) {
-    /**
-     * Application context instance.
-     */
-    protected var appContext: Context = context
-
+interface AuthLocalDataSource {
     /**
      * Retrieves the skip auth flow of data.
      *
      * @return Returns the skip flow data.
      */
-    abstract fun getSkipAuthFlow(): Flow<Int>
+    fun getSkipAuthFlow(): Flow<Int>
 
     /**
      * Updates skip auth.
      *
      * @param status The status of skip auth.
      */
-    abstract suspend fun updateSkipAuth(status: Int)
+    suspend fun updateSkipAuth(status: Int)
 }
 
 /**
@@ -52,7 +45,11 @@ abstract class AuthLocalDataSource(
  */
 class AuthLocalDataSourceImplementation @Inject constructor(
     @ApplicationContext context: Context
-) : AuthLocalDataSource(context) {
+) : AuthLocalDataSource {
+    /**
+     * Application context instance.
+     */
+    private var appContext: Context = context
 
     /**
      * The skip auth key.
