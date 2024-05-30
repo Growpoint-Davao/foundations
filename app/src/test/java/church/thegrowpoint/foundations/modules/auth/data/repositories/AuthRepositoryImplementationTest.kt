@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.auth.data.repositories
 
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSource
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
@@ -23,6 +24,7 @@ class AuthRepositoryImplementationTest {
     private val mockedFirebaseAuth = mockk<FirebaseAuth>()
     private val mockedFirebaseUser = mockk<FirebaseUser>()
     private val mockedAuthLocalDataSource = mockk<AuthLocalDataSource>()
+    private val mockedAuthFirestoreDataSource = mockk<AuthFirestoreDataSource>()
 
     @Before
     fun setUp() {
@@ -43,7 +45,8 @@ class AuthRepositoryImplementationTest {
 
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
         assertNotNull(authRepo.currentUser)
     }
@@ -58,7 +61,8 @@ class AuthRepositoryImplementationTest {
 
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
         assertNull(authRepo.currentUser)
     }
@@ -72,7 +76,8 @@ class AuthRepositoryImplementationTest {
 
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
         authRepo.signOut()
 
@@ -91,6 +96,7 @@ class AuthRepositoryImplementationTest {
         every { mockedFirebaseUser.uid } returns "11223344"
         every { mockedFirebaseUser.email } returns email
         every { mockedFirebaseUser.displayName } returns "Foo"
+        coEvery { mockedAuthFirestoreDataSource.storeUser(any()) } returns null
 
         // create mocked task auth result
         val mockedAuthResult = mockk<AuthResult>()
@@ -101,11 +107,17 @@ class AuthRepositoryImplementationTest {
         every { mockedAuthTask.result } returns mockedAuthResult
         coEvery { mockedAuthTask.await() } returns mockedAuthResult
 
-        every { mockedFirebaseAuth.createUserWithEmailAndPassword(email, password) } returns mockedAuthTask
+        every {
+            mockedFirebaseAuth.createUserWithEmailAndPassword(
+                email,
+                password
+            )
+        } returns mockedAuthTask
 
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
 
         val result = authRepo.register(email, password)
@@ -120,11 +132,12 @@ class AuthRepositoryImplementationTest {
      */
     @Test
     fun register_emailPassword_shouldReturnNullUserDuringException() = runTest {
+        val testId = "foo112233"
         val email = "test@foo.com"
         val password = "Andr01d_bar_foo"
 
         // setup fake properties for mocked user
-        every { mockedFirebaseUser.uid } returns "11223344"
+        every { mockedFirebaseUser.uid } returns testId
         every { mockedFirebaseUser.email } returns email
         every { mockedFirebaseUser.displayName } returns "Foo"
 
@@ -137,11 +150,17 @@ class AuthRepositoryImplementationTest {
         every { mockedAuthTask.result } returns mockedAuthResult
         coEvery { mockedAuthTask.await() } throws Exception("Foo Exception")
 
-        every { mockedFirebaseAuth.createUserWithEmailAndPassword(email, password) } returns mockedAuthTask
+        every {
+            mockedFirebaseAuth.createUserWithEmailAndPassword(
+                email,
+                password
+            )
+        } returns mockedAuthTask
 
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
 
         val result = authRepo.register(email, password)
@@ -155,73 +174,89 @@ class AuthRepositoryImplementationTest {
      * Test sign in with email and password if it will return a user when sign in is successful with no exception.
      */
     @Test
-    fun signInWithEmailAndPassword_emailPassword_shouldReturnUserAfterSignInWithNoException() = runTest {
-        val email = "test@foo.com"
-        val password = "Andr01d_bar_foo"
+    fun signInWithEmailAndPassword_emailPassword_shouldReturnUserAfterSignInWithNoException() =
+        runTest {
+            val email = "test@foo.com"
+            val password = "Andr01d_bar_foo"
 
-        // setup fake properties for mocked user
-        every { mockedFirebaseUser.uid } returns "11223344"
-        every { mockedFirebaseUser.email } returns email
-        every { mockedFirebaseUser.displayName } returns "Foo"
+            // setup fake properties for mocked user
+            every { mockedFirebaseUser.uid } returns "11223344"
+            every { mockedFirebaseUser.email } returns email
+            every { mockedFirebaseUser.displayName } returns "Foo"
 
-        // create mocked task auth result
-        val mockedAuthResult = mockk<AuthResult>()
-        every { mockedAuthResult.user } returns mockedFirebaseUser
+            // create mocked task auth result
+            val mockedAuthResult = mockk<AuthResult>()
+            every { mockedAuthResult.user } returns mockedFirebaseUser
 
-        // create a mocked task
-        val mockedAuthTask = mockk<Task<AuthResult>>(relaxed = true)
-        every { mockedAuthTask.result } returns mockedAuthResult
-        coEvery { mockedAuthTask.await() } returns mockedAuthResult
+            // create a mocked task
+            val mockedAuthTask = mockk<Task<AuthResult>>(relaxed = true)
+            every { mockedAuthTask.result } returns mockedAuthResult
+            coEvery { mockedAuthTask.await() } returns mockedAuthResult
 
-        every { mockedFirebaseAuth.signInWithEmailAndPassword(email, password) } returns mockedAuthTask
+            every {
+                mockedFirebaseAuth.signInWithEmailAndPassword(
+                    email,
+                    password
+                )
+            } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(
-            firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
-        )
+            coEvery { mockedAuthFirestoreDataSource.storeUser(any()) } returns null
 
-        val result = authRepo.signInWithEmailAndPassword(email, password)
-        val resultingUser = result!!.user
-        val exception = result.exception
-        assertEquals(resultingUser!!.email, mockedFirebaseUser.email)
-        assertNull(exception)
-    }
+            val authRepo = AuthRepositoryImplementation(
+                firebaseAuth = mockedFirebaseAuth,
+                authLocalDataSource = mockedAuthLocalDataSource,
+                authFirestoreDataSource = mockedAuthFirestoreDataSource
+            )
+
+            val result = authRepo.signInWithEmailAndPassword(email, password)
+            val resultingUser = result!!.user
+            val exception = result.exception
+            assertEquals(resultingUser!!.email, mockedFirebaseUser.email)
+            assertNull(exception)
+        }
 
     /**
      * Test signInWithEmailAndPassword if it will return null user when there is exception.
      */
     @Test
-    fun signInWithEmailAndPassword_emailPassword_shouldReturnNullUseAfterSignInWhenExceptionIsThrown() = runTest {
-        val email = "test@foo.com"
-        val password = "Andr01d_bar_foo"
+    fun signInWithEmailAndPassword_emailPassword_shouldReturnNullUseAfterSignInWhenExceptionIsThrown() =
+        runTest {
+            val email = "test@foo.com"
+            val password = "Andr01d_bar_foo"
 
-        // setup fake properties for mocked user
-        every { mockedFirebaseUser.uid } returns "11223344"
-        every { mockedFirebaseUser.email } returns email
-        every { mockedFirebaseUser.displayName } returns "Foo"
+            // setup fake properties for mocked user
+            every { mockedFirebaseUser.uid } returns "11223344"
+            every { mockedFirebaseUser.email } returns email
+            every { mockedFirebaseUser.displayName } returns "Foo"
 
-        // create mocked task auth result
-        val mockedAuthResult = mockk<AuthResult>()
-        every { mockedAuthResult.user } returns mockedFirebaseUser
+            // create mocked task auth result
+            val mockedAuthResult = mockk<AuthResult>()
+            every { mockedAuthResult.user } returns mockedFirebaseUser
 
-        // create a mocked task
-        val mockedAuthTask = mockk<Task<AuthResult>>(relaxed = true)
-        every { mockedAuthTask.result } returns mockedAuthResult
-        coEvery { mockedAuthTask.await() } throws Exception("Foo Exception")
+            // create a mocked task
+            val mockedAuthTask = mockk<Task<AuthResult>>(relaxed = true)
+            every { mockedAuthTask.result } returns mockedAuthResult
+            coEvery { mockedAuthTask.await() } throws Exception("Foo Exception")
 
-        every { mockedFirebaseAuth.signInWithEmailAndPassword(email, password) } returns mockedAuthTask
+            every {
+                mockedFirebaseAuth.signInWithEmailAndPassword(
+                    email,
+                    password
+                )
+            } returns mockedAuthTask
 
-        val authRepo = AuthRepositoryImplementation(
-            firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
-        )
+            val authRepo = AuthRepositoryImplementation(
+                firebaseAuth = mockedFirebaseAuth,
+                authLocalDataSource = mockedAuthLocalDataSource,
+                authFirestoreDataSource = mockedAuthFirestoreDataSource
+            )
 
-        val result = authRepo.signInWithEmailAndPassword(email, password)
-        val resultingUser = result!!.user
-        val exception = result.exception
-        assertNull(resultingUser)
-        assertEquals("Foo Exception", exception!!.message)
-    }
+            val result = authRepo.signInWithEmailAndPassword(email, password)
+            val resultingUser = result!!.user
+            val exception = result.exception
+            assertNull(resultingUser)
+            assertEquals("Foo Exception", exception!!.message)
+        }
 
     /**
      * Test signInWithCredential if it will return a user after successful function call with no exception.
@@ -248,9 +283,12 @@ class AuthRepositoryImplementationTest {
 
         every { mockedFirebaseAuth.signInWithCredential(mockedCredential) } returns mockedAuthTask
 
+        coEvery { mockedAuthFirestoreDataSource.storeUser(any()) } returns null
+
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
 
         val result = authRepo.signInWithCredential(mockedCredential)
@@ -287,7 +325,8 @@ class AuthRepositoryImplementationTest {
 
         val authRepo = AuthRepositoryImplementation(
             firebaseAuth = mockedFirebaseAuth,
-            authLocalDataSource = mockedAuthLocalDataSource
+            authLocalDataSource = mockedAuthLocalDataSource,
+            authFirestoreDataSource = mockedAuthFirestoreDataSource
         )
 
         val result = authRepo.signInWithCredential(mockedCredential)
