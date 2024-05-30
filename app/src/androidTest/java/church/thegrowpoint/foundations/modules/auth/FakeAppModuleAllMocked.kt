@@ -2,6 +2,8 @@ package church.thegrowpoint.foundations.modules.auth
 
 import android.content.Context
 import church.thegrowpoint.foundations.modules.AppModule
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSource
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.repositories.AuthRepositoryImplementation
@@ -12,6 +14,7 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEm
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -47,13 +50,21 @@ class FakeAppModuleAllMocked {
 
     @Provides
     @Singleton
+    fun provideAuthFirestoreDataSource(db: FirebaseFirestore): AuthFirestoreDataSource {
+        return AuthFirestoreDataSourceImplementation(db)
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthRepository(
         firebaseAuth: FirebaseAuth,
-        authLocalDataSource: AuthLocalDataSource
+        authLocalDataSource: AuthLocalDataSource,
+        authFirestoreDataSource: AuthFirestoreDataSource
     ): AuthRepository {
         return AuthRepositoryImplementation(
             firebaseAuth = firebaseAuth,
-            authLocalDataSource = authLocalDataSource
+            authLocalDataSource = authLocalDataSource,
+            authFirestoreDataSource = authFirestoreDataSource
         )
     }
 

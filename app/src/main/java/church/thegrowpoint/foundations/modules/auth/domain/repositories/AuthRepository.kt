@@ -71,4 +71,6 @@ interface AuthRepository {
      * @return returns [UserResult], a wrapper data class that contains the authenticated user and possible exception.
      */
     suspend fun signInWithCredential(credential: AuthCredential): UserResult?
+
+    suspend fun storeUser(user: User): Any?
 }

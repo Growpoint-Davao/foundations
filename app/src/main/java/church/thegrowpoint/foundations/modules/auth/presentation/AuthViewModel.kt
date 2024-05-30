@@ -170,6 +170,10 @@ class AuthViewModel @Inject constructor(
                     if (onGoogleSignIn != null) {
                         onGoogleSignIn(userResult.user, userResult.exception)
                     }
+
+                    if (userResult.exception != null) {
+                        (onErrorMessage ?: userResult.exception.message)?.let { showToastMessage(it) }
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

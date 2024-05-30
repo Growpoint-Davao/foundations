@@ -1,6 +1,8 @@
 package church.thegrowpoint.foundations.modules
 
 import android.content.Context
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSource
+import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.repositories.AuthRepositoryImplementation
@@ -13,6 +15,9 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGo
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateSkipAuthFlow
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,13 +38,27 @@ internal object AppModule {
 
     @Provides
     @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return Firebase.firestore
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthFirestoreDataSource(db: FirebaseFirestore): AuthFirestoreDataSource {
+        return AuthFirestoreDataSourceImplementation(db)
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthRepository(
         firebaseAuth: FirebaseAuth,
-        authLocalDataSource: AuthLocalDataSource
+        authLocalDataSource: AuthLocalDataSource,
+        authFirestoreDataSource: AuthFirestoreDataSource
     ): AuthRepository {
         return AuthRepositoryImplementation(
             firebaseAuth = firebaseAuth,
-            authLocalDataSource = authLocalDataSource
+            authLocalDataSource = authLocalDataSource,
+            authFirestoreDataSource = authFirestoreDataSource
         )
     }
 
