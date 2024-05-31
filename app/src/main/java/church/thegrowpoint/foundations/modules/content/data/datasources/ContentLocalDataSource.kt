@@ -1,6 +1,5 @@
 package church.thegrowpoint.foundations.modules.content.data.datasources
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -42,7 +41,6 @@ interface ContentLocalDataSource {
  * The base class for reading and writing content locally.
  *
  * @property section the name of content section.
- * @property appContext the application context.
  */
 abstract class BaseContentLocalDataSource(
     protected val section: String,
@@ -51,7 +49,7 @@ abstract class BaseContentLocalDataSource(
     /**
      * Preference key instance.
      */
-    val preferenceKey = stringPreferencesKey(section)
+    private val preferenceKey = stringPreferencesKey(section)
 
     /**
      * Get answers flow.
