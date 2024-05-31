@@ -15,16 +15,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.modules.content.presentation.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Salvation2(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    contentViewModel: ContentViewModel = hiltViewModel()
+    viewModel: SalvationViewModel = hiltViewModel()
 ) {
-    val answers = contentViewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answers = viewModel.salvationAnswersUIState.collectAsState().value.answers
     val answer1 = answers["1"] ?: ""
     val answer2 = answers["2"] ?: ""
 
@@ -47,7 +47,7 @@ fun Salvation2(
                 supportText = "",
                 value = answer1
             ) {
-                contentViewModel.setSalvationAnswer(key = "1", answer = it)
+                viewModel.setSalvationAnswer(key = "1", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_2_part_2),
@@ -63,7 +63,7 @@ fun Salvation2(
                 supportText = "",
                 value = answer2
             ) {
-                contentViewModel.setSalvationAnswer(key = "2", answer = it)
+                viewModel.setSalvationAnswer(key = "2", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

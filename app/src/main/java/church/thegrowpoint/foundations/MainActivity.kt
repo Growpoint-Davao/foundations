@@ -22,7 +22,6 @@ import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
-import church.thegrowpoint.foundations.modules.content.presentation.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import dagger.hilt.android.AndroidEntryPoint

@@ -93,6 +93,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.composables.GrowpointTitlePanel
@@ -103,8 +105,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FoundationsContent(
     contentViewModel: ContentViewModel,
-    authViewModel: AuthViewModel,
-    appNavController: NavHostController = rememberNavController()
+    authViewModel: AuthViewModel
 ) {
     val context = LocalContext.current
     var topBarTitle by rememberSaveable {
@@ -372,6 +373,9 @@ fun Content(
     val initialSectionDestination = Routes.GETTING_STARTED.route
     contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
 
+    // page view models
+    val salvationViewModel : SalvationViewModel = hiltViewModel()
+
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
@@ -399,35 +403,35 @@ fun Content(
             route = Routes.SALVATION.route
         ) {
             composable(route = "${Routes.SALVATION.route}/1") {
-                Salvation1(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation1(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/2") {
-                Salvation2(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation2(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/3") {
-                Salvation3(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation3(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/4") {
-                Salvation4(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation4(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/5") {
-                Salvation5(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation5(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/6") {
-                Salvation6(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation6(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/7") {
-                Salvation7(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation7(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/8") {
-                Salvation8(state = pageContentState, contentViewModel = contentViewModel)
+                Salvation8(state = pageContentState, viewModel = salvationViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/9") {
