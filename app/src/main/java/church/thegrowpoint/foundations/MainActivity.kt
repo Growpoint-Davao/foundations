@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -29,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModels()
-    private val contentViewModel: ContentViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         enableEdgeToEdge()
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity() {
                             composable(route = Routes.CONTENT.route) {
                                 FoundationsContent(
                                     authViewModel = authViewModel,
-                                    contentViewModel = contentViewModel
+                                    contentViewModel = hiltViewModel()
                                 )
                             }
                         }
