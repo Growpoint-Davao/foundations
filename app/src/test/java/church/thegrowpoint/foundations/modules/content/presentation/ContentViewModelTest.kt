@@ -3,6 +3,7 @@ package church.thegrowpoint.foundations.modules.content.presentation
 import android.content.Context
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreSalvationAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreSalvationAnswers
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Assert.assertEquals
@@ -12,16 +13,12 @@ import org.junit.Test
 
 class ContentViewModelTest {
     private val mockedContext = mockk<Context>()
-    private val mockedGetDataStoreSalvationAnswersUseCase = mockk<GetDataStoreSalvationAnswersFlow>()
-    private val mockedSetSalvationAnswersUseCase = mockk<SetDataStoreSalvationAnswers>()
     private val testDispatcher = StandardTestDispatcher()
 
     @Test
     fun getSectionPageCount_shouldReturnCorrectPageCount() {
         val contentViewModel = ContentViewModel(
             context = mockedContext,
-            getDataStoreSalvationAnswersUseCase = mockedGetDataStoreSalvationAnswersUseCase,
-            setSalvationAnswersUseCase = mockedSetSalvationAnswersUseCase,
             dispatcher = testDispatcher
         )
 
@@ -38,8 +35,6 @@ class ContentViewModelTest {
     fun getNextSection_shouldReturnCorrectNextSection() {
         val contentViewModel = ContentViewModel(
             context = mockedContext,
-            getDataStoreSalvationAnswersUseCase = mockedGetDataStoreSalvationAnswersUseCase,
-            setSalvationAnswersUseCase = mockedSetSalvationAnswersUseCase,
             dispatcher = testDispatcher
         )
 
@@ -56,8 +51,6 @@ class ContentViewModelTest {
     fun setNavigationDrawerItemSelected_shouldBeAbleToUpdateSelectedState() {
         val contentViewModel = ContentViewModel(
             context = mockedContext,
-            getDataStoreSalvationAnswersUseCase = mockedGetDataStoreSalvationAnswersUseCase,
-            setSalvationAnswersUseCase = mockedSetSalvationAnswersUseCase,
             dispatcher = testDispatcher
         )
 

@@ -7,27 +7,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
-import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.modules.content.presentation.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Salvation8(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    contentViewModel: ContentViewModel = hiltViewModel()
+    viewModel: SalvationViewModel = hiltViewModel()
 ) {
-    val answers = contentViewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answers = viewModel.uiState.collectAsState().value.answers
     val answer12 = answers["12"] ?: ""
     val answer13 = answers["13"] ?: ""
 
@@ -50,7 +47,7 @@ fun Salvation8(
                 supportText = "",
                 value = answer12
             ) {
-                contentViewModel.setSalvationAnswer(key = "12", answer = it)
+                viewModel.setAnswer(key = "12", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_8_part_2),
@@ -66,7 +63,7 @@ fun Salvation8(
                 supportText = "",
                 value = answer13
             ) {
-                contentViewModel.setSalvationAnswer(key = "13", answer = it)
+                viewModel.setAnswer(key = "13", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

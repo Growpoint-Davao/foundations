@@ -7,31 +7,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
-import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.modules.content.presentation.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Salvation7(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    contentViewModel: ContentViewModel = hiltViewModel()
+    viewModel: SalvationViewModel = hiltViewModel()
 ) {
-    val answers = contentViewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answers = viewModel.uiState.collectAsState().value.answers
     val answer11 = answers["11"] ?: ""
 
     LazyColumn(
@@ -53,7 +46,7 @@ fun Salvation7(
                 supportText = "",
                 value = answer11
             ) {
-                contentViewModel.setSalvationAnswer(key = "11", answer = it)
+                viewModel.setAnswer(key = "11", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

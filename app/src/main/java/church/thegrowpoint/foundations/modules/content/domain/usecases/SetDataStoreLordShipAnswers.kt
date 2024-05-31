@@ -4,12 +4,12 @@ import church.thegrowpoint.foundations.modules.content.domain.repositories.Conte
 import javax.inject.Inject
 
 /**
- * # SetDataStoreSalvationAnswers
+ * # SetDataStoreLordShipAnswers
  *
- * Sets or updates the salvation answers in data store.
+ * Sets or updates the lordship answers in data store.
  *
- * @property contentDataSourceFlowRepository the salvation data store repository instance.
+ * @property contentDataSourceFlowRepository the lordship data store repository instance.
  */
-class SetDataStoreSalvationAnswers @Inject constructor(
+class SetDataStoreLordShipAnswers @Inject constructor(
     private val contentDataSourceFlowRepository: ContentDataSourceFlowRepository
 ) : BaseSetContentAnswersDataStoreUseCase(contentDataSourceFlowRepository)

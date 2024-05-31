@@ -6,10 +6,10 @@ import church.thegrowpoint.foundations.modules.Routes
 import javax.inject.Inject
 
 /**
- * # SalvationLocalDataSource
+ * # LordshipLocalDataSource
  *
- * The local data source for salvation content.
+ * The local data source for lordship content.
  */
-class SalvationLocalDataSource @Inject constructor(
+class LordshipLocalDataSource @Inject constructor(
     dataStore: DataStore<Preferences>
-) : BaseContentLocalDataSource(section = Routes.GETTING_STARTED.route, dataStore = dataStore)
+) : BaseContentLocalDataSource(section = Routes.LORDSHIP.route, dataStore = dataStore)
