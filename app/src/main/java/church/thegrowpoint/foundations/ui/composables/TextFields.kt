@@ -85,7 +85,7 @@ fun MultilineLabeledWithSupportTextOutlinedTextField(
     value: String = "",
     maxLines: Int = 3,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
-        imeAction = ImeAction.Next
+        imeAction = ImeAction.Done
     ),
     isError: Boolean = false,
     shape: Shape = OutlinedTextFieldDefaults.shape,
