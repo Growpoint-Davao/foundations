@@ -28,3 +28,14 @@ class User(private val firebaseUser: FirebaseUser) : DomainUser {
         return email
     }
 }
+
+/**
+ * Extension function for converting user model to hash map
+ */
+fun User.toAnyMap(): HashMap<String, Any> {
+    return hashMapOf(
+        "id" to this.id,
+        "email" to this.email,
+        "name" to this.name
+    )
+}
