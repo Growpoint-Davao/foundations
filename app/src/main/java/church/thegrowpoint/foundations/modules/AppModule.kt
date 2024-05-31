@@ -8,12 +8,18 @@ import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDa
 import church.thegrowpoint.foundations.modules.auth.data.repositories.AuthRepositoryImplementation
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
-import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetSkipAuthFlow
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
-import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateSkipAuthFlow
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataStoreSkipAuthFlow
+import church.thegrowpoint.foundations.modules.content.data.datasources.BaseContentLocalDataSource
+import church.thegrowpoint.foundations.modules.content.data.datasources.SalvationLocalDataSource
+import church.thegrowpoint.foundations.modules.content.data.repositories.SalvationLocalRepositoryImplementation
+import church.thegrowpoint.foundations.modules.content.domain.repositories.SalvationFlowRepository
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreSalvationAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreSalvationAnswers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -25,11 +31,50 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Salvation
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object AppModule {
+    @Salvation
+    @Provides
+    @Singleton
+    fun provideSalvationLocalDataSource(
+        @ApplicationContext context: Context
+    ): BaseContentLocalDataSource {
+        return SalvationLocalDataSource(context)
+    }
+
+    @Salvation
+    @Provides
+    @Singleton
+    fun provideSalvationLocalRepository(
+        @Salvation localDataSource: BaseContentLocalDataSource
+    ): SalvationFlowRepository {
+        return SalvationLocalRepositoryImplementation(localDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetSalvationAnswers(
+        @Salvation salvationRepository: SalvationFlowRepository
+    ): GetDataStoreSalvationAnswersFlow {
+        return GetDataStoreSalvationAnswersFlow(salvationRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSetSalvationAnswer(
+        @Salvation salvationRepository: SalvationFlowRepository
+    ): SetDataStoreSalvationAnswers {
+        return SetDataStoreSalvationAnswers(salvationRepository)
+    }
+
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
@@ -97,14 +142,14 @@ internal object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetSkipAuthFlow(authRepository: AuthRepository): GetSkipAuthFlow {
-        return GetSkipAuthFlow(authRepository)
+    fun provideGetSkipAuthFlow(authRepository: AuthRepository): GetDataStoreSkipAuthFlow {
+        return GetDataStoreSkipAuthFlow(authRepository)
     }
 
     @Provides
     @Singleton
-    fun provideUpdateSkipAuthFlow(authRepository: AuthRepository): UpdateSkipAuthFlow {
-        return UpdateSkipAuthFlow(authRepository)
+    fun provideUpdateSkipAuthFlow(authRepository: AuthRepository): UpdateDataStoreSkipAuthFlow {
+        return UpdateDataStoreSkipAuthFlow(authRepository)
     }
 
     @Provides
