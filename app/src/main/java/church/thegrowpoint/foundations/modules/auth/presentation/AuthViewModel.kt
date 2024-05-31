@@ -7,12 +7,12 @@ import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
-import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetSkipAuthFlow
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
-import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateSkipAuthFlow
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataStoreSkipAuthFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,8 +44,8 @@ class AuthViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUser,
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPassword,
     private val signInWithGoogleUseCase: SignInWithGoogle,
-    private val getSkipAuthFlowUseCase: GetSkipAuthFlow,
-    private val updateSkipAuthFlowUseCase: UpdateSkipAuthFlow,
+    private val getSkipAuthFlowUseCase: GetDataStoreSkipAuthFlow,
+    private val updateSkipAuthFlowUseCase: UpdateDataStoreSkipAuthFlow,
     private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel(context) {
     // auth state
@@ -64,7 +64,7 @@ class AuthViewModel @Inject constructor(
      *
      * @return the skip auth flow.
      */
-    fun skipAuthFlow(): Flow<Int> {
+    fun skipAuthFlow(): Flow<Int?> {
         return getSkipAuthFlowUseCase()
     }
 
