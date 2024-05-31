@@ -2,19 +2,9 @@ package church.thegrowpoint.foundations.modules.auth.data.datasources
 
 import church.thegrowpoint.foundations.modules.FirestoreDataSource
 import church.thegrowpoint.foundations.modules.auth.data.models.User
+import church.thegrowpoint.foundations.modules.auth.data.models.toAnyMap
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
-
-/**
- * Extension function for converting user model to hash map
- */
-fun User.toAnyMap(): HashMap<String, Any> {
-    return hashMapOf(
-        "id" to this.id,
-        "email" to this.email,
-        "name" to this.name
-    )
-}
 
 /**
  * # AuthFirestoreDataSource
