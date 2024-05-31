@@ -2,6 +2,7 @@ package church.thegrowpoint.foundations.modules.auth.data.datasources
 
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import io.mockk.every
 import io.mockk.mockk
@@ -19,13 +20,15 @@ class AuthLocalDataSourceTest {
 
     @Before
     fun setUp() {
-        mockkStatic(Flow<Preferences>::flowData)
+        mockkStatic(Flow<Preferences>::toFlowData)
     }
 
     @Test
     fun getSkipAuthFlow_shouldReturnInitialCode() = runTest {
         val flowPref = mockk<Flow<Preferences>>()
-        every { flowPref.flowData(any()) } returns flowOf(SkipAuthCodes.INITIAL.code, 1, 0)
+        val prefKey = intPreferencesKey("skip_auth")
+
+        every { flowPref.toFlowData(prefKey) } returns flowOf(SkipAuthCodes.INITIAL.code, 1, 0)
         every { mockedContext.dataStore.data } returns flowPref
 
         val dataSource = AuthLocalDataSourceImplementation(mockedContext)

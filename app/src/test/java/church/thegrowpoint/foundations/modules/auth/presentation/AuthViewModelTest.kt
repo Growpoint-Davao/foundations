@@ -5,12 +5,12 @@ import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
-import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetSkipAuthFlow
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
-import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateSkipAuthFlow
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataStoreSkipAuthFlow
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -34,8 +34,8 @@ class AuthViewModelTest {
     private lateinit var registerUser: RegisterUser
     private lateinit var signInWithEmailAndPassword: SignInWithEmailAndPassword
     private lateinit var signInWithGoogle: SignInWithGoogle
-    private lateinit var getSkipAuthFlow: GetSkipAuthFlow
-    private lateinit var updateSkipAuthFlow: UpdateSkipAuthFlow
+    private lateinit var getSkipAuthFlow: GetDataStoreSkipAuthFlow
+    private lateinit var updateSkipAuthFlow: UpdateDataStoreSkipAuthFlow
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
@@ -51,8 +51,8 @@ class AuthViewModelTest {
         registerUser = mockk<RegisterUser>()
         signInWithEmailAndPassword = mockk<SignInWithEmailAndPassword>()
         signInWithGoogle = mockk<SignInWithGoogle>()
-        getSkipAuthFlow = mockk<GetSkipAuthFlow>()
-        updateSkipAuthFlow = mockk<UpdateSkipAuthFlow>()
+        getSkipAuthFlow = mockk<GetDataStoreSkipAuthFlow>()
+        updateSkipAuthFlow = mockk<UpdateDataStoreSkipAuthFlow>()
 
         every { getCurrentUser() } returns null
     }

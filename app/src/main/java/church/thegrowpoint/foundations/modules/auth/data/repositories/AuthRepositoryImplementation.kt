@@ -43,14 +43,14 @@ class AuthRepositoryImplementation @Inject constructor(
      *
      * @return returns a flow of int which represents the skip auth state.
      */
-    override fun getSkipAuthFlow(): Flow<Int> {
+    override fun getDataStoreSkipAuthFlow(): Flow<Int?> {
         return authLocalDataSource.getSkipAuthFlow()
     }
 
     /**
      * Updates skip auth flow for skip auth state.
      */
-    override suspend fun updateSkipAuthFlow(value: Int) {
+    override suspend fun updateDataStoreSkipAuth(value: Int) {
         return authLocalDataSource.updateSkipAuth(value)
     }
 

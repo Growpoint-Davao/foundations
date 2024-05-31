@@ -17,12 +17,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import church.thegrowpoint.foundations.modules.Routes
+import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
+import church.thegrowpoint.foundations.modules.content.presentation.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
-import church.thegrowpoint.foundations.modules.Routes
-import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,8 +34,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         enableEdgeToEdge()
-
         super.onCreate(savedInstanceState)
+
         setContent {
             FoundationsTheme {
                 val skipAuth = authViewModel.skipAuthFlow().collectAsState(

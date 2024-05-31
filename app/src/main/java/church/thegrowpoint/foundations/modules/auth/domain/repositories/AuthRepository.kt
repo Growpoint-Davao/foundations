@@ -35,12 +35,12 @@ interface AuthRepository {
      *
      * @return returns a flow of int which represents the skip auth state.
      */
-    fun getSkipAuthFlow(): Flow<Int>
+    fun getDataStoreSkipAuthFlow(): Flow<Int?>
 
     /**
      * Updates skip auth flow for skip auth state.
      */
-    suspend fun updateSkipAuthFlow(value: Int)
+    suspend fun updateDataStoreSkipAuth(value: Int)
 
     /**
      * Signs out the current user.

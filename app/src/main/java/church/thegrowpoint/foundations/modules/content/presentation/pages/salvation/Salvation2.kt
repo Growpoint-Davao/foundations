@@ -6,15 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
@@ -28,9 +23,9 @@ fun Salvation2(
     state: LazyListState = rememberLazyListState(),
     contentViewModel: ContentViewModel = hiltViewModel()
 ) {
-    // prepare value states for text fields
-    var textField1 by rememberSaveable { mutableStateOf("") }
-    var textField2 by rememberSaveable { mutableStateOf("") }
+    val answers = contentViewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answer1 = answers["1"] ?: ""
+    val answer2 = answers["2"] ?: ""
 
     LazyColumn(state = state) {
         item {
@@ -46,9 +41,9 @@ fun Salvation2(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField1
+                value = answer1
             ) {
-                textField1 = it
+                contentViewModel.setSalvationAnswer(key = "1", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_2_part_2),
@@ -62,12 +57,9 @@ fun Salvation2(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField2,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
+                value = answer2
             ) {
-                textField2 = it
+                contentViewModel.setSalvationAnswer(key = "2", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

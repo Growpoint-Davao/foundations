@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "skip_auth")
 
-fun Flow<Preferences>.flowData(key: Preferences.Key<Int>): Flow<Int> {
-    return this.map { preferences -> preferences[key] ?: 0 }
+fun Flow<Preferences>.toFlowData(key: Preferences.Key<Int>): Flow<Int?> {
+    return this.map { preferences -> preferences[key] }
 }
 
 /**
@@ -28,7 +28,7 @@ interface AuthLocalDataSource {
      *
      * @return Returns the skip flow data.
      */
-    fun getSkipAuthFlow(): Flow<Int>
+    fun getSkipAuthFlow(): Flow<Int?>
 
     /**
      * Updates skip auth.
@@ -61,8 +61,8 @@ class AuthLocalDataSourceImplementation @Inject constructor(
      *
      * @return Returns the skip flow data.
      */
-    override fun getSkipAuthFlow(): Flow<Int> {
-        return appContext.dataStore.data.flowData(skipAuthKey)
+    override fun getSkipAuthFlow(): Flow<Int?> {
+        return appContext.dataStore.data.toFlowData(skipAuthKey)
     }
 
     /**
