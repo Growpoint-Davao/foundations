@@ -2,6 +2,7 @@ package church.thegrowpoint.foundations.modules.content.presentation.pages.lords
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -28,7 +29,10 @@ fun Lordship4(
     var textField1 by rememberSaveable { mutableStateOf("") }
     var textField2 by rememberSaveable { mutableStateOf("") }
 
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = Modifier.imePadding(),
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_4_part_1),
