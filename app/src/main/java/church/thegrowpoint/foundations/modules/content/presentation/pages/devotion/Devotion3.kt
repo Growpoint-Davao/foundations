@@ -2,6 +2,7 @@ package church.thegrowpoint.foundations.modules.content.presentation.pages.devot
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -30,7 +31,10 @@ fun Devotion3(
     var textField3 by rememberSaveable { mutableStateOf("") }
     var textField4 by rememberSaveable { mutableStateOf("") }
 
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = Modifier.imePadding(),
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_3_part_1),

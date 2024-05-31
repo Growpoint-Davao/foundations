@@ -2,6 +2,7 @@ package church.thegrowpoint.foundations.modules.content.presentation.pages.salva
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -31,7 +32,10 @@ fun Salvation5(
     val answer7 = answers["7"] ?: ""
     val answer8 = answers["8"] ?: ""
 
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = Modifier.imePadding(),
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_5_part_1),
