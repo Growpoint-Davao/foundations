@@ -103,7 +103,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FoundationsContent(
     contentViewModel: ContentViewModel,
-    authViewModel: AuthViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel,
     appNavController: NavHostController = rememberNavController()
 ) {
     val context = LocalContext.current
@@ -399,35 +399,35 @@ fun Content(
             route = Routes.SALVATION.route
         ) {
             composable(route = "${Routes.SALVATION.route}/1") {
-                Salvation1(state = pageContentState)
+                Salvation1(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/2") {
-                Salvation2(state = pageContentState)
+                Salvation2(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/3") {
-                Salvation3(state = pageContentState)
+                Salvation3(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/4") {
-                Salvation4(state = pageContentState)
+                Salvation4(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/5") {
-                Salvation5(state = pageContentState)
+                Salvation5(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/6") {
-                Salvation6(state = pageContentState)
+                Salvation6(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/7") {
-                Salvation7(state = pageContentState)
+                Salvation7(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/8") {
-                Salvation8(state = pageContentState)
+                Salvation8(state = pageContentState, contentViewModel = contentViewModel)
             }
 
             composable(route = "${Routes.SALVATION.route}/9") {
