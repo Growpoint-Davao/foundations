@@ -8,26 +8,28 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
+import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
+import church.thegrowpoint.foundations.modules.content.presentation.ContentViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Salvation5(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    contentViewModel: ContentViewModel = hiltViewModel()
 ) {
-    var textField1 by rememberSaveable { mutableStateOf("") }
-    var textField2 by rememberSaveable { mutableStateOf("") }
-    var textField3 by rememberSaveable { mutableStateOf("") }
+    val answers = contentViewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answer6 = answers["6"] ?: ""
+    val answer7 = answers["7"] ?: ""
+    val answer8 = answers["8"] ?: ""
 
     LazyColumn(state = state) {
         item {
@@ -43,9 +45,9 @@ fun Salvation5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField1
+                value = answer6
             ) {
-                textField1 = it
+                contentViewModel.setSalvationAnswer(key = "6", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_5_part_2),
@@ -59,9 +61,9 @@ fun Salvation5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField2
+                value = answer7
             ) {
-                textField2 = it
+                contentViewModel.setSalvationAnswer(key = "7", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_5_part_3),
@@ -75,12 +77,9 @@ fun Salvation5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField3,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
+                value = answer8
             ) {
-                textField3 = it
+                contentViewModel.setSalvationAnswer(key = "8", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

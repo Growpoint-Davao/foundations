@@ -199,6 +199,7 @@ class ContentViewModel @Inject constructor(
         }
     }
 
+    // TODO: test these functions
     private fun updateDataStoreSalvationAnswers(answers: HashMap<String, String>) {
         viewModelScope.launch(dispatcher) {
             setSalvationAnswersUseCase(answers)
