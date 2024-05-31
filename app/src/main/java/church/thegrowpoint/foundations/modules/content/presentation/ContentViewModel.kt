@@ -1,15 +1,23 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
 import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.Routes
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreSalvationAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreSalvationAnswers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -21,12 +29,19 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ContentViewModel @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    private val getDataStoreSalvationAnswersUseCase: GetDataStoreSalvationAnswersFlow,
+    private val setSalvationAnswersUseCase: SetDataStoreSalvationAnswers,
+    private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel(context) {
     // auth state
     private val _navigationDrawerItemsUIState = MutableStateFlow(NavigationDrawerItemsUIState())
     val navigationDrawerItemsUIState: StateFlow<NavigationDrawerItemsUIState> =
         _navigationDrawerItemsUIState.asStateFlow()
+
+    // salvation answers state
+    private val _salvationAnswersUIState = MutableStateFlow(SalvationAnswersUIState())
+    val salvationAnswersUIState: StateFlow<SalvationAnswersUIState> = _salvationAnswersUIState.asStateFlow()
 
     /**
      * The section pages configuration.
@@ -79,6 +94,14 @@ class ContentViewModel @Inject constructor(
             "pages" to 5
         )
     )
+
+    /**
+     * Retrieves the ongoing answer values of salvation section.
+     */
+    @Composable
+    fun salvationAnswerValues(): HashMap<String, String> {
+        return salvationAnswersUIState.collectAsState().value.answers
+    }
 
     /**
      * Retrieves the number of pages in a section.
@@ -176,5 +199,34 @@ class ContentViewModel @Inject constructor(
         }
     }
 
-    // TODO: create more methods for other content
+    private fun updateDataStoreSalvationAnswers(answers: HashMap<String, String>) {
+        viewModelScope.launch(dispatcher) {
+            setSalvationAnswersUseCase(answers)
+        }
+    }
+
+    fun getDataStoreSalvationAnswersFlow(): Flow<HashMap<String, String>> {
+        return getDataStoreSalvationAnswersUseCase()
+    }
+
+    fun setSalvationAnswer(key: String, answer: String) {
+        _salvationAnswersUIState.update { currentState ->
+            val latestAnswers = HashMap(currentState.answers)
+            latestAnswers[key] = answer
+
+            // update the local data store
+            updateDataStoreSalvationAnswers(latestAnswers)
+
+            currentState.copy(answers = latestAnswers)
+        }
+    }
+
+    fun setSalvationAnswers(answers: HashMap<String, String>) {
+        // only change the salvation answer state if there are changes in values
+        if (!answers.equals(salvationAnswersUIState.value)) {
+            _salvationAnswersUIState.update { currentState ->
+                currentState.copy(answers = answers)
+            }
+        }
+    }
 }

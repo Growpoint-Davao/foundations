@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
- * # GetDataStoreSalvationAnswers
+ * # GetDataStoreSalvationAnswersFlow
  *
  * The use case fo retrieving salvation content answers from data store.
  *
  * @property salvationRepository the salvation data store repository instance.
  */
-class GetDataStoreSalvationAnswers @Inject constructor(
+class GetDataStoreSalvationAnswersFlow @Inject constructor(
     private val salvationRepository: SalvationFlowRepository
 ) {
     /**
