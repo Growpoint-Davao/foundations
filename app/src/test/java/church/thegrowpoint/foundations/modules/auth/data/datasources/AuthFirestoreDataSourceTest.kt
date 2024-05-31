@@ -1,6 +1,7 @@
 package church.thegrowpoint.foundations.modules.auth.data.datasources
 
 import church.thegrowpoint.foundations.modules.auth.data.models.User
+import church.thegrowpoint.foundations.modules.auth.data.models.toAnyMap
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
