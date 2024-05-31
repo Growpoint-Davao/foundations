@@ -12,30 +12,30 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 // creates data store for salvation
-val Context.salvationDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.SALVATION.route)
+val Context.lordshipDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.SALVATION.route)
 
 /**
- * # SalvationLocalDataSource
+ * # LordshipLocalDataSource
  *
- * The local data source for salvation content.
+ * The local data source for lordship content.
  */
-class SalvationLocalDataSource @Inject constructor(
+class LordshipLocalDataSource @Inject constructor(
     @ApplicationContext context: Context
-) : BaseContentLocalDataSource(context = context, section = Routes.GETTING_STARTED.route) {
+) : BaseContentLocalDataSource(context = context, section = Routes.LORDSHIP.route) {
     /**
      * Get answers flow.
      *
      * @return returns the flow data which is key value pair of answers.
      */
     override fun getAnswersFlow(): Flow<HashMap<String, String>> {
-        return appContext.salvationDataStore.data.toFlowData(preferenceKey)
+        return appContext.lordshipDataStore.data.toFlowData(preferenceKey)
     }
 
     /**
      * Set answers (which is key value pair of answers)
      */
     override suspend fun setAnswers(answers: HashMap<String, String>) {
-        appContext.salvationDataStore.edit { preference ->
+        appContext.lordshipDataStore.edit { preference ->
             preference[preferenceKey] = answers.toJsonString()
         }
     }

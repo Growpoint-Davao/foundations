@@ -1,8 +1,18 @@
 package church.thegrowpoint.foundations.modules.content.data.datasources
 
 import android.content.Context
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import church.thegrowpoint.foundations.utils.extensions.toStringHashMap
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+/**
+ * Extension function to transform preference json string to hashmap
+ */
+fun Flow<Preferences>.toFlowData(key: Preferences.Key<String>): Flow<HashMap<String, String>> {
+    return this.map { preferences -> preferences[key]?.toStringHashMap() ?: HashMap() }
+}
 
 /**
  * # ContentLocalDataSource

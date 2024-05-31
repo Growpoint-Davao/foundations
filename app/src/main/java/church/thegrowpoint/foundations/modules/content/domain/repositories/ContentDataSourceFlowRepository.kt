@@ -3,11 +3,11 @@ package church.thegrowpoint.foundations.modules.content.domain.repositories
 import kotlinx.coroutines.flow.Flow
 
 /**
- * # SalvationFlowRepository
+ * # ContentDataSourceFlowRepository
  *
  * The interface for salvation flow repository.
  */
-interface SalvationFlowRepository {
+interface ContentDataSourceFlowRepository {
     /**
      * Get answers flow.
      *

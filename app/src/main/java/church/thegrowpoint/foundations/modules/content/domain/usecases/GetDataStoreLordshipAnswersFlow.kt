@@ -4,12 +4,12 @@ import church.thegrowpoint.foundations.modules.content.domain.repositories.Conte
 import javax.inject.Inject
 
 /**
- * # GetDataStoreSalvationAnswersFlow
+ * # GetDataStoreLordshipAnswersFlow
  *
- * The use case fo retrieving salvation content answers from data store.
+ * The use case fo retrieving lordship content answers from data store.
  *
- * @property contentDataSourceFlowRepository the salvation data store repository instance.
+ * @property contentDataSourceFlowRepository the lordship data store repository instance.
  */
-class GetDataStoreSalvationAnswersFlow @Inject constructor(
+class GetDataStoreLordshipAnswersFlow @Inject constructor(
     private val contentDataSourceFlowRepository: ContentDataSourceFlowRepository
 ) : BaseGetContentAnswersDataStoreFlowUseCase(contentDataSourceFlowRepository)
