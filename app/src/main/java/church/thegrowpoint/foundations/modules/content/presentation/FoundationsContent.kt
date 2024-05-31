@@ -94,6 +94,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
@@ -375,6 +376,7 @@ fun Content(
 
     // page view models
     val salvationViewModel : SalvationViewModel = hiltViewModel()
+    val lordShipViewModel : LordshipViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
@@ -448,31 +450,31 @@ fun Content(
             route = Routes.LORDSHIP.route
         ) {
             composable(route = "${Routes.LORDSHIP.route}/1") {
-                Lordship1(state = pageContentState)
+                Lordship1(state = pageContentState, viewModel = lordShipViewModel)
             }
 
             composable(route = "${Routes.LORDSHIP.route}/2") {
-                Lordship2(state = pageContentState)
+                Lordship2(state = pageContentState, viewModel = lordShipViewModel)
             }
 
             composable(route = "${Routes.LORDSHIP.route}/3") {
-                Lordship3(state = pageContentState)
+                Lordship3(state = pageContentState, viewModel = lordShipViewModel)
             }
 
             composable(route = "${Routes.LORDSHIP.route}/4") {
-                Lordship4(state = pageContentState)
+                Lordship4(state = pageContentState, viewModel = lordShipViewModel)
             }
 
             composable(route = "${Routes.LORDSHIP.route}/5") {
-                Lordship5(state = pageContentState)
+                Lordship5(state = pageContentState, viewModel = lordShipViewModel)
             }
 
             composable(route = "${Routes.LORDSHIP.route}/6") {
-                Lordship6(state = pageContentState)
+                Lordship6(state = pageContentState, viewModel = lordShipViewModel)
             }
 
             composable(route = "${Routes.LORDSHIP.route}/7") {
-                Lordship7(state = pageContentState)
+                Lordship7(state = pageContentState, viewModel = lordShipViewModel)
             }
         }
 

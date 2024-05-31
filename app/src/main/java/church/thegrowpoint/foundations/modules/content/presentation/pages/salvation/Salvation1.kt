@@ -29,7 +29,7 @@ fun Salvation1(
     )
     LaunchedEffect(localSalvationAnswers.value) {
         if (localSalvationAnswers.value.size > 0) {
-            // restore salvation answers
+            // restore answers
             viewModel.setAnswers(localSalvationAnswers.value)
         }
     }

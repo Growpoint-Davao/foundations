@@ -1,6 +1,9 @@
 package church.thegrowpoint.foundations.modules
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSource
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
@@ -38,6 +41,12 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
+// creates data store for salvation
+val Context.salvationDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.SALVATION.route)
+
+// creates data store for salvation
+val Context.lordshipDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.LORDSHIP.route)
+
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Salvation
@@ -49,20 +58,39 @@ annotation class Lordship
 @Module
 @InstallIn(SingletonComponent::class)
 internal object AppModule {
+    // data stores here
+    @Salvation
+    @Provides
+    @Singleton
+    fun provideSalvationDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> {
+        return context.salvationDataStore
+    }
+
+    @Lordship
+    @Provides
+    @Singleton
+    fun provideLordshipDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> {
+        return context.lordshipDataStore
+    }
+
     @Lordship
     @Provides
     @Singleton
     fun provideLordshipLocalDataSource(
-        @ApplicationContext context: Context
+        @Lordship dataStore: DataStore<Preferences>
     ): BaseContentLocalDataSource {
-        return LordshipLocalDataSource(context)
+        return LordshipLocalDataSource(dataStore)
     }
 
     @Lordship
     @Provides
     @Singleton
     fun provideLordshipLocalRepositoryImplementation(
-        @Salvation localDataSource: BaseContentLocalDataSource
+        @Lordship localDataSource: BaseContentLocalDataSource
     ): ContentDataSourceFlowRepository {
         return LordshipLocalRepositoryImplementation(localDataSource)
     }
@@ -87,9 +115,9 @@ internal object AppModule {
     @Provides
     @Singleton
     fun provideSalvationLocalDataSource(
-        @ApplicationContext context: Context
+        @Salvation dataStore: DataStore<Preferences>
     ): BaseContentLocalDataSource {
-        return SalvationLocalDataSource(context)
+        return SalvationLocalDataSource(dataStore)
     }
 
     @Salvation
