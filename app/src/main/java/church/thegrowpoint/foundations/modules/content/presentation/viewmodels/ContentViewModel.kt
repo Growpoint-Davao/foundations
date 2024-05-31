@@ -4,7 +4,7 @@ import android.content.Context
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.Routes
-import church.thegrowpoint.foundations.modules.content.presentation.NavigationDrawerItemsUIState
+import church.thegrowpoint.foundations.modules.content.presentation.states.NavigationDrawerItemsUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher

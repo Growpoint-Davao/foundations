@@ -24,7 +24,7 @@ fun Salvation6(
     state: LazyListState = rememberLazyListState(),
     viewModel: SalvationViewModel = hiltViewModel()
 ) {
-    val answers = viewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answers = viewModel.uiState.collectAsState().value.answers
     val answer9 = answers["9"] ?: ""
     val answer10 = answers["10"] ?: ""
 
@@ -47,7 +47,7 @@ fun Salvation6(
                 supportText = "",
                 value = answer9
             ) {
-                viewModel.setSalvationAnswer(key = "9", answer = it)
+                viewModel.setAnswer(key = "9", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_6_part_2),
@@ -63,7 +63,7 @@ fun Salvation6(
                 supportText = "",
                 value = answer10
             ) {
-                viewModel.setSalvationAnswer(key = "10", answer = it)
+                viewModel.setAnswer(key = "10", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

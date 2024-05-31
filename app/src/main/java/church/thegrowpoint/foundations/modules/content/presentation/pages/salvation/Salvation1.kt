@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 
 @Composable
@@ -25,13 +24,13 @@ fun Salvation1(
     viewModel: SalvationViewModel = hiltViewModel()
 ) {
     // this is the first page so restore everything here
-    val localSalvationAnswers = viewModel.getDataStoreSalvationAnswersFlow().collectAsState(
+    val localSalvationAnswers = viewModel.getDataStoreAnswersFlow().collectAsState(
         initial = HashMap()
     )
     LaunchedEffect(localSalvationAnswers.value) {
         if (localSalvationAnswers.value.size > 0) {
             // restore salvation answers
-            viewModel.setSalvationAnswers(localSalvationAnswers.value)
+            viewModel.setAnswers(localSalvationAnswers.value)
         }
     }
 

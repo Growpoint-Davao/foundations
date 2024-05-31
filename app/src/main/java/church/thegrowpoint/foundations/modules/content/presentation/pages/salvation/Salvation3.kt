@@ -24,7 +24,7 @@ fun Salvation3(
     state: LazyListState = rememberLazyListState(),
     viewModel: SalvationViewModel = hiltViewModel()
 ) {
-    val answers = viewModel.salvationAnswersUIState.collectAsState().value.answers
+    val answers = viewModel.uiState.collectAsState().value.answers
     val answer3 = answers["3"] ?: ""
 
     LazyColumn(
@@ -46,7 +46,7 @@ fun Salvation3(
                 supportText = "",
                 value = answer3
             ) {
-                viewModel.setSalvationAnswer(key = "3", answer = it)
+                viewModel.setAnswer(key = "3", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_3_part_2),

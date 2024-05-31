@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreSalvationAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreSalvationAnswers
-import church.thegrowpoint.foundations.modules.content.presentation.SalvationAnswersUIState
+import church.thegrowpoint.foundations.modules.content.presentation.states.LordshipAnswersUIState
+import church.thegrowpoint.foundations.modules.content.presentation.states.SalvationAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -29,41 +30,27 @@ class SalvationViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val getDataStoreSalvationAnswersUseCase: GetDataStoreSalvationAnswersFlow,
     private val setSalvationAnswersUseCase: SetDataStoreSalvationAnswers,
-    private val dispatcher: CoroutineDispatcher
-): BaseViewModel(context) {
-    // salvation answers state
-    private val _salvationAnswersUIState = MutableStateFlow(SalvationAnswersUIState())
-    val salvationAnswersUIState: StateFlow<SalvationAnswersUIState> = _salvationAnswersUIState.asStateFlow()
+    dispatcher: CoroutineDispatcher
+) : BasePageViewModel<SalvationAnswersUIState>(context, dispatcher) {
+    // ui state
+    override val mutableUIState = MutableStateFlow(SalvationAnswersUIState())
+    override val uiState: StateFlow<SalvationAnswersUIState> = mutableUIState.asStateFlow()
 
     // TODO: test these functions
-    private fun updateDataStoreSalvationAnswers(answers: HashMap<String, String>) {
+    override fun getDataStoreAnswersFlow(): Flow<HashMap<String, String>> {
+        return getDataStoreSalvationAnswersUseCase()
+    }
+
+    override fun updateDataStoreAnswers(answers: HashMap<String, String>) {
         viewModelScope.launch(dispatcher) {
             setSalvationAnswersUseCase(answers)
         }
     }
 
-    fun getDataStoreSalvationAnswersFlow(): Flow<HashMap<String, String>> {
-        return getDataStoreSalvationAnswersUseCase()
-    }
-
-    fun setSalvationAnswer(key: String, answer: String) {
-        _salvationAnswersUIState.update { currentState ->
-            val latestAnswers = HashMap(currentState.answers)
-            latestAnswers[key] = answer
-
-            // update the local data store
-            updateDataStoreSalvationAnswers(latestAnswers)
-
-            currentState.copy(answers = latestAnswers)
-        }
-    }
-
-    fun setSalvationAnswers(answers: HashMap<String, String>) {
-        // only change the salvation answer state if there are changes in values
-        if (!answers.equals(salvationAnswersUIState.value)) {
-            _salvationAnswersUIState.update { currentState ->
-                currentState.copy(answers = answers)
-            }
-        }
+    override fun createStateCopy(
+        currentState: SalvationAnswersUIState,
+        answers: HashMap<String, String>
+    ): SalvationAnswersUIState {
+        return currentState.copy(answers = answers)
     }
 }
