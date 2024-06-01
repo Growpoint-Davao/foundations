@@ -41,11 +41,14 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-// creates data store for salvation
+// creates data store for salvation section
 val Context.salvationDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.SALVATION.route)
 
-// creates data store for salvation
+// creates data store for lordship section
 val Context.lordshipDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.LORDSHIP.route)
+
+// creates data store for identity section
+val Context.identityDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.IDENTITY.route)
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -54,6 +57,10 @@ annotation class Salvation
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Lordship
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Identity
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -75,6 +82,15 @@ internal object AppModule {
         @ApplicationContext context: Context
     ): DataStore<Preferences> {
         return context.lordshipDataStore
+    }
+
+    @Identity
+    @Provides
+    @Singleton
+    fun provideIdentityDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> {
+        return context.identityDataStore
     }
 
     @Lordship
