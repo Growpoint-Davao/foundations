@@ -9,10 +9,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -28,8 +25,9 @@ fun Identity4(
     state: LazyListState = rememberLazyListState(),
     viewModel: IdentityViewModel
 ) {
-    var textField1 by rememberSaveable { mutableStateOf("") }
-    var textField2 by rememberSaveable { mutableStateOf("") }
+    val answers = viewModel.uiState.collectAsState().value.answers
+    val answer5 = answers["5"] ?: ""
+    val answer6 = answers["6"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -48,9 +46,9 @@ fun Identity4(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField1
+                value = answer5
             ) {
-                textField1 = it
+                viewModel.updateAnswerState(key = "5", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.identity_page_4_part_2),
@@ -64,12 +62,12 @@ fun Identity4(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField2,
+                value = answer6,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                textField2 = it
+                viewModel.updateAnswerState(key = "6", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.identity_page_4_part_3),
