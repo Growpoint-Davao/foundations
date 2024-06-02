@@ -1,45 +1,42 @@
 package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
-import androidx.lifecycle.viewModelScope
-import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreLordshipAnswersFlow
-import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreLordShipAnswers
+import church.thegrowpoint.foundations.modules.Lordship
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.LordshipAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LordshipViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    private val getDataStoreLordshipAnswersFlowUseCase: GetDataStoreLordshipAnswersFlow,
-    private val setDataStoreLordShipAnswersUseCase: SetDataStoreLordShipAnswers,
+    @Lordship getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
+    @Lordship setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     dispatcher: CoroutineDispatcher
-): BasePageViewModel<LordshipAnswersUIState>(context, dispatcher) {
+): BasePageViewModel<LordshipAnswersUIState>(
+    context = context,
+    getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
+    setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    dispatcher = dispatcher
+) {
     // ui state
     override val mutableUIState = MutableStateFlow(LordshipAnswersUIState())
     override val uiState: StateFlow<LordshipAnswersUIState> = mutableUIState.asStateFlow()
-
-    override fun getDataStoreAnswersFlow(): Flow<HashMap<String, String>> {
-        return getDataStoreLordshipAnswersFlowUseCase()
-    }
-
-    override fun updateDataStoreAnswers(answers: HashMap<String, String>) {
-        viewModelScope.launch(dispatcher) {
-            setDataStoreLordShipAnswersUseCase(answers)
-        }
-    }
 
     override fun createStateCopy(
         currentState: LordshipAnswersUIState,
         answers: HashMap<String, String>
     ): LordshipAnswersUIState {
-        return currentState.copy(answers = answers)
+        if (currentState.answers != answers) {
+            return currentState.copy(answers = answers) // not the same so create new copy
+        }
+
+        return currentState // the same so return the original state
     }
 }

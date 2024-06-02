@@ -46,7 +46,7 @@ fun Salvation3(
                 supportText = "",
                 value = answer3
             ) {
-                viewModel.setAnswer(key = "3", answer = it)
+                viewModel.updateAnswerState(key = "3", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_3_part_2),

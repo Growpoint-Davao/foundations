@@ -28,10 +28,8 @@ fun Salvation1(
         initial = HashMap()
     )
     LaunchedEffect(localSalvationAnswers.value) {
-        if (localSalvationAnswers.value.size > 0) {
-            // restore answers
-            viewModel.setAnswers(localSalvationAnswers.value)
-        }
+        // restore answers
+        viewModel.setAnswersState(localSalvationAnswers.value)
     }
 
     LazyColumn(state = state) {

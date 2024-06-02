@@ -46,7 +46,7 @@ fun Salvation7(
                 supportText = "",
                 value = answer11
             ) {
-                viewModel.setAnswer(key = "11", answer = it)
+                viewModel.updateAnswerState(key = "11", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

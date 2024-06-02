@@ -49,7 +49,7 @@ fun Lordship3(
                 supportText = "",
                 value = answer2
             ) {
-                viewModel.setAnswer(key = "2", answer = it)
+                viewModel.updateAnswerState(key = "2", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_3_part_2),
@@ -65,7 +65,7 @@ fun Lordship3(
                 supportText = "",
                 value = answer3
             ) {
-                viewModel.setAnswer(key = "3", answer = it)
+                viewModel.updateAnswerState(key = "3", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_3_part_3),
@@ -84,7 +84,7 @@ fun Lordship3(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.setAnswer(key = "4", answer = it)
+                viewModel.updateAnswerState(key = "4", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }
