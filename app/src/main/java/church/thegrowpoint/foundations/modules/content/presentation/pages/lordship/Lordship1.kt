@@ -27,10 +27,8 @@ fun Lordship1(
         initial = HashMap()
     )
     LaunchedEffect(localLordShipAnswers.value) {
-        if (localLordShipAnswers.value.size > 0) {
-            // restore answers
-            viewModel.setAnswers(localLordShipAnswers.value)
-        }
+        // restore answers
+        viewModel.setAnswersState(localLordShipAnswers.value)
     }
 
     LazyColumn(state = state) {

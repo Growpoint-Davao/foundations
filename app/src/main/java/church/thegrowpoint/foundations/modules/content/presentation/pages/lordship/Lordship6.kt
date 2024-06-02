@@ -10,10 +10,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -53,7 +49,7 @@ fun Lordship6(
                 supportText = "",
                 value = answer9
             ) {
-                viewModel.setAnswer(key = "9", answer = it)
+                viewModel.updateAnswerState(key = "9", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_6_part_2),
@@ -69,7 +65,7 @@ fun Lordship6(
                 supportText = "",
                 value = answer10
             ) {
-                viewModel.setAnswer(key = "10", answer = it)
+                viewModel.updateAnswerState(key = "10", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_6_part_3),
@@ -88,7 +84,7 @@ fun Lordship6(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.setAnswer(key = "11", answer = it)
+                viewModel.updateAnswerState(key = "11", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

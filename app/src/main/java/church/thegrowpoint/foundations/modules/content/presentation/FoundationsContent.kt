@@ -94,6 +94,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
@@ -135,7 +136,7 @@ fun FoundationsContent(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 HorizontalDivider()
-                LazyColumn (
+                LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = rememberLazyListState()
                 ) {
@@ -375,8 +376,9 @@ fun Content(
     contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
 
     // page view models
-    val salvationViewModel : SalvationViewModel = hiltViewModel()
-    val lordShipViewModel : LordshipViewModel = hiltViewModel()
+    val salvationViewModel: SalvationViewModel = hiltViewModel()
+    val lordShipViewModel: LordshipViewModel = hiltViewModel()
+    val identityViewModel: IdentityViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
@@ -483,23 +485,23 @@ fun Content(
             route = Routes.IDENTITY.route
         ) {
             composable(route = "${Routes.IDENTITY.route}/1") {
-                Identity1(state = pageContentState)
+                Identity1(state = pageContentState, viewModel = identityViewModel)
             }
 
             composable(route = "${Routes.IDENTITY.route}/2") {
-                Identity2(state = pageContentState)
+                Identity2(state = pageContentState, viewModel = identityViewModel)
             }
 
             composable(route = "${Routes.IDENTITY.route}/3") {
-                Identity3(state = pageContentState)
+                Identity3(state = pageContentState, viewModel = identityViewModel)
             }
 
             composable(route = "${Routes.IDENTITY.route}/4") {
-                Identity4(state = pageContentState)
+                Identity4(state = pageContentState, viewModel = identityViewModel)
             }
 
             composable(route = "${Routes.IDENTITY.route}/5") {
-                Identity5(state = pageContentState)
+                Identity5(state = pageContentState, viewModel = identityViewModel)
             }
         }
 

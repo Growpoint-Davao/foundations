@@ -9,39 +9,136 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
 import church.thegrowpoint.foundations.ui.composables.CheckboxWithText
 import church.thegrowpoint.foundations.ui.composables.LabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Identity1(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    viewModel: IdentityViewModel
 ) {
-    var whatOthersThinkCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var weaknessCheckboxState by rememberSaveable { mutableStateOf(false) }
-    var myGradePointAverageCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var myPhysicalStrengthCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var whatILookInMirrorCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var friendsIHangOutWithCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var myTalentsAndAbilitiesCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var myIntelligenceCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var whatMyFamilyThinkCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var myFamilyReputation by rememberSaveable { mutableStateOf(false) }
-    var myAttitudeCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var whatGodSaysAboutMeCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var clothesIWearCheckBoxState by rememberSaveable { mutableStateOf(false) }
-    var othersCheckBoxState by rememberSaveable { mutableStateOf(false) }
+    val identityAnswers = viewModel.getDataStoreAnswersFlow()
+        .collectAsState(
+            initial = HashMap()
+        )
 
-    var othersText by rememberSaveable { mutableStateOf("") }
+    val whatOthersThinkAnswer = viewModel.getBooleanAnswerFlow("whatOthersThinkOfMe")
+        .collectAsState(
+            initial = false
+        )
+    val myWeaknessesAnswer = viewModel.getBooleanAnswerFlow("myWeaknesses")
+        .collectAsState(
+            initial = false
+        )
+    val myGradePointAverageAnswer = viewModel.getBooleanAnswerFlow("myGradePointAverage")
+        .collectAsState(
+            initial = false
+        )
+    val myPhysicalStrengthsAnswer = viewModel.getBooleanAnswerFlow("myPhysicalStrengths")
+        .collectAsState(
+            initial = false
+        )
+    val whatILookInTheMirrorAnswer = viewModel.getBooleanAnswerFlow("whatILookInTheMirror")
+        .collectAsState(
+            initial = false
+        )
+    val myFriendsIHangoutWithAnswer = viewModel.getBooleanAnswerFlow("myFriendsIHangoutWith")
+        .collectAsState(
+            initial = false
+        )
+    val myTalentsAndAbilitiesAnswer = viewModel.getBooleanAnswerFlow("myTalentsAndAbilities")
+        .collectAsState(
+            initial = false
+        )
+    val myIntelligenceAnswer = viewModel.getBooleanAnswerFlow("myIntelligence")
+        .collectAsState(
+            initial = false
+        )
+    val whatMyFamilySaysAboutMeAnswer = viewModel.getBooleanAnswerFlow("whatMyFamilySaysAboutMe")
+        .collectAsState(
+            initial = false
+        )
+    val myFamilyReputationAnswer = viewModel.getBooleanAnswerFlow("myFamilyReputation")
+        .collectAsState(
+            initial = false
+        )
+    val myAttitudeAnswer = viewModel.getBooleanAnswerFlow("myAttitude")
+        .collectAsState(
+            initial = false
+        )
+    val whatGodSaysAboutMeAnswer = viewModel.getBooleanAnswerFlow("whatGodSaysAboutMe")
+        .collectAsState(
+            initial = false
+        )
+    val theClothsIWearAnswer = viewModel.getBooleanAnswerFlow("theClothsIWear")
+        .collectAsState(
+            initial = false
+        )
+    val othersAnswer = viewModel.getBooleanAnswerFlow("others")
+        .collectAsState(
+            initial = false
+        )
+
+    LaunchedEffect(identityAnswers.value) {
+        // restore answers
+        viewModel.setAnswersState(identityAnswers.value)
+    }
+
+    LaunchedEffect(whatOthersThinkAnswer.value) {
+        viewModel.setBooleanAnswerState("whatOthersThinkOfMe", whatOthersThinkAnswer.value)
+    }
+    LaunchedEffect(myWeaknessesAnswer.value) {
+        viewModel.setBooleanAnswerState("myWeaknesses", myWeaknessesAnswer.value)
+    }
+    LaunchedEffect(myGradePointAverageAnswer.value) {
+        viewModel.setBooleanAnswerState("myGradePointAverage", myGradePointAverageAnswer.value)
+    }
+    LaunchedEffect(myPhysicalStrengthsAnswer.value) {
+        viewModel.setBooleanAnswerState("myPhysicalStrengths", myPhysicalStrengthsAnswer.value)
+    }
+    LaunchedEffect(whatILookInTheMirrorAnswer.value) {
+        viewModel.setBooleanAnswerState("whatILookInTheMirror", whatILookInTheMirrorAnswer.value)
+    }
+    LaunchedEffect(myFriendsIHangoutWithAnswer.value) {
+        viewModel.setBooleanAnswerState("myFriendsIHangoutWith", myFriendsIHangoutWithAnswer.value)
+    }
+    LaunchedEffect(myTalentsAndAbilitiesAnswer.value) {
+        viewModel.setBooleanAnswerState("myTalentsAndAbilities", myTalentsAndAbilitiesAnswer.value)
+    }
+    LaunchedEffect(myIntelligenceAnswer.value) {
+        viewModel.setBooleanAnswerState("myIntelligence", myIntelligenceAnswer.value)
+    }
+    LaunchedEffect(whatMyFamilySaysAboutMeAnswer.value) {
+        viewModel.setBooleanAnswerState("whatMyFamilySaysAboutMe", whatMyFamilySaysAboutMeAnswer.value)
+    }
+    LaunchedEffect(myFamilyReputationAnswer.value) {
+        viewModel.setBooleanAnswerState("myFamilyReputation", myFamilyReputationAnswer.value)
+    }
+    LaunchedEffect(myAttitudeAnswer.value) {
+        viewModel.setBooleanAnswerState("myAttitude", myAttitudeAnswer.value)
+    }
+    LaunchedEffect(whatGodSaysAboutMeAnswer.value) {
+        viewModel.setBooleanAnswerState("whatGodSaysAboutMe", whatGodSaysAboutMeAnswer.value)
+    }
+    LaunchedEffect(theClothsIWearAnswer.value) {
+        viewModel.setBooleanAnswerState("theClothsIWear", theClothsIWearAnswer.value)
+    }
+    LaunchedEffect(othersAnswer.value) {
+        viewModel.setBooleanAnswerState("others", othersAnswer.value)
+    }
+
+    val identityUIState = viewModel.uiState.collectAsState().value
+    val answers = identityUIState.answers
+    val othersAnswers = answers["others"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -66,97 +163,101 @@ fun Identity1(
             ) {
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_1),
-                    checked = whatOthersThinkCheckBoxState
+                    checked = identityUIState.whatOthersThinkOfMe
                 ) {
-                    whatOthersThinkCheckBoxState = it
+                    viewModel.setBooleanAnswerState("whatOthersThinkOfMe", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_2),
-                    checked = weaknessCheckboxState
+                    checked = identityUIState.myWeaknesses
                 ) {
-                    weaknessCheckboxState = it
+                    viewModel.setBooleanAnswerState("myWeaknesses", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_3),
-                    checked = myGradePointAverageCheckBoxState
+                    checked = identityUIState.myGradePointAverage
                 ) {
-                    myGradePointAverageCheckBoxState = it
+                    viewModel.setBooleanAnswerState("myGradePointAverage", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_4),
-                    checked = myPhysicalStrengthCheckBoxState
+                    checked = identityUIState.myPhysicalStrengths
                 ) {
-                    myPhysicalStrengthCheckBoxState = it
+                    viewModel.setBooleanAnswerState("myPhysicalStrengths", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_5),
-                    checked = whatILookInMirrorCheckBoxState
+                    checked = identityUIState.whatILookInTheMirror
                 ) {
-                    whatILookInMirrorCheckBoxState = it
+                    viewModel.setBooleanAnswerState("whatILookInTheMirror", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_6),
-                    checked = friendsIHangOutWithCheckBoxState
+                    checked = identityUIState.myFriendsIHangoutWith
                 ) {
-                    friendsIHangOutWithCheckBoxState = it
+                    viewModel.setBooleanAnswerState("myFriendsIHangoutWith", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_7),
-                    checked = myTalentsAndAbilitiesCheckBoxState
+                    checked = identityUIState.myTalentsAndAbilities
                 ) {
-                    myTalentsAndAbilitiesCheckBoxState = it
+                    viewModel.setBooleanAnswerState("myTalentsAndAbilities", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_8),
-                    checked = myIntelligenceCheckBoxState
+                    checked = identityUIState.myIntelligence
                 ) {
-                    myIntelligenceCheckBoxState = it
+                    viewModel.setBooleanAnswerState("myIntelligence", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_9),
-                    checked = whatMyFamilyThinkCheckBoxState
+                    checked = identityUIState.whatMyFamilySaysAboutMe
                 ) {
-                    whatMyFamilyThinkCheckBoxState = it
+                    viewModel.setBooleanAnswerState("whatMyFamilySaysAboutMe", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_10),
-                    checked = myFamilyReputation
+                    checked = identityUIState.myFamilyReputation
                 ) {
-                    myFamilyReputation = it
+                    viewModel.setBooleanAnswerState("myFamilyReputation", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_11),
-                    checked = myAttitudeCheckBoxState
+                    checked = identityUIState.myAttitude
                 ) {
-                    myAttitudeCheckBoxState = it
+                    viewModel.setBooleanAnswerState("myAttitude", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_12),
-                    checked = whatGodSaysAboutMeCheckBoxState
+                    checked = identityUIState.whatGodSaysAboutMe
                 ) {
-                    whatGodSaysAboutMeCheckBoxState = it
+                    viewModel.setBooleanAnswerState("whatGodSaysAboutMe", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_13),
-                    checked = clothesIWearCheckBoxState
+                    checked = identityUIState.theClothsIWear
                 ) {
-                    clothesIWearCheckBoxState = it
+                    viewModel.setBooleanAnswerState("theClothsIWear", it, true)
                 }
                 CheckboxWithText(
                     label = stringResource(R.string.identity_page_1_identity_option_14),
-                    checked = othersCheckBoxState
+                    checked = identityUIState.others
                 ) {
-                    othersCheckBoxState = it
+                    viewModel.setBooleanAnswerState("others", it, true)
+
+                    if (!it) {
+                        viewModel.updateAnswerState(key = "others", answer = "")
+                    }
                 }
-                if (othersCheckBoxState) {
+                if (identityUIState.others) {
                     LabeledWithSupportTextOutlinedTextField(
                         label = "",
                         supportText = "",
-                        value = othersText,
+                        value = othersAnswers,
                         singleLine = true,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     ) {
-                        othersText = it
+                        viewModel.updateAnswerState(key = "others", answer = it)
                     }
                 }
                 ContentMarkdown(

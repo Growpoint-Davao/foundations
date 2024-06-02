@@ -40,6 +40,10 @@ class SalvationViewModel @Inject constructor(
         currentState: SalvationAnswersUIState,
         answers: HashMap<String, String>
     ): SalvationAnswersUIState {
-        return currentState.copy(answers = answers)
+        if (currentState.answers != answers) {
+            return currentState.copy(answers = answers) // not the same so create new copy
+        }
+
+        return currentState // the same so return the original state
     }
 }

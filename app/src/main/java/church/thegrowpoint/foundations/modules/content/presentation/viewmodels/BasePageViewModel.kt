@@ -61,18 +61,21 @@ abstract class BasePageViewModel<T : AnswersUIState>(
     protected abstract fun createStateCopy(currentState: T, answers: HashMap<String, String>): T
 
     /**
-     * Sets the answer for the given key.
+     * Sets the answer for the given key. This will also update the data store.
      *
      * @param key The key of the answer.
      * @param answer The answer to set.
+     * @param updateDataStore Whether to update the data store with the new answer.
      */
-    fun setAnswer(key: String, answer: String) {
+    fun updateAnswerState(key: String, answer: String, updateDataStore: Boolean = true) {
         mutableUIState.update { currentState ->
             val latestAnswers = HashMap(currentState.answers)
             latestAnswers[key] = answer
 
             // update the local data store
-            updateDataStoreAnswers(latestAnswers)
+            if (updateDataStore) {
+                updateDataStoreAnswers(latestAnswers)
+            }
 
             createStateCopy(currentState, latestAnswers)
         }
@@ -83,7 +86,7 @@ abstract class BasePageViewModel<T : AnswersUIState>(
      *
      * @param answers The answers to set. It is a key-value pair where the key is the identifier of the answer and the value is the answer.
      */
-    fun setAnswers(answers: HashMap<String, String>) {
+    fun setAnswersState(answers: HashMap<String, String>) {
         // only change the salvation answer state if there are changes in values
         if (answers != uiState.value) {
             mutableUIState.update { currentState ->

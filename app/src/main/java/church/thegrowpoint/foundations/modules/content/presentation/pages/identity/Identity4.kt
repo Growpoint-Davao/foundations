@@ -19,12 +19,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Identity4(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    viewModel: IdentityViewModel
 ) {
     var textField1 by rememberSaveable { mutableStateOf("") }
     var textField2 by rememberSaveable { mutableStateOf("") }
