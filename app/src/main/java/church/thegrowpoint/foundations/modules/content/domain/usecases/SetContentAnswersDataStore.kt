@@ -1,15 +1,16 @@
 package church.thegrowpoint.foundations.modules.content.domain.usecases
 
 import church.thegrowpoint.foundations.modules.content.domain.repositories.ContentDataSourceFlowRepository
+import javax.inject.Inject
 
 /**
- * # BaseSetContentAnswersDataStoreUseCase
+ * # SetContentAnswersDataStore
  *
  * The base use case class for setting the answers through data store.
  *
  * @property contentDataSourceFlowRepository the content data store repository instance.
  */
-abstract class BaseSetContentAnswersDataStoreUseCase(
+class SetContentAnswersDataStore @Inject constructor(
     private val contentDataSourceFlowRepository: ContentDataSourceFlowRepository
 ) {
     /**

@@ -1,13 +1,17 @@
 package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
+import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.BaseViewModel
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentAnswersDataStoreFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentAnswersDataStore
 import church.thegrowpoint.foundations.modules.content.presentation.states.AnswersUIState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 /**
  * # BasePageViewModel
@@ -19,6 +23,8 @@ import kotlinx.coroutines.flow.update
  */
 abstract class BasePageViewModel<T : AnswersUIState>(
     context: Context,
+    private val getContentAnswersDataStoreFlowUseCase: GetContentAnswersDataStoreFlow,
+    private val setContentAnswersDataStoreUseCase: SetContentAnswersDataStore,
     protected val dispatcher: CoroutineDispatcher
 ): BaseViewModel(context) {
     // ui state
@@ -26,11 +32,24 @@ abstract class BasePageViewModel<T : AnswersUIState>(
     abstract val uiState: StateFlow<T>
 
     /**
+     * Gets the data store answers flow.
+     *
+     * @return The data store answers flow.
+     */
+    fun getDataStoreAnswersFlow(): Flow<HashMap<String, String>> {
+        return getContentAnswersDataStoreFlowUseCase()
+    }
+
+    /**
      * Updates the data store answers.
      *
      * @param answers The answers to update the data store with.
      */
-    protected abstract fun  updateDataStoreAnswers(answers: HashMap<String, String>)
+    private fun updateDataStoreAnswers(answers: HashMap<String, String>) {
+        viewModelScope.launch(dispatcher) {
+            setContentAnswersDataStoreUseCase(answers)
+        }
+    }
 
     /**
      * Creates a new state copy with the given answers.
@@ -40,13 +59,6 @@ abstract class BasePageViewModel<T : AnswersUIState>(
      * @return The new state copy.
      */
     protected abstract fun createStateCopy(currentState: T, answers: HashMap<String, String>): T
-
-    /**
-     * Gets the data store answers flow.
-     *
-     * @return The data store answers flow.
-     */
-    abstract fun getDataStoreAnswersFlow(): Flow<HashMap<String, String>>
 
     /**
      * Sets the answer for the given key.

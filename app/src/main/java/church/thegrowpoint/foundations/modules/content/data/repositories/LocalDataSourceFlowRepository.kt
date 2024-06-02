@@ -1,18 +1,18 @@
 package church.thegrowpoint.foundations.modules.content.data.repositories
 
-import church.thegrowpoint.foundations.modules.content.data.datasources.BaseContentLocalDataSource
+import church.thegrowpoint.foundations.modules.content.data.datasources.ContentLocalDataSource
 import church.thegrowpoint.foundations.modules.content.domain.repositories.ContentDataSourceFlowRepository
 import kotlinx.coroutines.flow.Flow
 
 /**
  * # LocalDataSourceFlowRepository
  *
- * The base class for all data store flow repositories.
+ * The class for all data store flow repositories.
  *
  * @property localDataSource the local data source or typically the data store that uses data store.
  */
-abstract class LocalDataSourceFlowRepository (
-    private val localDataSource: BaseContentLocalDataSource
+class LocalDataSourceFlowRepository (
+    private val localDataSource: ContentLocalDataSource
 ) : ContentDataSourceFlowRepository {
     /**
      * Get answers flow.

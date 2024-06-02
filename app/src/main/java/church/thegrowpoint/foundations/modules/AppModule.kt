@@ -17,16 +17,11 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEm
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataStoreSkipAuthFlow
-import church.thegrowpoint.foundations.modules.content.data.datasources.BaseContentLocalDataSource
-import church.thegrowpoint.foundations.modules.content.data.datasources.LordshipLocalDataSource
-import church.thegrowpoint.foundations.modules.content.data.datasources.SalvationLocalDataSource
-import church.thegrowpoint.foundations.modules.content.data.repositories.LordshipLocalRepositoryImplementation
-import church.thegrowpoint.foundations.modules.content.data.repositories.SalvationLocalRepositoryImplementation
+import church.thegrowpoint.foundations.modules.content.data.datasources.ContentLocalDataSourceImplementation
+import church.thegrowpoint.foundations.modules.content.data.repositories.LocalDataSourceFlowRepository
 import church.thegrowpoint.foundations.modules.content.domain.repositories.ContentDataSourceFlowRepository
-import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreLordshipAnswersFlow
-import church.thegrowpoint.foundations.modules.content.domain.usecases.GetDataStoreSalvationAnswersFlow
-import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreLordShipAnswers
-import church.thegrowpoint.foundations.modules.content.domain.usecases.SetDataStoreSalvationAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentAnswersDataStoreFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentAnswersDataStore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -65,100 +60,102 @@ annotation class Identity
 @Module
 @InstallIn(SingletonComponent::class)
 internal object AppModule {
-    // data stores here
     @Salvation
     @Provides
     @Singleton
-    fun provideSalvationDataStore(
+    fun provideSalvationContentDataSourceFlowRepository(
         @ApplicationContext context: Context
-    ): DataStore<Preferences> {
-        return context.salvationDataStore
+    ): ContentDataSourceFlowRepository {
+        // create the local data source
+        val localDataSource = ContentLocalDataSourceImplementation(
+            section = Routes.SALVATION.route,
+            dataStore = context.salvationDataStore
+        )
+
+        return LocalDataSourceFlowRepository(localDataSource = localDataSource)
     }
 
     @Lordship
     @Provides
     @Singleton
-    fun provideLordshipDataStore(
+    fun provideLordshipContentDataSourceFlowRepository(
         @ApplicationContext context: Context
-    ): DataStore<Preferences> {
-        return context.lordshipDataStore
+    ): ContentDataSourceFlowRepository {
+        // create the local data source
+        val localDataSource = ContentLocalDataSourceImplementation(
+            section = Routes.LORDSHIP.route,
+            dataStore = context.lordshipDataStore
+        )
+
+        return LocalDataSourceFlowRepository(localDataSource = localDataSource)
     }
 
     @Identity
     @Provides
     @Singleton
-    fun provideIdentityDataStore(
+    fun provideIdentityContentDataSourceFlowRepository(
         @ApplicationContext context: Context
-    ): DataStore<Preferences> {
-        return context.identityDataStore
-    }
-
-    @Lordship
-    @Provides
-    @Singleton
-    fun provideLordshipLocalDataSource(
-        @Lordship dataStore: DataStore<Preferences>
-    ): BaseContentLocalDataSource {
-        return LordshipLocalDataSource(dataStore)
-    }
-
-    @Lordship
-    @Provides
-    @Singleton
-    fun provideLordshipLocalRepositoryImplementation(
-        @Lordship localDataSource: BaseContentLocalDataSource
     ): ContentDataSourceFlowRepository {
-        return LordshipLocalRepositoryImplementation(localDataSource)
-    }
+        val localDataSource = ContentLocalDataSourceImplementation(
+            section = Routes.IDENTITY.route,
+            dataStore = context.identityDataStore
+        )
 
-    @Provides
-    @Singleton
-    fun provideGetDataStoreLordshipAnswersFlow(
-        @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): GetDataStoreLordshipAnswersFlow {
-        return GetDataStoreLordshipAnswersFlow(contentDataSourceFlowRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSetDataStoreLordShipAnswers(
-        @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): SetDataStoreLordShipAnswers {
-        return SetDataStoreLordShipAnswers(contentDataSourceFlowRepository)
+        return LocalDataSourceFlowRepository(localDataSource = localDataSource)
     }
 
     @Salvation
     @Provides
     @Singleton
-    fun provideSalvationLocalDataSource(
-        @Salvation dataStore: DataStore<Preferences>
-    ): BaseContentLocalDataSource {
-        return SalvationLocalDataSource(dataStore)
+    fun provideSalvationGetContentAnswersDataStoreFlowUseCase(
+        @Salvation contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentAnswersDataStoreFlow {
+        return GetContentAnswersDataStoreFlow(contentDataSourceFlowRepository)
     }
 
     @Salvation
     @Provides
     @Singleton
-    fun provideSalvationLocalRepositoryImplementation(
-        @Salvation localDataSource: BaseContentLocalDataSource
-    ): ContentDataSourceFlowRepository {
-        return SalvationLocalRepositoryImplementation(localDataSource)
+    fun provideSalvationSetContentAnswersDataStoreUseCase(
+        @Salvation contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentAnswersDataStore {
+        return SetContentAnswersDataStore(contentDataSourceFlowRepository)
     }
 
+    @Lordship
     @Provides
     @Singleton
-    fun provideGetDataStoreSalvationAnswersFlow(
-        @Salvation contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): GetDataStoreSalvationAnswersFlow {
-        return GetDataStoreSalvationAnswersFlow(contentDataSourceFlowRepository)
+    fun provideLordshipGetContentAnswersDataStoreFlowUseCase(
+        @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentAnswersDataStoreFlow {
+        return GetContentAnswersDataStoreFlow(contentDataSourceFlowRepository)
     }
 
+    @Lordship
     @Provides
     @Singleton
-    fun provideSetDataStoreSalvationAnswers(
-        @Salvation contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): SetDataStoreSalvationAnswers {
-        return SetDataStoreSalvationAnswers(contentDataSourceFlowRepository)
+    fun provideLordshipSetContentAnswersDataStoreUseCase(
+        @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentAnswersDataStore {
+        return SetContentAnswersDataStore(contentDataSourceFlowRepository)
+    }
+
+    @Identity
+    @Provides
+    @Singleton
+    fun provideIdentityGetContentAnswersDataStoreFlowUseCase(
+        @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentAnswersDataStoreFlow {
+        return GetContentAnswersDataStoreFlow(contentDataSourceFlowRepository)
+    }
+
+    @Identity
+    @Provides
+    @Singleton
+    fun provideIdentitySetContentAnswersDataStoreUseCase(
+        @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentAnswersDataStore {
+        return SetContentAnswersDataStore(contentDataSourceFlowRepository)
     }
 
     @Provides

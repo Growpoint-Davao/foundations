@@ -1,10 +1,10 @@
 package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
-import church.thegrowpoint.foundations.modules.Lordship
+import church.thegrowpoint.foundations.modules.Identity
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentAnswersDataStoreFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentAnswersDataStore
-import church.thegrowpoint.foundations.modules.content.presentation.states.LordshipAnswersUIState
+import church.thegrowpoint.foundations.modules.content.presentation.states.IdentityAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,25 +14,25 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class LordshipViewModel @Inject constructor(
+class IdentityViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    @Lordship getContentAnswersDataStoreFlowUseCase: GetContentAnswersDataStoreFlow,
-    @Lordship setContentAnswersDataStoreUseCase: SetContentAnswersDataStore,
+    @Identity getContentAnswersDataStoreFlowUseCase: GetContentAnswersDataStoreFlow,
+    @Identity setContentAnswersDataStoreUseCase: SetContentAnswersDataStore,
     dispatcher: CoroutineDispatcher
-): BasePageViewModel<LordshipAnswersUIState>(
+): BasePageViewModel<IdentityAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
     dispatcher = dispatcher
 ) {
     // ui state
-    override val mutableUIState = MutableStateFlow(LordshipAnswersUIState())
-    override val uiState: StateFlow<LordshipAnswersUIState> = mutableUIState.asStateFlow()
+    override val mutableUIState = MutableStateFlow(IdentityAnswersUIState())
+    override val uiState: StateFlow<IdentityAnswersUIState> = mutableUIState.asStateFlow()
 
     override fun createStateCopy(
-        currentState: LordshipAnswersUIState,
+        currentState: IdentityAnswersUIState,
         answers: HashMap<String, String>
-    ): LordshipAnswersUIState {
+    ): IdentityAnswersUIState {
         return currentState.copy(answers = answers)
     }
 }

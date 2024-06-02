@@ -36,14 +36,14 @@ interface ContentLocalDataSource {
 }
 
 /**
- * # BaseContentLocalDataSource
+ * # ContentLocalDataSourceImplementation
  *
- * The base class for reading and writing content locally.
+ * The class for reading and writing content locally.
  *
  * @property section the name of content section.
  */
-abstract class BaseContentLocalDataSource(
-    protected val section: String,
+class ContentLocalDataSourceImplementation(
+    private val section: String,
     private val dataStore: DataStore<Preferences>
 ) : ContentLocalDataSource {
     /**
