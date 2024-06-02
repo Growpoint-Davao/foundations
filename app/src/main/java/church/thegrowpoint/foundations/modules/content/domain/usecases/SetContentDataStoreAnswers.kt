@@ -4,13 +4,13 @@ import church.thegrowpoint.foundations.modules.content.domain.repositories.Conte
 import javax.inject.Inject
 
 /**
- * # SetContentAnswersDataStore
+ * # SetContentDataStoreAnswers
  *
  * The base use case class for setting the answers through data store.
  *
  * @property contentDataSourceFlowRepository the content data store repository instance.
  */
-class SetContentAnswersDataStore @Inject constructor(
+class SetContentDataStoreAnswers @Inject constructor(
     private val contentDataSourceFlowRepository: ContentDataSourceFlowRepository
 ) {
     /**

@@ -3,8 +3,8 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.BaseViewModel
-import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentAnswersDataStoreFlow
-import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentAnswersDataStore
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.AnswersUIState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
  */
 abstract class BasePageViewModel<T : AnswersUIState>(
     context: Context,
-    private val getContentAnswersDataStoreFlowUseCase: GetContentAnswersDataStoreFlow,
-    private val setContentAnswersDataStoreUseCase: SetContentAnswersDataStore,
+    private val getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
+    private val setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     protected val dispatcher: CoroutineDispatcher
 ): BaseViewModel(context) {
     // ui state

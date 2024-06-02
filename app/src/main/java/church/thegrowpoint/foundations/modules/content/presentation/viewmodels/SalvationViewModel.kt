@@ -2,8 +2,8 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
 import church.thegrowpoint.foundations.modules.Salvation
-import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentAnswersDataStoreFlow
-import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentAnswersDataStore
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.SalvationAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -23,8 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SalvationViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    @Salvation getContentAnswersDataStoreFlowUseCase: GetContentAnswersDataStoreFlow,
-    @Salvation setContentAnswersDataStoreUseCase: SetContentAnswersDataStore,
+    @Salvation getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
+    @Salvation setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     dispatcher: CoroutineDispatcher
 ) : BasePageViewModel<SalvationAnswersUIState>(
     context = context,

@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
- * # GetContentAnswersDataStoreFlow
+ * # GetContentDataStoreAnswersFlow
  *
  * The base use case for content data store.
  *
  * @property contentDataSourceFlowRepository the content data source repository.
  */
-class GetContentAnswersDataStoreFlow @Inject constructor(
+class GetContentDataStoreAnswersFlow @Inject constructor(
     private val contentDataSourceFlowRepository: ContentDataSourceFlowRepository
 ) {
     /**

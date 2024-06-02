@@ -15,6 +15,26 @@ class LocalDataSourceFlowRepository (
     private val localDataSource: ContentLocalDataSource
 ) : ContentDataSourceFlowRepository {
     /**
+     * Get boolean answer flow.
+     *
+     * @param key the name or key of the checkbox question.
+     * @return returns the boolean flow of checkbox answer.
+     */
+    override fun getBooleanAnswerFlow(key: String): Flow<Boolean> {
+        return localDataSource.getBooleanAnswerFlow(key)
+    }
+
+    /**
+     * Set boolean answer.
+     *
+     * @param key the name or key of the checkbox question.
+     * @param status the boolean answer.
+     */
+    override suspend fun setBooleanAnswer(key: String, status: Boolean) {
+        return localDataSource.setBooleanAnswer(key, status)
+    }
+
+    /**
      * Get answers flow.
      *
      * @return returns the flow data which is key value pair of answers.

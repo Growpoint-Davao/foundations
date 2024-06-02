@@ -20,8 +20,10 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataSt
 import church.thegrowpoint.foundations.modules.content.data.datasources.ContentLocalDataSourceImplementation
 import church.thegrowpoint.foundations.modules.content.data.repositories.LocalDataSourceFlowRepository
 import church.thegrowpoint.foundations.modules.content.domain.repositories.ContentDataSourceFlowRepository
-import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentAnswersDataStoreFlow
-import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentAnswersDataStore
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentBooleanAnswerDataStoreFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreBooleanAnswer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -109,8 +111,8 @@ internal object AppModule {
     @Singleton
     fun provideSalvationGetContentAnswersDataStoreFlowUseCase(
         @Salvation contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): GetContentAnswersDataStoreFlow {
-        return GetContentAnswersDataStoreFlow(contentDataSourceFlowRepository)
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
     }
 
     @Salvation
@@ -118,8 +120,8 @@ internal object AppModule {
     @Singleton
     fun provideSalvationSetContentAnswersDataStoreUseCase(
         @Salvation contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): SetContentAnswersDataStore {
-        return SetContentAnswersDataStore(contentDataSourceFlowRepository)
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
     }
 
     @Lordship
@@ -127,8 +129,8 @@ internal object AppModule {
     @Singleton
     fun provideLordshipGetContentAnswersDataStoreFlowUseCase(
         @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): GetContentAnswersDataStoreFlow {
-        return GetContentAnswersDataStoreFlow(contentDataSourceFlowRepository)
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
     }
 
     @Lordship
@@ -136,8 +138,8 @@ internal object AppModule {
     @Singleton
     fun provideLordshipSetContentAnswersDataStoreUseCase(
         @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): SetContentAnswersDataStore {
-        return SetContentAnswersDataStore(contentDataSourceFlowRepository)
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
     }
 
     @Identity
@@ -145,8 +147,8 @@ internal object AppModule {
     @Singleton
     fun provideIdentityGetContentAnswersDataStoreFlowUseCase(
         @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): GetContentAnswersDataStoreFlow {
-        return GetContentAnswersDataStoreFlow(contentDataSourceFlowRepository)
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
     }
 
     @Identity
@@ -154,8 +156,26 @@ internal object AppModule {
     @Singleton
     fun provideIdentitySetContentAnswersDataStoreUseCase(
         @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): SetContentAnswersDataStore {
-        return SetContentAnswersDataStore(contentDataSourceFlowRepository)
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
+    }
+
+    @Identity
+    @Provides
+    @Singleton
+    fun provideIdentityGetContentBooleanAnswerDataStoreFlowUseCase(
+        @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentBooleanAnswerDataStoreFlow {
+        return GetContentBooleanAnswerDataStoreFlow(contentDataSourceFlowRepository)
+    }
+
+    @Identity
+    @Provides
+    @Singleton
+    fun provideIdentitySetContentDataStoreBooleanAnswerUseCase(
+        @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentDataStoreBooleanAnswer {
+        return SetContentDataStoreBooleanAnswer(contentDataSourceFlowRepository)
     }
 
     @Provides
