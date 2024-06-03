@@ -96,6 +96,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
@@ -379,6 +380,7 @@ fun Content(
     val salvationViewModel: SalvationViewModel = hiltViewModel()
     val lordShipViewModel: LordshipViewModel = hiltViewModel()
     val identityViewModel: IdentityViewModel = hiltViewModel()
+    val powerViewModel: PowerViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
@@ -510,23 +512,23 @@ fun Content(
             route = Routes.POWER.route
         ) {
             composable(route = "${Routes.POWER.route}/1") {
-                Power1(state = pageContentState)
+                Power1(state = pageContentState, viewModel = powerViewModel)
             }
 
             composable(route = "${Routes.POWER.route}/2") {
-                Power2(state = pageContentState)
+                Power2(state = pageContentState, viewModel = powerViewModel)
             }
 
             composable(route = "${Routes.POWER.route}/3") {
-                Power3(state = pageContentState)
+                Power3(state = pageContentState, viewModel = powerViewModel)
             }
 
             composable(route = "${Routes.POWER.route}/4") {
-                Power4(state = pageContentState)
+                Power4(state = pageContentState, viewModel = powerViewModel)
             }
 
             composable(route = "${Routes.POWER.route}/5") {
-                Power5(state = pageContentState)
+                Power5(state = pageContentState, viewModel = powerViewModel)
             }
         }
 

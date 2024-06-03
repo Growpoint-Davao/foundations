@@ -47,6 +47,9 @@ val Context.lordshipDataStore: DataStore<Preferences> by preferencesDataStore(na
 // creates data store for identity section
 val Context.identityDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.IDENTITY.route)
 
+// creates data store for power section
+val Context.powerDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.POWER.route)
+
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Salvation
@@ -58,6 +61,10 @@ annotation class Lordship
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Identity
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Power
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -106,6 +113,20 @@ internal object AppModule {
         return LocalDataSourceFlowRepository(localDataSource = localDataSource)
     }
 
+    @Power
+    @Provides
+    @Singleton
+    fun providePowerContentDataSourceFlowRepository(
+        @ApplicationContext context: Context
+    ): ContentDataSourceFlowRepository {
+        val localDataSource = ContentLocalDataSourceImplementation(
+            section = Routes.POWER.route,
+            dataStore = context.powerDataStore
+        )
+
+        return LocalDataSourceFlowRepository(localDataSource = localDataSource)
+    }
+
     @Salvation
     @Provides
     @Singleton
@@ -138,6 +159,24 @@ internal object AppModule {
     @Singleton
     fun provideLordshipSetContentAnswersDataStoreUseCase(
         @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
+    }
+
+    @Power
+    @Provides
+    @Singleton
+    fun providePowerGetContentAnswersDataStoreFlowUseCase(
+        @Power contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
+    }
+
+    @Power
+    @Provides
+    @Singleton
+    fun providePowerSetContentAnswersDataStoreUseCase(
+        @Power contentDataSourceFlowRepository: ContentDataSourceFlowRepository
     ): SetContentDataStoreAnswers {
         return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
     }
