@@ -93,6 +93,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
@@ -383,6 +384,7 @@ fun Content(
     val identityViewModel: IdentityViewModel = hiltViewModel()
     val powerViewModel: PowerViewModel = hiltViewModel()
     val devotionViewModel: DevotionViewModel = hiltViewModel()
+    val churchViewModel: ChurchViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
@@ -564,15 +566,15 @@ fun Content(
             route = Routes.CHURCH.route
         ) {
             composable(route = "${Routes.CHURCH.route}/1") {
-                Church1(state = pageContentState)
+                Church1(state = pageContentState, viewModel = churchViewModel)
             }
 
             composable(route = "${Routes.CHURCH.route}/2") {
-                Church2(state = pageContentState)
+                Church2(state = pageContentState, viewModel = churchViewModel)
             }
 
             composable(route = "${Routes.CHURCH.route}/3") {
-                Church3(state = pageContentState)
+                Church3(state = pageContentState, viewModel = churchViewModel)
             }
         }
 

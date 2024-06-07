@@ -9,25 +9,26 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Church3(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    viewModel: ChurchViewModel = hiltViewModel()
 ) {
-    var textField1 by rememberSaveable { mutableStateOf("") }
-    var textField2 by rememberSaveable { mutableStateOf("") }
+    val answers = viewModel.uiState.collectAsState().value.answers
+    val answer3 = answers["3"] ?: ""
+    val answer4 = answers["4"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -46,9 +47,9 @@ fun Church3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField1
+                value = answer3
             ) {
-                textField1 = it
+                viewModel.updateAnswerState(key = "3", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.church_page_3_part_2),
@@ -62,12 +63,12 @@ fun Church3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = textField2,
+                value = answer4,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                textField2 = it
+                viewModel.updateAnswerState(key = "4", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.church_page_3_part_3),

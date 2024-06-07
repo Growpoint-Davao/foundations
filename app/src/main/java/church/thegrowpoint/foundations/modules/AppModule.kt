@@ -53,6 +53,8 @@ val Context.powerDataStore: DataStore<Preferences> by preferencesDataStore(name 
 // creates data store for devotion section
 val Context.devotionDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.DEVOTION.route)
 
+// creates data store for church section
+val Context.churchDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.CHURCH.route)
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -73,6 +75,10 @@ annotation class Power
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Devotion
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Church
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -144,6 +150,20 @@ internal object AppModule {
         val localDataSource = ContentLocalDataSourceImplementation(
             section = Routes.DEVOTION.route,
             dataStore = context.devotionDataStore
+        )
+
+        return LocalDataSourceFlowRepository(localDataSource = localDataSource)
+    }
+
+    @Church
+    @Provides
+    @Singleton
+    fun provideChurchContentDataSourceFlowRepository(
+        @ApplicationContext context: Context
+    ): ContentDataSourceFlowRepository {
+        val localDataSource = ContentLocalDataSourceImplementation(
+            section = Routes.CHURCH.route,
+            dataStore = context.churchDataStore
         )
 
         return LocalDataSourceFlowRepository(localDataSource = localDataSource)
@@ -253,6 +273,24 @@ internal object AppModule {
     @Singleton
     fun provideDevotionSetContentAnswersDataStoreUseCase(
         @Devotion contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
+    }
+
+    @Church
+    @Provides
+    @Singleton
+    fun provideChurchGetContentAnswersDataStoreFlowUseCase(
+        @Church contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
+    }
+
+    @Church
+    @Provides
+    @Singleton
+    fun provideChurchSetContentAnswersDataStoreUseCase(
+        @Church contentDataSourceFlowRepository: ContentDataSourceFlowRepository
     ): SetContentDataStoreAnswers {
         return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
     }
