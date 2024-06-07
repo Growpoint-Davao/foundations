@@ -96,6 +96,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DiscipleshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
@@ -385,6 +386,7 @@ fun Content(
     val powerViewModel: PowerViewModel = hiltViewModel()
     val devotionViewModel: DevotionViewModel = hiltViewModel()
     val churchViewModel: ChurchViewModel = hiltViewModel()
+    val discipleshipViewModel: DiscipleshipViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
@@ -583,19 +585,19 @@ fun Content(
             route = Routes.DISCIPLESHIP.route
         ) {
             composable(route = "${Routes.DISCIPLESHIP.route}/1") {
-                Discipleship1(state = pageContentState)
+                Discipleship1(state = pageContentState, viewModel = discipleshipViewModel)
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/2") {
-                Discipleship2(state = pageContentState)
+                Discipleship2(state = pageContentState, viewModel = discipleshipViewModel)
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/3") {
-                Discipleship3(state = pageContentState)
+                Discipleship3(state = pageContentState, viewModel = discipleshipViewModel)
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/4") {
-                Discipleship4(state = pageContentState)
+                Discipleship4(state = pageContentState, viewModel = discipleshipViewModel)
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/5") {
