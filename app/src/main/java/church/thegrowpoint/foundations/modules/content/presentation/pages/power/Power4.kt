@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
@@ -23,7 +24,7 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 fun Power4(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: PowerViewModel
+    viewModel: PowerViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
     val answer8 = answers["8"] ?: ""

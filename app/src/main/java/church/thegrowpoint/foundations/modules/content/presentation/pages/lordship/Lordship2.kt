@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
@@ -23,7 +24,7 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 fun Lordship2(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: LordshipViewModel
+    viewModel: LordshipViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
     val answer1 = answers["1"] ?: ""

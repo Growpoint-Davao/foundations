@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
@@ -20,7 +21,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.D
 fun Devotion1(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: DevotionViewModel
+    viewModel: DevotionViewModel = hiltViewModel()
 ) {
     // this is the first page so restore everything here
     val localPowerAnswers = viewModel.getDataStoreAnswersFlow().collectAsState(
