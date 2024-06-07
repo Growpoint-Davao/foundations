@@ -38,6 +38,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -280,7 +281,9 @@ fun FoundationsContent(
         },
         drawerState = navigationDrawerState
     ) {
-        // val authState by authViewModel.authState.collectAsState()
+        // keyboard controller for hiding the keyboard
+        val keyboardController = LocalSoftwareKeyboardController.current
+
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
         val pageContentState = rememberLazyListState()
@@ -301,6 +304,8 @@ fun FoundationsContent(
                 ) {
                     // toggle the navigation drawer
                     navigationDrawerScope.launch {
+                        keyboardController?.hide()
+
                         navigationDrawerState.apply {
                             if (isClosed) open() else close()
                         }
