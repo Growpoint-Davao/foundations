@@ -9,25 +9,25 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
 fun Devotion5(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    viewModel: DevotionViewModel
 ) {
-    var textField1 by rememberSaveable { mutableStateOf("") }
-    var textField2 by rememberSaveable { mutableStateOf("") }
+    val answers = viewModel.uiState.collectAsState().value.answers
+    val answer12 = answers["12"] ?: ""
+    val answer13 = answers["13"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -45,9 +45,10 @@ fun Devotion5(
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
-                supportText = ""
+                supportText = "",
+                value = answer12
             ) {
-                textField1 = it
+                viewModel.updateAnswerState(key = "12", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_5_part_2),
@@ -61,11 +62,12 @@ fun Devotion5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
+                value = answer13,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                textField2 = it
+                viewModel.updateAnswerState(key = "13", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_5_part_3),

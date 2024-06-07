@@ -94,6 +94,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.salvat
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
@@ -381,6 +382,7 @@ fun Content(
     val lordShipViewModel: LordshipViewModel = hiltViewModel()
     val identityViewModel: IdentityViewModel = hiltViewModel()
     val powerViewModel: PowerViewModel = hiltViewModel()
+    val devotionViewModel: DevotionViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
@@ -537,23 +539,23 @@ fun Content(
             route = Routes.DEVOTION.route
         ) {
             composable(route = "${Routes.DEVOTION.route}/1") {
-                Devotion1(state = pageContentState)
+                Devotion1(state = pageContentState, viewModel = devotionViewModel)
             }
 
             composable(route = "${Routes.DEVOTION.route}/2") {
-                Devotion2(state = pageContentState)
+                Devotion2(state = pageContentState, viewModel = devotionViewModel)
             }
 
             composable(route = "${Routes.DEVOTION.route}/3") {
-                Devotion3(state = pageContentState)
+                Devotion3(state = pageContentState, viewModel = devotionViewModel)
             }
 
             composable(route = "${Routes.DEVOTION.route}/4") {
-                Devotion4(state = pageContentState)
+                Devotion4(state = pageContentState, viewModel = devotionViewModel)
             }
 
             composable(route = "${Routes.DEVOTION.route}/5") {
-                Devotion5(state = pageContentState)
+                Devotion5(state = pageContentState, viewModel = devotionViewModel)
             }
         }
 

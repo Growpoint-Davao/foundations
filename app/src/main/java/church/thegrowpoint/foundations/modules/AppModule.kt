@@ -50,6 +50,10 @@ val Context.identityDataStore: DataStore<Preferences> by preferencesDataStore(na
 // creates data store for power section
 val Context.powerDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.POWER.route)
 
+// creates data store for devotion section
+val Context.devotionDataStore: DataStore<Preferences> by preferencesDataStore(name = Routes.DEVOTION.route)
+
+
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Salvation
@@ -65,6 +69,10 @@ annotation class Identity
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Power
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Devotion
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -127,6 +135,20 @@ internal object AppModule {
         return LocalDataSourceFlowRepository(localDataSource = localDataSource)
     }
 
+    @Devotion
+    @Provides
+    @Singleton
+    fun provideDevotionContentDataSourceFlowRepository(
+        @ApplicationContext context: Context
+    ): ContentDataSourceFlowRepository {
+        val localDataSource = ContentLocalDataSourceImplementation(
+            section = Routes.DEVOTION.route,
+            dataStore = context.devotionDataStore
+        )
+
+        return LocalDataSourceFlowRepository(localDataSource = localDataSource)
+    }
+
     @Salvation
     @Provides
     @Singleton
@@ -159,24 +181,6 @@ internal object AppModule {
     @Singleton
     fun provideLordshipSetContentAnswersDataStoreUseCase(
         @Lordship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): SetContentDataStoreAnswers {
-        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
-    }
-
-    @Power
-    @Provides
-    @Singleton
-    fun providePowerGetContentAnswersDataStoreFlowUseCase(
-        @Power contentDataSourceFlowRepository: ContentDataSourceFlowRepository
-    ): GetContentDataStoreAnswersFlow {
-        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
-    }
-
-    @Power
-    @Provides
-    @Singleton
-    fun providePowerSetContentAnswersDataStoreUseCase(
-        @Power contentDataSourceFlowRepository: ContentDataSourceFlowRepository
     ): SetContentDataStoreAnswers {
         return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
     }
@@ -215,6 +219,42 @@ internal object AppModule {
         @Identity contentDataSourceFlowRepository: ContentDataSourceFlowRepository
     ): SetContentDataStoreBooleanAnswer {
         return SetContentDataStoreBooleanAnswer(contentDataSourceFlowRepository)
+    }
+
+    @Power
+    @Provides
+    @Singleton
+    fun providePowerGetContentAnswersDataStoreFlowUseCase(
+        @Power contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
+    }
+
+    @Power
+    @Provides
+    @Singleton
+    fun providePowerSetContentAnswersDataStoreUseCase(
+        @Power contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
+    }
+
+    @Devotion
+    @Provides
+    @Singleton
+    fun provideDevotionGetContentAnswersDataStoreFlowUseCase(
+        @Devotion contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): GetContentDataStoreAnswersFlow {
+        return GetContentDataStoreAnswersFlow(contentDataSourceFlowRepository)
+    }
+
+    @Devotion
+    @Provides
+    @Singleton
+    fun provideDevotionSetContentAnswersDataStoreUseCase(
+        @Devotion contentDataSourceFlowRepository: ContentDataSourceFlowRepository
+    ): SetContentDataStoreAnswers {
+        return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
     }
 
     @Provides
