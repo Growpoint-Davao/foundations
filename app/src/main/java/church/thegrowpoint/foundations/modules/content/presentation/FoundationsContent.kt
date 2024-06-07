@@ -112,7 +112,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun FoundationsContent(
     contentViewModel: ContentViewModel,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    salvationViewModel: SalvationViewModel = hiltViewModel(),
+    lordShipViewModel: LordshipViewModel = hiltViewModel(),
+    identityViewModel: IdentityViewModel = hiltViewModel(),
+    powerViewModel: PowerViewModel = hiltViewModel(),
+    devotionViewModel: DevotionViewModel = hiltViewModel(),
+    churchViewModel: ChurchViewModel = hiltViewModel(),
+    discipleshipViewModel: DiscipleshipViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     var topBarTitle by rememberSaveable {
@@ -321,6 +328,13 @@ fun FoundationsContent(
                     Content(
                         navController = navController,
                         contentViewModel = contentViewModel,
+                        salvationViewModel = salvationViewModel,
+                        lordShipViewModel = lordShipViewModel,
+                        identityViewModel = identityViewModel,
+                        powerViewModel = powerViewModel,
+                        devotionViewModel = devotionViewModel,
+                        churchViewModel = churchViewModel,
+                        discipleshipViewModel = discipleshipViewModel,
                         pageContentState = pageContentState
                     )
                 }
@@ -377,21 +391,19 @@ fun FoundationsContent(
 fun Content(
     modifier: Modifier = Modifier,
     contentViewModel: ContentViewModel,
+    salvationViewModel: SalvationViewModel = hiltViewModel(),
+    lordShipViewModel: LordshipViewModel = hiltViewModel(),
+    identityViewModel: IdentityViewModel = hiltViewModel(),
+    powerViewModel: PowerViewModel = hiltViewModel(),
+    devotionViewModel: DevotionViewModel = hiltViewModel(),
+    churchViewModel: ChurchViewModel = hiltViewModel(),
+    discipleshipViewModel: DiscipleshipViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController(),
     pageContentState: LazyListState = rememberLazyListState()
 ) {
     // TODO: resolve start destination
     val initialSectionDestination = Routes.GETTING_STARTED.route
     contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
-
-    // page view models
-    val salvationViewModel: SalvationViewModel = hiltViewModel()
-    val lordShipViewModel: LordshipViewModel = hiltViewModel()
-    val identityViewModel: IdentityViewModel = hiltViewModel()
-    val powerViewModel: PowerViewModel = hiltViewModel()
-    val devotionViewModel: DevotionViewModel = hiltViewModel()
-    val churchViewModel: ChurchViewModel = hiltViewModel()
-    val discipleshipViewModel: DiscipleshipViewModel = hiltViewModel()
 
     NavHost(
         modifier = modifier.fillMaxSize(),
