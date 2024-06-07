@@ -1,6 +1,5 @@
 package church.thegrowpoint.foundations
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,9 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,12 +23,26 @@ import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DiscipleshipViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModels()
+    private val salvationViewModel: SalvationViewModel by viewModels()
+    private val lordShipViewModel: LordshipViewModel by viewModels()
+    private val identityViewModel: IdentityViewModel by viewModels()
+    private val powerViewModel: PowerViewModel by viewModels()
+    private val devotionViewModel: DevotionViewModel by viewModels()
+    private val churchViewModel: ChurchViewModel by viewModels()
+    private val discipleshipViewModel: DiscipleshipViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -90,6 +100,13 @@ class MainActivity : ComponentActivity() {
                             composable(route = Routes.CONTENT.route) {
                                 FoundationsContent(
                                     authViewModel = authViewModel,
+                                    salvationViewModel = salvationViewModel,
+                                    lordShipViewModel = lordShipViewModel,
+                                    identityViewModel = identityViewModel,
+                                    powerViewModel = powerViewModel,
+                                    devotionViewModel = devotionViewModel,
+                                    churchViewModel = churchViewModel,
+                                    discipleshipViewModel = discipleshipViewModel,
                                     contentViewModel = hiltViewModel()
                                 )
                             }
