@@ -132,7 +132,9 @@ fun LoginScreen(
             },
             isError = !pwLengthValid,
             supportingText = stringResource(R.string.password_is_too_short)
-        )
+        ) {
+
+        }
         Spacer(modifier = Modifier.height(16.dp))
         LargeButton(
             modifier = Modifier.fillMaxWidth(),
@@ -156,13 +158,6 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            SurfaceThemedIconButton(
-                modifier = Modifier.weight(1f),
-                icon = painterResource(R.drawable.facebook_logo),
-                text = stringResource(R.string.facebook)
-            ) {
-
-            }
             Spacer(modifier = Modifier.width(16.dp))
             SurfaceThemedIconButton(
                 modifier = Modifier.weight(1f),

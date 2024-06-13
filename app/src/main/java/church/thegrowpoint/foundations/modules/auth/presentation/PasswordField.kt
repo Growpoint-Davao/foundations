@@ -1,6 +1,8 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -31,7 +33,8 @@ fun PasswordField(
     label: String = stringResource(R.string.password),
     isError: Boolean = false,
     imeAction: ImeAction = ImeAction.Done,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    onPasswordDone: (KeyboardActionScope.() -> Unit)? = null
 ) {
     var showPassword by remember { mutableStateOf(false) }
 
@@ -62,7 +65,10 @@ fun PasswordField(
         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
-            imeAction = imeAction
+            imeAction = imeAction,
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = onPasswordDone
         )
     )
 }
