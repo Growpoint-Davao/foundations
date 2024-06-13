@@ -137,14 +137,28 @@ class AuthViewModel @Inject constructor(
     fun signIn(
         email: String,
         password: String,
-        onSignIn: (user: User?, exception: Exception?) -> Unit
+        onSignIn: ((user: User?, exception: Exception?) -> Unit)? = null
     ) {
         viewModelScope.launch(dispatcher) {
-            val signInResult = signInWithEmailAndPasswordUseCase(email = email, password = password)
-            val user = signInResult?.user
-            val exception = signInResult?.exception
-            onSignIn(user, exception)
-            setCurrentUser(user)
+            try {
+                val signInResult = signInWithEmailAndPasswordUseCase(email = email, password = password)
+                val user = signInResult?.user
+                val exception = signInResult?.exception
+
+                if (onSignIn != null) {
+                    onSignIn(user, exception)
+                }
+
+                if (exception !=null) {
+                    exception.message?.let { showToastMessage(it) }
+                }
+
+                setCurrentUser(user)
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+                e.message?.let { showToastMessage(it) }
+            }
         }
     }
 

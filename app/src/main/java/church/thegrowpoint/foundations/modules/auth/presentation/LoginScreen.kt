@@ -133,7 +133,7 @@ fun LoginScreen(
             isError = !pwLengthValid,
             supportingText = stringResource(R.string.password_is_too_short)
         ) {
-
+            authViewModel.signIn(email = email, password = password)
         }
         Spacer(modifier = Modifier.height(16.dp))
         LargeButton(
@@ -141,7 +141,7 @@ fun LoginScreen(
             text = stringResource(R.string.sign_in),
             enabled = enableSignInButton
         ) {
-
+            authViewModel.signIn(email = email, password = password)
         }
         Spacer(modifier = Modifier.height(16.dp))
         ClickableLabel(
