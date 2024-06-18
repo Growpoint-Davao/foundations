@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -65,6 +66,7 @@ fun RegistrationScreen(
             Column(
                 modifier = modifier
                     .padding(innerPadding)
+                    .imePadding()
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -102,7 +104,13 @@ fun RegistrationScreen(
                         },
                         isError = !confirmPwLengthValid,
                         supportingText = stringResource(R.string.password_is_too_short)
-                    )
+                    ) {
+                        authViewModel.register(
+                            email = email,
+                            password = password,
+                            onSuccessMessage = context.getString(R.string.registration_is_successful)
+                        )
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
