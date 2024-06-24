@@ -61,7 +61,7 @@ class ContentViewModel @Inject constructor(
         Routes.POWER.route to mapOf(
             "titleResID" to R.string.power,
             "previous" to Routes.IDENTITY.route,
-            "pages" to 5,
+            "pages" to 7,
             "next" to Routes.DEVOTION.route
         ),
         Routes.DEVOTION.route to mapOf(

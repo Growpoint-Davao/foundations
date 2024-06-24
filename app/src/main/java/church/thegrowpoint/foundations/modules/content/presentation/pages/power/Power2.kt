@@ -29,7 +29,6 @@ fun Power2(
     val answers = viewModel.uiState.collectAsState().value.answers
     val answer1 = answers["1"] ?: ""
     val answer2 = answers["2"] ?: ""
-    val answer3 = answers["3"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -77,16 +76,6 @@ fun Power2(
                     end = 16.dp
                 )
             )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer3,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
-            ) {
-                viewModel.updateAnswerState(key = "3", answer = it)
-            }
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

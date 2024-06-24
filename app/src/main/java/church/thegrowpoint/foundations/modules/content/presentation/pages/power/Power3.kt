@@ -27,10 +27,9 @@ fun Power3(
     viewModel: PowerViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
+    val answer3 = answers["3"] ?: ""
     val answer4 = answers["4"] ?: ""
     val answer5 = answers["5"] ?: ""
-    val answer6 = answers["6"] ?: ""
-    val answer7 = answers["7"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -49,12 +48,31 @@ fun Power3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
+                value = answer3,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
+            ) {
+                viewModel.updateAnswerState(key = "3", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.power_page_3_part_2),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
                 value = answer4
             ) {
                 viewModel.updateAnswerState(key = "4", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.power_page_3_part_2),
+                markdown = stringResource(R.string.power_page_3_part_3),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -70,42 +88,7 @@ fun Power3(
                 viewModel.updateAnswerState(key = "5", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.power_page_3_part_3),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer6
-            ) {
-                viewModel.updateAnswerState(key = "6", answer = it)
-            }
-            ContentMarkdown(
                 markdown = stringResource(R.string.power_page_3_part_4),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer7,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
-            ) {
-                viewModel.updateAnswerState(key = "7", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.power_page_3_part_5),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

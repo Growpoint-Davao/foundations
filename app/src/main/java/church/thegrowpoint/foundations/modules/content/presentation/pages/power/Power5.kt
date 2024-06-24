@@ -27,8 +27,7 @@ fun Power5(
     viewModel: PowerViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer9 = answers["9"] ?: ""
-    val answer10 = answers["10"] ?: ""
+    val answer8 = answers["8"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -47,31 +46,15 @@ fun Power5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer9
-            ) {
-                viewModel.updateAnswerState(key = "9", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.power_page_5_part_2),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer10,
+                value = answer8,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "10", answer = it)
+                viewModel.updateAnswerState(key = "8", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.power_page_5_part_3),
+                markdown = stringResource(R.string.power_page_5_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

@@ -21,14 +21,14 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.P
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
-fun Power4(
+fun Power6(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     viewModel: PowerViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer6 = answers["6"] ?: ""
-    val answer7 = answers["7"] ?: ""
+    val answer9a = answers["9a"] ?: ""
+    val answer9b = answers["9b"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -36,7 +36,7 @@ fun Power4(
     ) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.power_page_4_part_1),
+                markdown = stringResource(R.string.power_page_6_part_1),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -47,12 +47,12 @@ fun Power4(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer6
+                value = answer9a
             ) {
-                viewModel.updateAnswerState(key = "6", answer = it)
+                viewModel.updateAnswerState(key = "9a", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.power_page_4_part_2),
+                markdown = stringResource(R.string.power_page_6_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -63,15 +63,15 @@ fun Power4(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer7,
+                value = answer9b,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "7", answer = it)
+                viewModel.updateAnswerState(key = "9b", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.power_page_4_part_3),
+                markdown = stringResource(R.string.power_page_6_part_3),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

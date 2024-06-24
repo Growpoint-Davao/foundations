@@ -86,6 +86,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.power.
 import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation10
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation2
@@ -562,6 +564,14 @@ fun Content(
 
             composable(route = "${Routes.POWER.route}/5") {
                 Power5(state = pageContentState, viewModel = powerViewModel)
+            }
+
+            composable(route = "${Routes.POWER.route}/6") {
+                Power6(state = pageContentState, viewModel = powerViewModel)
+            }
+
+            composable(route = "${Routes.POWER.route}/7") {
+                Power7(state = pageContentState)
             }
         }
 
