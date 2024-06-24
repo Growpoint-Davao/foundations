@@ -1,11 +1,10 @@
 package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
-import church.thegrowpoint.foundations.modules.Lordship
 import church.thegrowpoint.foundations.modules.Power
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
-import church.thegrowpoint.foundations.modules.content.presentation.states.LordshipAnswersUIState
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.PowerAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -20,11 +19,13 @@ class PowerViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Power getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Power setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    @Power setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<PowerAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     override val mutableUIState = MutableStateFlow(PowerAnswersUIState())

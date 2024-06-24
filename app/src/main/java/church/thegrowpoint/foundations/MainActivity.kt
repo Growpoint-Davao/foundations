@@ -69,6 +69,10 @@ class MainActivity : ComponentActivity() {
                             startDestination = Routes.CONTENT.route
                         }
 
+                        if (authState.currentUser != null) {
+
+                        }
+
                         NavHost(
                             navController = navController,
                             startDestination = startDestination
@@ -118,5 +122,18 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // save answers to remote source
+        salvationViewModel.saveAnswersToRemoteSource()
+        lordShipViewModel.saveAnswersToRemoteSource()
+        identityViewModel.saveAnswersToRemoteSource()
+        powerViewModel.saveAnswersToRemoteSource()
+        devotionViewModel.saveAnswersToRemoteSource()
+        churchViewModel.saveAnswersToRemoteSource()
+        discipleshipViewModel.saveAnswersToRemoteSource()
     }
 }

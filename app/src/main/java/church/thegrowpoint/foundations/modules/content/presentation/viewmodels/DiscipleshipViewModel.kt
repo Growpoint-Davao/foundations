@@ -2,11 +2,10 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
 import church.thegrowpoint.foundations.modules.Discipleship
-import church.thegrowpoint.foundations.modules.Salvation
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.DiscipleshipAnswersUIState
-import church.thegrowpoint.foundations.modules.content.presentation.states.SalvationAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,11 +19,13 @@ class DiscipleshipViewModel@Inject constructor(
     @ApplicationContext context: Context,
     @Discipleship getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Discipleship setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    @Discipleship setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ) : BasePageViewModel<DiscipleshipAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state

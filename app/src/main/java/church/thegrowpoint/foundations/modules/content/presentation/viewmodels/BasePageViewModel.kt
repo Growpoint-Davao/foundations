@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.AnswersUIState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,7 @@ abstract class BasePageViewModel<T : AnswersUIState>(
     context: Context,
     private val getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     private val setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    private val setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     protected val dispatcher: CoroutineDispatcher
 ): BaseViewModel(context) {
     // ui state
@@ -60,6 +62,14 @@ abstract class BasePageViewModel<T : AnswersUIState>(
      */
     protected abstract fun createStateCopy(currentState: T, answers: HashMap<String, String>): T
 
+    protected open fun convertStateToMap(): Map<String, Any>? {
+        if (uiState.value.answers.isNotEmpty()) {
+            return uiState.value.answers
+        }
+
+        return null
+    }
+
     /**
      * Sets the answer for the given key. This will also update the data store.
      *
@@ -91,6 +101,17 @@ abstract class BasePageViewModel<T : AnswersUIState>(
         if (answers != uiState.value) {
             mutableUIState.update { currentState ->
                 createStateCopy(currentState, answers)
+            }
+        }
+    }
+
+    fun saveAnswersToRemoteSource() {
+        viewModelScope.launch(dispatcher) {
+            setContentRemoteAnswersUseCase?.let {
+                val data = convertStateToMap()
+                if (data != null) {
+                    it(data)
+                }
             }
         }
     }
