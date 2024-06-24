@@ -27,8 +27,7 @@ fun Identity4(
     viewModel: IdentityViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer5 = answers["5"] ?: ""
-    val answer6 = answers["6"] ?: ""
+    val answer4 = answers["4"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -47,31 +46,15 @@ fun Identity4(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer5
-            ) {
-                viewModel.updateAnswerState(key = "5", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_4_part_2),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer6,
+                value = answer4,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "6", answer = it)
+                viewModel.updateAnswerState(key = "4", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_4_part_3),
+                markdown = stringResource(R.string.identity_page_4_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

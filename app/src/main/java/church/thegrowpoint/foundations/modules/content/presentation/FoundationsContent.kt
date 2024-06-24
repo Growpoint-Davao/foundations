@@ -72,6 +72,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.identi
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship3
@@ -510,7 +512,7 @@ fun Content(
             route = Routes.IDENTITY.route
         ) {
             composable(route = "${Routes.IDENTITY.route}/1") {
-                Identity1(state = pageContentState, viewModel = identityViewModel)
+                Identity1(state = pageContentState)
             }
 
             composable(route = "${Routes.IDENTITY.route}/2") {
@@ -527,6 +529,14 @@ fun Content(
 
             composable(route = "${Routes.IDENTITY.route}/5") {
                 Identity5(state = pageContentState, viewModel = identityViewModel)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/6") {
+                Identity6(state = pageContentState, viewModel = identityViewModel)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/7") {
+                Identity7(state = pageContentState)
             }
         }
 
