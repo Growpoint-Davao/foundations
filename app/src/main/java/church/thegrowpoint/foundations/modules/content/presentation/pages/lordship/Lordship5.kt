@@ -27,8 +27,8 @@ fun Lordship5(
     viewModel: LordshipViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer7 = answers["7"] ?: ""
     val answer8 = answers["8"] ?: ""
+    val answer9 = answers["9"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -47,9 +47,12 @@ fun Lordship5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer7
+                value = answer8,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
             ) {
-                viewModel.updateAnswerState(key = "7", answer = it)
+                viewModel.updateAnswerState(key = "8", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_5_part_2),
@@ -63,12 +66,9 @@ fun Lordship5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer8,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
+                value = answer9
             ) {
-                viewModel.updateAnswerState(key = "8", answer = it)
+                viewModel.updateAnswerState(key = "9", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

@@ -29,6 +29,7 @@ fun Lordship4(
     val answers = viewModel.uiState.collectAsState().value.answers
     val answer5 = answers["5"] ?: ""
     val answer6 = answers["6"] ?: ""
+    val answer7 = answers["7"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -69,6 +70,22 @@ fun Lordship4(
                 )
             ) {
                 viewModel.updateAnswerState(key = "6", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.lordship_page_4_part_3),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
+                value = answer7
+            ) {
+                viewModel.updateAnswerState(key = "7", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }
