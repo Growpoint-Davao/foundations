@@ -4,6 +4,7 @@ import android.content.Context
 import church.thegrowpoint.foundations.modules.Church
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.ChurchAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,11 +19,13 @@ class ChurchViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Church getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Church setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    @Church setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<ChurchAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state

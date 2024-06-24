@@ -134,12 +134,12 @@ fun Identity1(
         viewModel.setBooleanAnswerState("theClothsIWear", theClothsIWearAnswer.value)
     }
     LaunchedEffect(othersAnswer.value) {
-        viewModel.setBooleanAnswerState("others", othersAnswer.value)
+        viewModel.setBooleanAnswerState("othersAnswer", othersAnswer.value)
     }
 
     val identityUIState = viewModel.uiState.collectAsState().value
     val answers = identityUIState.answers
-    val othersAnswers = answers["others"] ?: ""
+    val othersAnswers = answers["othersAnswer"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -258,7 +258,7 @@ fun Identity1(
                         singleLine = true,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     ) {
-                        viewModel.updateAnswerState(key = "others", answer = it)
+                        viewModel.updateAnswerState(key = "othersAnswer", answer = it)
                     }
                 }
                 ContentMarkdown(

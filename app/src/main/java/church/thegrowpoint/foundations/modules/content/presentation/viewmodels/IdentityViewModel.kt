@@ -7,6 +7,7 @@ import church.thegrowpoint.foundations.modules.content.domain.usecases.GetConten
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreBooleanAnswer
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.IdentityAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,16 +27,55 @@ class IdentityViewModel @Inject constructor(
     @Identity setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     @Identity private val getContentBooleanAnswerDataStoreFlowUseCase: GetContentBooleanAnswerDataStoreFlow,
     @Identity private val setContentDataStoreBooleanAnswerUseCase: SetContentDataStoreBooleanAnswer,
+    @Identity setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<IdentityAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state
     override val mutableUIState = MutableStateFlow(IdentityAnswersUIState())
     override val uiState: StateFlow<IdentityAnswersUIState> = mutableUIState.asStateFlow()
+
+    override fun convertStateToMap(): Map<String, Any>? {
+        if (uiState.value.answers.isEmpty() && areIdentitiesFalse()) {
+            return null
+        }
+
+        val answersData = HashMap<String, Any>()
+
+        answersData.putAll(uiState.value.answers)
+
+        answersData["whatOthersThinkOfMe"] = uiState.value.whatOthersThinkOfMe
+        answersData["myWeaknesses"] = uiState.value.myWeaknesses
+        answersData["myGradePointAverage"] = uiState.value.myGradePointAverage
+        answersData["myPhysicalStrengths"] = uiState.value.myPhysicalStrengths
+        answersData["whatILookInTheMirror"] = uiState.value.whatILookInTheMirror
+        answersData["myFriendsIHangoutWith"] = uiState.value.myFriendsIHangoutWith
+        answersData["myTalentsAndAbilities"] = uiState.value.myTalentsAndAbilities
+        answersData["myIntelligence"] = uiState.value.myIntelligence
+        answersData["whatMyFamilySaysAboutMe"] = uiState.value.whatMyFamilySaysAboutMe
+        answersData["myFamilyReputation"] = uiState.value.myFamilyReputation
+        answersData["myAttitude"] = uiState.value.myAttitude
+        answersData["whatGodSaysAboutMe"] = uiState.value.whatGodSaysAboutMe
+        answersData["theClothsIWear"] = uiState.value.theClothsIWear
+        answersData["others"] = uiState.value.others
+
+        return answersData
+    }
+
+    private fun areIdentitiesFalse(): Boolean {
+        return !uiState.value.whatOthersThinkOfMe && !uiState.value.myWeaknesses
+                && !uiState.value.myGradePointAverage && !uiState.value.myPhysicalStrengths
+                && !uiState.value.whatILookInTheMirror && !uiState.value.myFriendsIHangoutWith
+                && !uiState.value.myTalentsAndAbilities && !uiState.value.myIntelligence
+                && !uiState.value.whatMyFamilySaysAboutMe && !uiState.value.myFamilyReputation
+                && !uiState.value.myAttitude && !uiState.value.whatGodSaysAboutMe
+                && !uiState.value.theClothsIWear && !uiState.value.others
+    }
 
     /**
      * Get boolean answer flow.

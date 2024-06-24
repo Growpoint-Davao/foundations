@@ -18,12 +18,15 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGo
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.content.data.datasources.ContentLocalDataSourceImplementation
+import church.thegrowpoint.foundations.modules.content.data.datasources.FirestoreRemoteDataSource
+import church.thegrowpoint.foundations.modules.content.data.repositories.ContentRemoteRepositoryImplementation
 import church.thegrowpoint.foundations.modules.content.data.repositories.LocalDataSourceFlowRepository
 import church.thegrowpoint.foundations.modules.content.domain.repositories.ContentDataSourceFlowRepository
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentBooleanAnswerDataStoreFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreBooleanAnswer
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -333,6 +336,146 @@ internal object AppModule {
         @Discipleship contentDataSourceFlowRepository: ContentDataSourceFlowRepository
     ): SetContentDataStoreAnswers {
         return SetContentDataStoreAnswers(contentDataSourceFlowRepository)
+    }
+
+    @Salvation
+    @Provides
+    @Singleton
+    fun provideSalvationSetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.SALVATION.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
+    }
+
+    @Lordship
+    @Provides
+    @Singleton
+    fun provideLordshipSetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.LORDSHIP.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
+    }
+
+    @Identity
+    @Provides
+    @Singleton
+    fun provideIdentitySetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.IDENTITY.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
+    }
+
+    @Power
+    @Provides
+    @Singleton
+    fun providePowerSetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.POWER.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
+    }
+
+    @Devotion
+    @Provides
+    @Singleton
+    fun provideDevotionSetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.DEVOTION.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
+    }
+
+    @Church
+    @Provides
+    @Singleton
+    fun provideChurchSetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.CHURCH.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
+    }
+
+    @Discipleship
+    @Provides
+    @Singleton
+    fun provideDiscipleshipSetContentRemoteAnswers(): SetContentRemoteAnswers? {
+        // get the current user, if no current user them return null
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return null
+
+        // the remote data source instance for salvation section
+        val dataSource = FirestoreRemoteDataSource(
+            collection = Routes.DISCIPLESHIP.route,
+            userID = currentUser.uid,
+            db = Firebase.firestore
+        )
+
+        // the remote repository instance for salvation section
+        val remoteRepository = ContentRemoteRepositoryImplementation(dataSource)
+
+        return SetContentRemoteAnswers(remoteRepository)
     }
 
     @Provides

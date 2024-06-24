@@ -4,6 +4,7 @@ import android.content.Context
 import church.thegrowpoint.foundations.modules.Salvation
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.SalvationAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,11 +26,13 @@ class SalvationViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Salvation getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Salvation setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    @Salvation setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ) : BasePageViewModel<SalvationAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state

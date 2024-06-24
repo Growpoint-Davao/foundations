@@ -4,6 +4,7 @@ import android.content.Context
 import church.thegrowpoint.foundations.modules.Lordship
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.LordshipAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,11 +19,13 @@ class LordshipViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Lordship getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Lordship setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    @Lordship setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<LordshipAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state

@@ -4,6 +4,7 @@ import android.content.Context
 import church.thegrowpoint.foundations.modules.Devotion
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
+import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.DevotionAnswersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,11 +19,13 @@ class DevotionViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Devotion getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Devotion setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
+    @Devotion setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<DevotionAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
+    setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state
