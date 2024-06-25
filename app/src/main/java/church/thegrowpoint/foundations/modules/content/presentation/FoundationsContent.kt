@@ -59,6 +59,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.devoti
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship3
@@ -597,6 +599,14 @@ fun Content(
 
             composable(route = "${Routes.DEVOTION.route}/5") {
                 Devotion5(state = pageContentState, viewModel = devotionViewModel)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/6") {
+                Devotion6(state = pageContentState, viewModel = devotionViewModel)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/7") {
+                Devotion7(state = pageContentState)
             }
         }
 
