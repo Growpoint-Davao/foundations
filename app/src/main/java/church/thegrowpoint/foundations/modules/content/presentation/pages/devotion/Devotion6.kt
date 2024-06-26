@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation.pages.identity
+package church.thegrowpoint.foundations.modules.content.presentation.pages.devotion
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -17,18 +17,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
-fun Identity5(
+fun Devotion6(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: IdentityViewModel = hiltViewModel()
+    viewModel: DevotionViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer5 = answers["5"] ?: ""
-    val answer6 = answers["6"] ?: ""
+    val answer7 = answers["7"] ?: ""
+    val answer8 = answers["8"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -36,7 +36,7 @@ fun Identity5(
     ) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_5_part_1),
+                markdown = stringResource(R.string.devotion_page_6_part_1),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -47,12 +47,12 @@ fun Identity5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer5
+                value = answer7
             ) {
-                viewModel.updateAnswerState(key = "5", answer = it)
+                viewModel.updateAnswerState(key = "7", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_5_part_2),
+                markdown = stringResource(R.string.devotion_page_6_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -63,22 +63,13 @@ fun Identity5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer6,
+                value = answer8,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "6", answer = it)
+                viewModel.updateAnswerState(key = "8", answer = it)
             }
-            ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_5_part_3),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

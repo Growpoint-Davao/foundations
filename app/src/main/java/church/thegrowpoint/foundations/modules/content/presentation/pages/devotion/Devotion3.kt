@@ -27,10 +27,9 @@ fun Devotion3(
     viewModel: DevotionViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer4 = answers["4"] ?: ""
-    val answer5 = answers["5"] ?: ""
-    val answer6 = answers["6"] ?: ""
-    val answer7 = answers["7"] ?: ""
+    val answer3 = answers["3"] ?: ""
+    val answer4a = answers["4a"] ?: ""
+    val answer4b = answers["4b"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -49,9 +48,12 @@ fun Devotion3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer4
+                value = answer3,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
             ) {
-                viewModel.updateAnswerState(key = "4", answer = it)
+                viewModel.updateAnswerState(key = "3", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_3_part_2),
@@ -65,9 +67,9 @@ fun Devotion3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer5
+                value = answer4a
             ) {
-                viewModel.updateAnswerState(key = "5", answer = it)
+                viewModel.updateAnswerState(key = "4a", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_3_part_3),
@@ -81,28 +83,9 @@ fun Devotion3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer6
+                value = answer4b
             ) {
-                viewModel.updateAnswerState(key = "6", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.devotion_page_3_part_4),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer7,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
-            ) {
-                viewModel.updateAnswerState(key = "7", answer = it)
+                viewModel.updateAnswerState(key = "4b", answer = it)
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

@@ -27,7 +27,9 @@ fun Identity3(
     viewModel: IdentityViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer4 = answers["4"] ?: ""
+    val answer1 = answers["1"] ?: ""
+    val answer2 = answers["2"] ?: ""
+    val answer3 = answers["3"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -46,15 +48,47 @@ fun Identity3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer4,
+                value = answer1
+            ) {
+                viewModel.updateAnswerState(key = "1", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.identity_page_3_part_2),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
+                value = answer2
+            ) {
+                viewModel.updateAnswerState(key = "2", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.identity_page_3_part_3),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
+                value = answer3,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "4", answer = it)
+                viewModel.updateAnswerState(key = "3", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_3_part_2),
+                markdown = stringResource(R.string.identity_page_3_part_4),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

@@ -60,25 +60,6 @@ fun Church2(
                     end = 16.dp
                 )
             )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer2,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
-            ) {
-                viewModel.updateAnswerState(key = "2", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.church_page_2_part_3),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

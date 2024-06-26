@@ -9,12 +9,12 @@
 
         > *But in your hearts honor Christ the Lord as holy, always being prepared to make a defense to anyone who asks you for a reason for the hope that is in you (I Peter 3:15)*\n\n
 
-        > *As he was getting into the boat, the man who had been possessed with demons begged him that he might be with him. And he did not permit him but said to him, “Go home and tell your friends and tell them how much the Lord has done for you, and how he has had mercy on you (Mark 5:18-19)*\n\n
-
-        If you were the Doctor who discovered the miracle cure for cancer, wouldn’t you want everyone to know about your discovery? You now have a miracle cure for something more deadly than cancer. You have the solution for sin. Making disciples starts with sharing the good news of God’s solution for sin with your family and friends. To be prepared to tell others about the hope of salvation, we must learn how to give our testimony and preach the gospel. As we do this, we are starting to make disciples.
+        > *As he was getting into the boat, the man who had been possessed with demons begged him that he might be with him. And he did not permit him but said to him, “Go home and tell your friends and tell them how much the Lord has done for you, and how he has had mercy on you (Mark 5:18-19)*
     </string>
 
     <string name="discipleship_page_2_part_1">
+        If you were the Doctor who discovered the miracle cure for cancer, wouldn’t you want everyone to know about your discovery? You now have a miracle cure for something more deadly than cancer. You have the solution for sin. Making disciples starts with sharing the good news of God’s solution for sin with your family and friends. To be prepared to tell others about the hope of salvation, we must learn how to give our testimony and preach the gospel. As we do this, we are starting to make disciples.\n\n
+
         ## How to Give Your Testimony\n\n
 
         In a court of law, a witness tells the truth and nothing but the truth about what he has seen, heard and experienced. **We are called to be God’s witnesses**. We are, to tell the truth about what he has done for, in, and through us, as we share our testimony.\n\n
@@ -23,31 +23,33 @@
 
         The word of your testimony is powerful. It is a personal, irrefutable account of what Jesus has done for you and how he has changed your life.\n\n
 
-        There are three parts to sharing your testimony, which is your two-minute miracle.\n\n
-
-        1. Briefly describe your life before Christ.
-    </string>
-
-    <string name="discipleship_page_2_part_2">
-        2. Carefully explain how you came to the point of submitting your life to Christ.
-    </string>
-
-    <string name="discipleship_page_2_part_3">
-        3. Joyfully describe your life since Jesus became Lord. Take more time to explain how your life has changed since you surrendered to Christ.
-    </string>
-
-    <string name="discipleship_page_2_part_4">
-        > *And they have conquered him by the blood of the lamb and by the word of their testimony, for they loved not their lives even unto death (Revelation 12:11)*
+        There are three parts to sharing your testimony, which is your two-minute miracle.
     </string>
 
     <string name="discipleship_page_3_part_1">
+        1. Briefly describe your life before Christ.
+    </string>
+
+    <string name="discipleship_page_3_part_2">
+        2. Carefully explain how you came to the point of submitting your life to Christ.
+    </string>
+
+    <string name="discipleship_page_3_part_3">
+        3. Joyfully describe your life since Jesus became Lord. Take more time to explain how your life has changed since you surrendered to Christ.
+    </string>
+
+    <string name="discipleship_page_3_part_4">
+        > *And they have conquered him by the blood of the lamb and by the word of their testimony, for they loved not their lives even unto death (Revelation 12:11)*
+    </string>
+
+    <string name="discipleship_page_4_part_1">
         ## How to Preach the Gospel\n\n
 
         1. What does Romans 1:16 teach us about the gospel?\n
         > *For I am not ashamed of the gospel, for it is **the power of God for salvation** to everyone who believes, to the Jew first and also to the Greek (Romans 1:16)*\n
     </string>
 
-    <string name="discipleship_page_3_part_2">
+    <string name="discipleship_page_4_part_2">
         The gospel is the power of God for the salvation of all who believe. It is the reason we engage culture and community, become witnesses, and share our testimony.\n\n
 
         2. Preach the gospel using two simple verses to your family and friends.\n
@@ -55,19 +57,20 @@
 
         Why is this verse important?
     </string>
+    <string name="discipleship_page_4_part_3">
+        **Everyone has sinned**. A sin is an act of disobedience or rebellion against God and the truth is, not a single person on earth has perfectly obeyed God’s commandments.
+    </string>
 
-    <string name="discipleship_page_4_part_1">
-        **Everyone has sinned**. A sin is an act of disobedience or rebellion against God and the truth is, not a single person on earth has perfectly obeyed God’s commandments.\n\n
-
+    <string name="discipleship_page_5_part_1">
         > *For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord (Romans 6:23)*\n\n
 
         What is this verse teaching about the consequences of our sin?
     </string>
 
-    <string name="discipleship_page_4_part_2">
+    <string name="discipleship_page_5_part_2">
         Since we have all sinned, we deserve death and are disqualified from even being in God’s presence.The good news is salvation is a gift from God. **Salvation is found in Christ alone because he died on the cross for us, in our place**. We received this gift by faith as we trust in his finished work on the cross.
 
-        After you have presented the gospel to your family and friends, feel free to lead them in prayer.
+        After you have presented the gospel to your family and friends, feel free to lead them in prayer.\n\n
 
         ## How to Make Disciples\n\n
 
@@ -77,11 +80,11 @@
         > *And what you have heard from me in the presence of many witnesses entrust to faithful men who will be able to teach others also (2 Timothy 2:2)*
     </string>
 
-    <string name="discipleship_page_4_part_3">
+    <string name="discipleship_page_5_part_3">
         We make disciples as **we introduce people to Jesus and teach them how to obey God’s commands**. Paul told Timothy to transfer everything he had learned to others who would be able to teach it to others this is discipleship.
     </string>
 
-    <string name="discipleship_page_5">
+    <string name="discipleship_page_6">
         ## Personal Application\n\n
 
         * Is your life a witness for God?\n

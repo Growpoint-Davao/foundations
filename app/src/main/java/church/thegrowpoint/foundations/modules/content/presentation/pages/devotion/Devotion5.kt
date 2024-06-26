@@ -27,8 +27,10 @@ fun Devotion5(
     viewModel: DevotionViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer12 = answers["12"] ?: ""
-    val answer13 = answers["13"] ?: ""
+    val answer5 = answers["5"] ?: ""
+    val answer6a = answers["6a"] ?: ""
+    val answer6b = answers["6b"] ?: ""
+    val answer6c = answers["6c"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -47,9 +49,9 @@ fun Devotion5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer12
+                value = answer5
             ) {
-                viewModel.updateAnswerState(key = "12", answer = it)
+                viewModel.updateAnswerState(key = "5", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.devotion_page_5_part_2),
@@ -63,15 +65,47 @@ fun Devotion5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer13,
+                value = answer6a
+            ) {
+                viewModel.updateAnswerState(key = "6a", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.devotion_page_5_part_3),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
+                value = answer6b
+            ) {
+                viewModel.updateAnswerState(key = "6b", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.devotion_page_5_part_4),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
+                value = answer6c,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "13", answer = it)
+                viewModel.updateAnswerState(key = "6c", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.devotion_page_5_part_3),
+                markdown = stringResource(R.string.devotion_page_5_part_5),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

@@ -54,16 +54,21 @@ import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship6
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
@@ -72,6 +77,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.identi
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship3
@@ -84,6 +91,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.power.
 import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power6
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power7
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation10
 import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation2
@@ -510,7 +519,7 @@ fun Content(
             route = Routes.IDENTITY.route
         ) {
             composable(route = "${Routes.IDENTITY.route}/1") {
-                Identity1(state = pageContentState, viewModel = identityViewModel)
+                Identity1(state = pageContentState)
             }
 
             composable(route = "${Routes.IDENTITY.route}/2") {
@@ -527,6 +536,14 @@ fun Content(
 
             composable(route = "${Routes.IDENTITY.route}/5") {
                 Identity5(state = pageContentState, viewModel = identityViewModel)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/6") {
+                Identity6(state = pageContentState, viewModel = identityViewModel)
+            }
+
+            composable(route = "${Routes.IDENTITY.route}/7") {
+                Identity7(state = pageContentState)
             }
         }
 
@@ -553,6 +570,14 @@ fun Content(
             composable(route = "${Routes.POWER.route}/5") {
                 Power5(state = pageContentState, viewModel = powerViewModel)
             }
+
+            composable(route = "${Routes.POWER.route}/6") {
+                Power6(state = pageContentState, viewModel = powerViewModel)
+            }
+
+            composable(route = "${Routes.POWER.route}/7") {
+                Power7(state = pageContentState)
+            }
         }
 
         navigation(
@@ -578,6 +603,14 @@ fun Content(
             composable(route = "${Routes.DEVOTION.route}/5") {
                 Devotion5(state = pageContentState, viewModel = devotionViewModel)
             }
+
+            composable(route = "${Routes.DEVOTION.route}/6") {
+                Devotion6(state = pageContentState, viewModel = devotionViewModel)
+            }
+
+            composable(route = "${Routes.DEVOTION.route}/7") {
+                Devotion7(state = pageContentState)
+            }
         }
 
         navigation(
@@ -595,6 +628,14 @@ fun Content(
             composable(route = "${Routes.CHURCH.route}/3") {
                 Church3(state = pageContentState, viewModel = churchViewModel)
             }
+
+            composable(route = "${Routes.CHURCH.route}/4") {
+                Church4(state = pageContentState, viewModel = churchViewModel)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/5") {
+                Church5(state = pageContentState)
+            }
         }
 
         navigation(
@@ -606,7 +647,7 @@ fun Content(
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/2") {
-                Discipleship2(state = pageContentState, viewModel = discipleshipViewModel)
+                Discipleship2(state = pageContentState)
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/3") {
@@ -619,6 +660,10 @@ fun Content(
 
             composable(route = "${Routes.DISCIPLESHIP.route}/5") {
                 Discipleship5(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DISCIPLESHIP.route}/6") {
+                Discipleship6(state = pageContentState)
             }
         }
     }

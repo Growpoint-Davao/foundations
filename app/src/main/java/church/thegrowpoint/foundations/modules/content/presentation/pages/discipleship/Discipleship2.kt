@@ -23,14 +23,8 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 @Composable
 fun Discipleship2(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
-    viewModel: DiscipleshipViewModel = hiltViewModel()
+    state: LazyListState = rememberLazyListState()
 ) {
-    val answers = viewModel.uiState.collectAsState().value.answers
-    val answer1 = answers["1"] ?: ""
-    val answer2 = answers["2"] ?: ""
-    val answer3 = answers["3"] ?: ""
-
     LazyColumn(
         modifier = Modifier.imePadding(),
         state = state
@@ -38,60 +32,6 @@ fun Discipleship2(
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_2_part_1),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                maxLines = 5,
-                value = answer1
-            ) {
-                viewModel.updateAnswerState(key = "1", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.discipleship_page_2_part_2),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                maxLines = 5,
-                value = answer2
-            ) {
-                viewModel.updateAnswerState(key = "2", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.discipleship_page_2_part_3),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                maxLines = 5,
-                value = answer3,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done
-                )
-            ) {
-                viewModel.updateAnswerState(key = "3", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.discipleship_page_2_part_4),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

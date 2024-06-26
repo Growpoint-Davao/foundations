@@ -1,4 +1,4 @@
-package church.thegrowpoint.foundations.modules.content.presentation.pages.identity
+package church.thegrowpoint.foundations.modules.content.presentation.pages.power
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -17,18 +17,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
-fun Identity5(
+fun Power6(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: IdentityViewModel = hiltViewModel()
+    viewModel: PowerViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer5 = answers["5"] ?: ""
-    val answer6 = answers["6"] ?: ""
+    val answer9a = answers["9a"] ?: ""
+    val answer9b = answers["9b"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -36,7 +36,7 @@ fun Identity5(
     ) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_5_part_1),
+                markdown = stringResource(R.string.power_page_6_part_1),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -47,12 +47,12 @@ fun Identity5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer5
+                value = answer9a
             ) {
-                viewModel.updateAnswerState(key = "5", answer = it)
+                viewModel.updateAnswerState(key = "9a", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_5_part_2),
+                markdown = stringResource(R.string.power_page_6_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -63,15 +63,15 @@ fun Identity5(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer6,
+                value = answer9b,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "6", answer = it)
+                viewModel.updateAnswerState(key = "9b", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.identity_page_5_part_3),
+                markdown = stringResource(R.string.power_page_6_part_3),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

@@ -27,7 +27,6 @@ fun Lordship6(
     viewModel: LordshipViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer9 = answers["9"] ?: ""
     val answer10 = answers["10"] ?: ""
     val answer11 = answers["11"] ?: ""
 
@@ -36,22 +35,6 @@ fun Lordship6(
         state = state
     ) {
         item {
-            ContentMarkdown(
-                markdown = stringResource(R.string.lordship_page_6_part_1),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer9
-            ) {
-                viewModel.updateAnswerState(key = "9", answer = it)
-            }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_6_part_2),
                 modifier = modifier.padding(
