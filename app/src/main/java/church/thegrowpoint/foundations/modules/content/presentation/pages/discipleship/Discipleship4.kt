@@ -31,8 +31,8 @@ fun Discipleship4(
     viewModel: DiscipleshipViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer4 = answers["4"] ?: ""
-    val answer5 = answers["5"] ?: ""
+    val answer1 = answers["1"] ?: ""
+    val answer2a = answers["2a"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -51,9 +51,9 @@ fun Discipleship4(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer4
+                value = answer1
             ) {
-                viewModel.updateAnswerState(key = "4", answer = it)
+                viewModel.updateAnswerState(key = "1", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_4_part_2),
@@ -68,12 +68,12 @@ fun Discipleship4(
                 label = "",
                 supportText = "",
                 maxLines = 5,
-                value = answer5,
+                value = answer2a,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "5", answer = it)
+                viewModel.updateAnswerState(key = "2a", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_4_part_3),
