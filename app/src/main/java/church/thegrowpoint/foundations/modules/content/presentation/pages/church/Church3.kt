@@ -27,8 +27,7 @@ fun Church3(
     viewModel: ChurchViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer3 = answers["3"] ?: ""
-    val answer4 = answers["4"] ?: ""
+    val answer2 = answers["2"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -47,31 +46,15 @@ fun Church3(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer3
-            ) {
-                viewModel.updateAnswerState(key = "3", answer = it)
-            }
-            ContentMarkdown(
-                markdown = stringResource(R.string.church_page_3_part_2),
-                modifier = modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            )
-            MultilineLabeledWithSupportTextOutlinedTextField(
-                label = "",
-                supportText = "",
-                value = answer4,
+                value = answer2,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "4", answer = it)
+                viewModel.updateAnswerState(key = "2", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.church_page_3_part_3),
+                markdown = stringResource(R.string.church_page_3_part_2),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,

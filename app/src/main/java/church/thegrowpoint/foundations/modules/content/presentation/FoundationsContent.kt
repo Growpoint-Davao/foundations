@@ -54,6 +54,8 @@ import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church4
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
@@ -624,6 +626,14 @@ fun Content(
 
             composable(route = "${Routes.CHURCH.route}/3") {
                 Church3(state = pageContentState, viewModel = churchViewModel)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/4") {
+                Church4(state = pageContentState, viewModel = churchViewModel)
+            }
+
+            composable(route = "${Routes.CHURCH.route}/5") {
+                Church5(state = pageContentState)
             }
         }
 

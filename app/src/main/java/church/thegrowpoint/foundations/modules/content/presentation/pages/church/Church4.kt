@@ -21,14 +21,14 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.C
 import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSupportTextOutlinedTextField
 
 @Composable
-fun Church2(
+fun Church4(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     viewModel: ChurchViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer1 = answers["1"] ?: ""
-    val answer2 = answers["2"] ?: ""
+    val answer3 = answers["3"] ?: ""
+    val answer4 = answers["4"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -36,7 +36,7 @@ fun Church2(
     ) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.church_page_2_part_1),
+                markdown = stringResource(R.string.church_page_4_part_1),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
@@ -47,12 +47,31 @@ fun Church2(
             MultilineLabeledWithSupportTextOutlinedTextField(
                 label = "",
                 supportText = "",
-                value = answer1
+                value = answer3
             ) {
-                viewModel.updateAnswerState(key = "1", answer = it)
+                viewModel.updateAnswerState(key = "3", answer = it)
             }
             ContentMarkdown(
-                markdown = stringResource(R.string.church_page_2_part_2),
+                markdown = stringResource(R.string.church_page_4_part_2),
+                modifier = modifier.padding(
+                    top = 24.dp,
+                    bottom = 32.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                )
+            )
+            MultilineLabeledWithSupportTextOutlinedTextField(
+                label = "",
+                supportText = "",
+                value = answer4,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                )
+            ) {
+                viewModel.updateAnswerState(key = "4", answer = it)
+            }
+            ContentMarkdown(
+                markdown = stringResource(R.string.church_page_4_part_3),
                 modifier = modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
