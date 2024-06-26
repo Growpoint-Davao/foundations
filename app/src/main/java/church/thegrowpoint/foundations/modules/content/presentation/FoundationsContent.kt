@@ -68,6 +68,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.discip
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship5
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship6
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
@@ -646,7 +647,7 @@ fun Content(
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/2") {
-                Discipleship2(state = pageContentState, viewModel = discipleshipViewModel)
+                Discipleship2(state = pageContentState)
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/3") {
@@ -659,6 +660,10 @@ fun Content(
 
             composable(route = "${Routes.DISCIPLESHIP.route}/5") {
                 Discipleship5(state = pageContentState)
+            }
+
+            composable(route = "${Routes.DISCIPLESHIP.route}/6") {
+                Discipleship6(state = pageContentState)
             }
         }
     }
