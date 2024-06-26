@@ -31,9 +31,9 @@ fun Discipleship3(
     viewModel: DiscipleshipViewModel = hiltViewModel()
 ) {
     val answers = viewModel.uiState.collectAsState().value.answers
-    val answer1 = answers["1"] ?: ""
-    val answer2 = answers["2"] ?: ""
-    val answer3 = answers["3"] ?: ""
+    val howToGiveTestimony1 = answers["howToGiveTestimony1"] ?: ""
+    val howToGiveTestimony2 = answers["howToGiveTestimony2"] ?: ""
+    val howToGiveTestimony3 = answers["howToGiveTestimony3"] ?: ""
 
     LazyColumn(
         modifier = Modifier.imePadding(),
@@ -53,9 +53,9 @@ fun Discipleship3(
                 label = "",
                 supportText = "",
                 maxLines = 5,
-                value = answer1
+                value = howToGiveTestimony1
             ) {
-                viewModel.updateAnswerState(key = "1", answer = it)
+                viewModel.updateAnswerState(key = "howToGiveTestimony1", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_3_part_2),
@@ -70,9 +70,9 @@ fun Discipleship3(
                 label = "",
                 supportText = "",
                 maxLines = 5,
-                value = answer2
+                value = howToGiveTestimony2
             ) {
-                viewModel.updateAnswerState(key = "2", answer = it)
+                viewModel.updateAnswerState(key = "howToGiveTestimony2", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_3_part_3),
@@ -87,12 +87,12 @@ fun Discipleship3(
                 label = "",
                 supportText = "",
                 maxLines = 5,
-                value = answer3,
+                value = howToGiveTestimony3,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 )
             ) {
-                viewModel.updateAnswerState(key = "3", answer = it)
+                viewModel.updateAnswerState(key = "howToGiveTestimony3", answer = it)
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_3_part_4),
