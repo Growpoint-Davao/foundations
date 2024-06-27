@@ -34,5 +34,5 @@ interface ContentDataSourceFlowRepository {
     /**
      * Set answers (which is key value pair of answers)
      */
-    suspend fun setAnswers(answers: HashMap<String, String>)
+    suspend fun setAnswers(answers: Map<String, String>)
 }

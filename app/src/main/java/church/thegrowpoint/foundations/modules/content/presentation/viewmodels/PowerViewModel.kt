@@ -3,6 +3,7 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 import android.content.Context
 import church.thegrowpoint.foundations.modules.Power
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.PowerAnswersUIState
@@ -20,12 +21,14 @@ class PowerViewModel @Inject constructor(
     @Power getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Power setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     @Power setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
+    @Power getContentRemoteAnswersUseCase: GetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<PowerAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
     setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
+    getContentRemoteAnswersUseCase = getContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     override val mutableUIState = MutableStateFlow(PowerAnswersUIState())
@@ -40,5 +43,11 @@ class PowerViewModel @Inject constructor(
         }
 
         return currentState // the same so return the original state
+    }
+
+    override fun restoreRemoteAnswers(data: Map<String, Any?>) {
+        for ((key, value) in data) {
+            updateAnswerState(key = key, answer = value.toString())
+        }
     }
 }

@@ -16,7 +16,7 @@ class SetContentDataStoreAnswers @Inject constructor(
     /**
      * Set answers (which is key value pair of answers)
      */
-    suspend operator fun invoke(answers: HashMap<String, String>) {
+    suspend operator fun invoke(answers: Map<String, String>) {
         return contentDataSourceFlowRepository.setAnswers(answers)
     }
 }

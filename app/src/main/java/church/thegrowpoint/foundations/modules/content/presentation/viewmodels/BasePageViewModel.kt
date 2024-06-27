@@ -1,9 +1,11 @@
 package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.BaseViewModel
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.AnswersUIState
@@ -27,6 +29,7 @@ abstract class BasePageViewModel<T : AnswersUIState>(
     private val getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     private val setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     private val setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
+    private val getContentRemoteAnswersUseCase: GetContentRemoteAnswers? = null,
     protected val dispatcher: CoroutineDispatcher
 ): BaseViewModel(context) {
     // ui state
@@ -61,6 +64,8 @@ abstract class BasePageViewModel<T : AnswersUIState>(
      * @return The new state copy.
      */
     protected abstract fun createStateCopy(currentState: T, answers: HashMap<String, String>): T
+
+    protected abstract fun restoreRemoteAnswers(data: Map<String, Any?>)
 
     protected open fun convertStateToMap(): Map<String, Any>? {
         if (uiState.value.answers.isNotEmpty()) {
@@ -111,6 +116,17 @@ abstract class BasePageViewModel<T : AnswersUIState>(
                 val data = convertStateToMap()
                 if (data != null) {
                     it(data)
+                }
+            }
+        }
+    }
+
+    fun restoreAnswersFromRemoteResource() {
+        viewModelScope.launch(dispatcher) {
+            getContentRemoteAnswersUseCase?.let {
+                val data = it()
+                if (data != null) {
+                    restoreRemoteAnswers(data)
                 }
             }
         }

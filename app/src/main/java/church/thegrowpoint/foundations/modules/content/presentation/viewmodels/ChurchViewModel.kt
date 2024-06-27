@@ -2,7 +2,9 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 
 import android.content.Context
 import church.thegrowpoint.foundations.modules.Church
+import church.thegrowpoint.foundations.modules.Salvation
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.ChurchAnswersUIState
@@ -20,12 +22,14 @@ class ChurchViewModel @Inject constructor(
     @Church getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Church setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     @Church setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
+    @Church getContentRemoteAnswersUseCase: GetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<ChurchAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
     setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
+    getContentRemoteAnswersUseCase = getContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state
@@ -41,5 +45,11 @@ class ChurchViewModel @Inject constructor(
         }
 
         return currentState // the same so return the original state
+    }
+
+    override fun restoreRemoteAnswers(data: Map<String, Any?>) {
+        for ((key, value) in data) {
+            updateAnswerState(key = key, answer = value.toString())
+        }
     }
 }

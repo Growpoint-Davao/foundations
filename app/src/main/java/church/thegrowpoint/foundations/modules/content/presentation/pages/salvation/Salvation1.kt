@@ -27,6 +27,7 @@ fun Salvation1(
     val localSalvationAnswers = viewModel.getDataStoreAnswersFlow().collectAsState(
         initial = HashMap()
     )
+
     LaunchedEffect(localSalvationAnswers.value) {
         // restore answers
         viewModel.setAnswersState(localSalvationAnswers.value)

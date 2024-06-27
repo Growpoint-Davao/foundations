@@ -3,6 +3,7 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 import android.content.Context
 import church.thegrowpoint.foundations.modules.Lordship
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.presentation.states.LordshipAnswersUIState
@@ -20,12 +21,14 @@ class LordshipViewModel @Inject constructor(
     @Lordship getContentAnswersDataStoreFlowUseCase: GetContentDataStoreAnswersFlow,
     @Lordship setContentAnswersDataStoreUseCase: SetContentDataStoreAnswers,
     @Lordship setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
+    @Lordship getContentRemoteAnswersUseCase: GetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<LordshipAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
     setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
+    getContentRemoteAnswersUseCase = getContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state
@@ -41,5 +44,11 @@ class LordshipViewModel @Inject constructor(
         }
 
         return currentState // the same so return the original state
+    }
+
+    override fun restoreRemoteAnswers(data: Map<String, Any?>) {
+        for ((key, value) in data) {
+            updateAnswerState(key = key, answer = value.toString())
+        }
     }
 }

@@ -56,7 +56,7 @@ interface ContentLocalDataSource {
     /**
      * Set answers (which is key value pair of answers)
      */
-    suspend fun setAnswers(answers: HashMap<String, String>)
+    suspend fun setAnswers(answers: Map<String, String>)
 }
 
 /**
@@ -111,7 +111,7 @@ class ContentLocalDataSourceImplementation(
     /**
      * Set answers (which is key value pair of answers)
      */
-    override suspend fun setAnswers(answers: HashMap<String, String>) {
+    override suspend fun setAnswers(answers: Map<String, String>) {
         dataStore.edit { preference ->
             preference[answersPreferenceKey] = answers.toJsonString()
         }

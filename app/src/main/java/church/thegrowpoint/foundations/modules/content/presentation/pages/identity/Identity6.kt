@@ -87,6 +87,7 @@ fun Identity6(
             ) {
                 viewModel.updateAnswerState(key = "10", answer = it)
             }
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
