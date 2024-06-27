@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.Identity
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentBooleanAnswerDataStoreFlow
 import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentDataStoreAnswersFlow
+import church.thegrowpoint.foundations.modules.content.domain.usecases.GetContentRemoteAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreAnswers
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentDataStoreBooleanAnswer
 import church.thegrowpoint.foundations.modules.content.domain.usecases.SetContentRemoteAnswers
@@ -28,12 +29,14 @@ class IdentityViewModel @Inject constructor(
     @Identity private val getContentBooleanAnswerDataStoreFlowUseCase: GetContentBooleanAnswerDataStoreFlow,
     @Identity private val setContentDataStoreBooleanAnswerUseCase: SetContentDataStoreBooleanAnswer,
     @Identity setContentRemoteAnswersUseCase: SetContentRemoteAnswers? = null,
+    @Identity getContentRemoteAnswersUseCase: GetContentRemoteAnswers? = null,
     dispatcher: CoroutineDispatcher
 ): BasePageViewModel<IdentityAnswersUIState>(
     context = context,
     getContentAnswersDataStoreFlowUseCase = getContentAnswersDataStoreFlowUseCase,
     setContentAnswersDataStoreUseCase = setContentAnswersDataStoreUseCase,
     setContentRemoteAnswersUseCase = setContentRemoteAnswersUseCase,
+    getContentRemoteAnswersUseCase = getContentRemoteAnswersUseCase,
     dispatcher = dispatcher
 ) {
     // ui state
@@ -147,5 +150,15 @@ class IdentityViewModel @Inject constructor(
         }
 
         return currentState // the same so return the original state
+    }
+
+    override fun restoreRemoteAnswers(data: Map<String, Any?>) {
+        for ((key, value) in data) {
+            if (value is Boolean) {
+                setBooleanAnswerState(key = key, status = value, updateDataStore = true)
+            } else {
+                updateAnswerState(key = key, answer = value.toString())
+            }
+        }
     }
 }

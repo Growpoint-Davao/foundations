@@ -70,7 +70,13 @@ class MainActivity : ComponentActivity() {
                         }
 
                         if (authState.currentUser != null) {
-
+                            salvationViewModel.restoreAnswersFromRemoteResource()
+                            lordShipViewModel.restoreAnswersFromRemoteResource()
+                            identityViewModel.restoreAnswersFromRemoteResource()
+                            powerViewModel.restoreAnswersFromRemoteResource()
+                            devotionViewModel.restoreAnswersFromRemoteResource()
+                            churchViewModel.restoreAnswersFromRemoteResource()
+                            discipleshipViewModel.restoreAnswersFromRemoteResource()
                         }
 
                         NavHost(

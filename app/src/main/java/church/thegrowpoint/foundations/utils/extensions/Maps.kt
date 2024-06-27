@@ -16,3 +16,10 @@ fun String.toStringHashMap(): HashMap<String, String> {
 fun HashMap<String, String>.toJsonString(): String {
     return Json.encodeToString(this)
 }
+
+/**
+ * Converts a hashmap to a json string.
+ */
+fun Map<String, String>.toJsonString(): String {
+    return Json.encodeToString(this)
+}

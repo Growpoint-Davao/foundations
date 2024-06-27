@@ -46,7 +46,7 @@ class LocalDataSourceFlowRepository (
     /**
      * Set answers (which is key value pair of answers)
      */
-    override suspend fun setAnswers(answers: HashMap<String, String>) {
+    override suspend fun setAnswers(answers: Map<String, String>) {
         return localDataSource.setAnswers(answers)
     }
 }
