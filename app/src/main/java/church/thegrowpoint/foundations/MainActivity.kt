@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
 
                                 composable(route = Routes.FORGOT_PASSWORD.route) {
                                     ForgotPasswordScreen(
-                                        authViewModel = authViewModel,
+                                        // authViewModel = authViewModel,
                                         appNavController = navController
                                     )
                                 }

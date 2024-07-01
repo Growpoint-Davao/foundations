@@ -40,6 +40,8 @@
     <string name="established_for_growing">Established For Growing</string>
     <string name="register">Register</string>
     <string name="save">Save</string>
+    <string name="send_reset_password_link">Send reset password link</string>
+
 
     <!-- drawer item strings -->
     <string name="introduction">Introduction</string>
