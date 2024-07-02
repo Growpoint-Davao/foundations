@@ -41,7 +41,10 @@
     <string name="register">Register</string>
     <string name="save">Save</string>
     <string name="send_reset_password_link">Send reset password link</string>
-
+    <string name="reset_password">Reset Password Link was sent to your email.</string>
+    <string name="email_sent">Email Sent</string>
+    <string name="we_have_successfully_sent_you_a_reset_password_link_to_your_email">We have successfully sent you a reset password link to your email.</string>
+    <string name="ok">OK</string>
 
     <!-- drawer item strings -->
     <string name="introduction">Introduction</string>

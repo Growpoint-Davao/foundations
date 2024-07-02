@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
+import church.thegrowpoint.foundations.ui.composables.SimpleAlertDialog
 import church.thegrowpoint.foundations.ui.theme.FoundationsTheme
 import church.thegrowpoint.foundations.ui.theme.RoundedShapes
 import church.thegrowpoint.foundations.utils.extensions.validEmail
@@ -44,6 +45,19 @@ fun ForgotPasswordScreen(
     var isValidEmail by rememberSaveable { mutableStateOf(true) }
     val context = LocalContext.current
 
+    val openSuccessDialog = rememberSaveable { mutableStateOf(false) }
+
+    if (openSuccessDialog.value) {
+        SimpleAlertDialog(
+            dialogTitle = stringResource(R.string.email_sent),
+            dialogText = stringResource(R.string.we_have_successfully_sent_you_a_reset_password_link_to_your_email),
+            onDismissRequest = { openSuccessDialog.value = false }
+        ) {
+            openSuccessDialog.value = false
+            // go back to login screen
+            appNavController.popBackStack()
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -89,7 +103,11 @@ fun ForgotPasswordScreen(
                     }
 
                     // send reset password link via email
-
+                    authViewModel.sendResetPasswordLink(email) { success ->
+                        if (success) {
+                            openSuccessDialog.value = true
+                        }
+                    }
                 },
             ) {
                 Icon(

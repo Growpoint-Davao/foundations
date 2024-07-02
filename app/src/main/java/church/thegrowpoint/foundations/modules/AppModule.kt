@@ -13,6 +13,7 @@ import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepo
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.SendResetPasswordLink
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
@@ -639,6 +640,12 @@ internal object AppModule {
     @Singleton
     fun provideSignOutUser(authRepository: AuthRepository): SignOutUser {
         return SignOutUser(authRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSendResetPasswordLink(authRepository: AuthRepository): SendResetPasswordLink {
+        return SendResetPasswordLink(authRepository)
     }
 
     @Provides

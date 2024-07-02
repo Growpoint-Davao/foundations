@@ -72,5 +72,19 @@ interface AuthRepository {
      */
     suspend fun signInWithCredential(credential: AuthCredential): UserResult?
 
+    /**
+     * Stores the user in the database.
+     *
+     * @param user The user object to be stored.
+     * @return The result of the operation.
+     */
     suspend fun storeUser(user: User): Any?
+
+    /**
+     * Sends a password reset link to the specified email address.
+     *
+     * @param email The email address to send the link to.
+     * @param onComplete A callback function that will be called with the result of the operation.
+     */
+    suspend fun sendResetPasswordLink(email: String, onComplete: (success: Boolean, exception: Exception?) -> Unit)
 }
