@@ -149,4 +149,22 @@ class AuthRepositoryImplementation @Inject constructor(
     override suspend fun storeUser(user: DomainUser): Any? {
         return authFirestoreDataSource.storeUser(user as User)
     }
+
+    /**
+     * Sends reset password link to [email].
+     *
+     * @param email The email to send the link to.
+     * @param onComplete The callback to be called when the operation is completed.
+     */
+    override suspend fun sendResetPasswordLink(
+        email: String,
+        onComplete: (success: Boolean, exception: Exception?) -> Unit
+    ) {
+        try {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+            onComplete(true, null)
+        } catch (e: Exception) {
+            onComplete(false, e)
+        }
+    }
 }

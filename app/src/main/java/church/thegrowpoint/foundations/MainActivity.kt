@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.auth.presentation.ForgotPasswordScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
@@ -102,8 +103,10 @@ class MainActivity : ComponentActivity() {
                                 }
 
                                 composable(route = Routes.FORGOT_PASSWORD.route) {
-                                    // TODO: register
-                                    Text(text = "Forgout Password")
+                                    ForgotPasswordScreen(
+                                        // authViewModel = authViewModel,
+                                        appNavController = navController
+                                    )
                                 }
                             }
 

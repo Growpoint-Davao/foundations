@@ -9,6 +9,7 @@ import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.SendResetPasswordLink
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
@@ -46,6 +47,7 @@ class AuthViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogle,
     private val getSkipAuthFlowUseCase: GetDataStoreSkipAuthFlow,
     private val updateSkipAuthFlowUseCase: UpdateDataStoreSkipAuthFlow,
+    private val sendResetPasswordLinkUseCase: SendResetPasswordLink,
     private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel(context) {
     // auth state
@@ -197,6 +199,21 @@ class AuthViewModel @Inject constructor(
                 if (onGoogleSignIn != null) {
                     onGoogleSignIn(null, e)
                 }
+            }
+        }
+    }
+
+    /**
+     * Sends a reset password link to the user.
+     *
+     * @param email The email of the user.
+     * @param onSuccess A function to be called when the reset password link is sent.
+     */
+    fun sendResetPasswordLink(email: String, onSuccess: ((success: Boolean) -> Unit)) {
+        viewModelScope.launch(dispatcher) {
+            sendResetPasswordLinkUseCase(email) { success, exception ->
+                onSuccess(success)
+                exception?.message?.let { showToastMessage(it) }
             }
         }
     }

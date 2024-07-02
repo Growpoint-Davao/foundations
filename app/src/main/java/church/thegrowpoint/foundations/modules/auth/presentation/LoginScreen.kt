@@ -149,7 +149,7 @@ fun LoginScreen(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         ) {
-
+            appNavController.navigate(Routes.FORGOT_PASSWORD.route)
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
