@@ -7,6 +7,7 @@ import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepo
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.RegisterUser
+import church.thegrowpoint.foundations.modules.auth.domain.usecases.SendResetPasswordLink
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEmailAndPassword
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
@@ -36,6 +37,7 @@ class AuthViewModelTest {
     private lateinit var signInWithGoogle: SignInWithGoogle
     private lateinit var getSkipAuthFlow: GetDataStoreSkipAuthFlow
     private lateinit var updateSkipAuthFlow: UpdateDataStoreSkipAuthFlow
+    private lateinit var sendResetPasswordLink: SendResetPasswordLink
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
@@ -53,6 +55,7 @@ class AuthViewModelTest {
         signInWithGoogle = mockk<SignInWithGoogle>()
         getSkipAuthFlow = mockk<GetDataStoreSkipAuthFlow>()
         updateSkipAuthFlow = mockk<UpdateDataStoreSkipAuthFlow>()
+        sendResetPasswordLink = mockk<SendResetPasswordLink>()
 
         every { getCurrentUser() } returns null
     }
@@ -74,7 +77,8 @@ class AuthViewModelTest {
             signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
             getSkipAuthFlowUseCase = getSkipAuthFlow,
-            updateSkipAuthFlowUseCase = updateSkipAuthFlow
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow,
+            sendResetPasswordLinkUseCase = sendResetPasswordLink
         )
 
         val currentUser = viewModel.authState.value.currentUser
@@ -103,7 +107,8 @@ class AuthViewModelTest {
             signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
             getSkipAuthFlowUseCase = getSkipAuthFlow,
-            updateSkipAuthFlowUseCase = updateSkipAuthFlow
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow,
+            sendResetPasswordLinkUseCase = sendResetPasswordLink
         )
 
         val currentUser = viewModel.authState.value.currentUser
@@ -131,7 +136,8 @@ class AuthViewModelTest {
             signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
             getSkipAuthFlowUseCase = getSkipAuthFlow,
-            updateSkipAuthFlowUseCase = updateSkipAuthFlow
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow,
+            sendResetPasswordLinkUseCase = sendResetPasswordLink
         )
 
         assertFalse(viewModel.authState.value.skipAuth)
@@ -160,7 +166,8 @@ class AuthViewModelTest {
             signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
             getSkipAuthFlowUseCase = getSkipAuthFlow,
-            updateSkipAuthFlowUseCase = updateSkipAuthFlow
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow,
+            sendResetPasswordLinkUseCase = sendResetPasswordLink
         )
 
         viewModel.logout()
@@ -192,7 +199,8 @@ class AuthViewModelTest {
             signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
             getSkipAuthFlowUseCase = getSkipAuthFlow,
-            updateSkipAuthFlowUseCase = updateSkipAuthFlow
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow,
+            sendResetPasswordLinkUseCase = sendResetPasswordLink
         )
 
         viewModel.signInWithGoogle(onGoogleSignIn = onGoogleSignIn)
@@ -220,7 +228,8 @@ class AuthViewModelTest {
             signInWithGoogleUseCase = signInWithGoogle,
             dispatcher = testDispatcher,
             getSkipAuthFlowUseCase = getSkipAuthFlow,
-            updateSkipAuthFlowUseCase = updateSkipAuthFlow
+            updateSkipAuthFlowUseCase = updateSkipAuthFlow,
+            sendResetPasswordLinkUseCase = sendResetPasswordLink
         )
 
         viewModel.signInWithGoogle(onGoogleSignIn = onGoogleSignIn)
