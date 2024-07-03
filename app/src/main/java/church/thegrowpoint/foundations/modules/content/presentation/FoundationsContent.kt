@@ -131,6 +131,8 @@ fun FoundationsContent(
     discipleshipViewModel: DiscipleshipViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+
+    // set initial title
     var topBarTitle by rememberSaveable {
         mutableStateOf(context.getString(R.string.getting_started))
     }
@@ -152,8 +154,6 @@ fun FoundationsContent(
     val devotionLazyListState = rememberLazyListState()
     val churchLazyListState = rememberLazyListState()
     val discipleshipLazyListState = rememberLazyListState()
-
-    var pageLazyListState by remember { mutableStateOf(gettingStartedLazyListState) }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -187,9 +187,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.getting_started)
                             contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
-
-                            // change the list state
-                            pageLazyListState = gettingStartedLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.salvation),
@@ -203,9 +200,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.salvation)
                             contentViewModel.setNavigationDrawerItemSelected(salvationSelected = true)
-
-                            // change the list state
-                            pageLazyListState = salvationLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.lordship),
@@ -219,9 +213,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.lordship)
                             contentViewModel.setNavigationDrawerItemSelected(lordshipSelected = true)
-
-                            // change the list state
-                            pageLazyListState = lordshipLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.identity),
@@ -235,9 +226,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.identity)
                             contentViewModel.setNavigationDrawerItemSelected(identitySelected = true)
-
-                            // change the list state
-                            pageLazyListState = identityLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.power),
@@ -251,9 +239,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.power)
                             contentViewModel.setNavigationDrawerItemSelected(powerSelected = true)
-
-                            // change the list state
-                            pageLazyListState = powerLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.devotion),
@@ -267,9 +252,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.devotion)
                             contentViewModel.setNavigationDrawerItemSelected(devotionSelected = true)
-
-                            // change the list state
-                            pageLazyListState = devotionLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.church),
@@ -283,9 +265,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.church)
                             contentViewModel.setNavigationDrawerItemSelected(churchSelected = true)
-
-                            // change the list state
-                            pageLazyListState = churchLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.discipleship),
@@ -299,9 +278,6 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.discipleship)
                             contentViewModel.setNavigationDrawerItemSelected(discipleshipSelected = true)
-
-                            // change the list state
-                            pageLazyListState = discipleshipLazyListState
                         }
 
                         // other drawer items
@@ -338,11 +314,30 @@ fun FoundationsContent(
 
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
+        // determine the correct column lazy list state depending on what page is currently selected
+        var pageLazyListState by remember { mutableStateOf(gettingStartedLazyListState) }
+        if (navDrawerItemsUIState.value.gettingStartedSelected) {
+            pageLazyListState = gettingStartedLazyListState
+        } else if (navDrawerItemsUIState.value.salvationSelected) {
+            pageLazyListState = salvationLazyListState
+        } else if (navDrawerItemsUIState.value.lordshipSelected) {
+            pageLazyListState = lordshipLazyListState
+        } else if (navDrawerItemsUIState.value.identitySelected) {
+            pageLazyListState = identityLazyListState
+        } else if (navDrawerItemsUIState.value.powerSelected) {
+            pageLazyListState = powerLazyListState
+        } else if (navDrawerItemsUIState.value.devotionSelected) {
+            pageLazyListState = devotionLazyListState
+        } else if (navDrawerItemsUIState.value.churchSelected) {
+            pageLazyListState = churchLazyListState
+        } else {
+            pageLazyListState = discipleshipLazyListState
+        }
+
+        // determine the visibility of the floating navigation buttons based on the lazy list state of the page
         val navFabVisibility by remember {
             derivedStateOf {
-                // show floating navigation buttons when the user is at the end of the list, or
-                // if user could not scroll because all the content are visible
-                pageLazyListState!!.canScrollBackward || (!pageLazyListState!!.canScrollBackward && !pageLazyListState!!.canScrollForward)
+                pageLazyListState.canScrollBackward || (!pageLazyListState.canScrollBackward && !pageLazyListState.canScrollForward)
             }
         }
 
@@ -447,7 +442,6 @@ fun Content(
 ) {
     // TODO: resolve start destination
     val initialSectionDestination = Routes.GETTING_STARTED.route
-    contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
 
     NavHost(
         modifier = modifier.fillMaxSize(),

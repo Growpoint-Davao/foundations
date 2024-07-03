@@ -7,12 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -25,6 +23,7 @@ import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DiscipleshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.IdentityViewModel
@@ -44,6 +43,7 @@ class MainActivity : ComponentActivity() {
     private val devotionViewModel: DevotionViewModel by viewModels()
     private val churchViewModel: ChurchViewModel by viewModels()
     private val discipleshipViewModel: DiscipleshipViewModel by viewModels()
+    private val contentViewModel: ContentViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -111,6 +111,9 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(route = Routes.CONTENT.route) {
+                                // set the initial selected item
+                                contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
+
                                 FoundationsContent(
                                     authViewModel = authViewModel,
                                     salvationViewModel = salvationViewModel,
@@ -120,7 +123,7 @@ class MainActivity : ComponentActivity() {
                                     devotionViewModel = devotionViewModel,
                                     churchViewModel = churchViewModel,
                                     discipleshipViewModel = discipleshipViewModel,
-                                    contentViewModel = hiltViewModel()
+                                    contentViewModel = contentViewModel
                                 )
                             }
                         }
