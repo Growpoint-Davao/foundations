@@ -143,6 +143,18 @@ fun FoundationsContent(
     // drawer selected status state
     val navDrawerItemsUIState = contentViewModel.navigationDrawerItemsUIState.collectAsState()
 
+    // list states per page to properly control the showing and hiding of the floating navigation buttons
+    val gettingStartedLazyListState = rememberLazyListState()
+    val salvationLazyListState = rememberLazyListState()
+    val lordshipLazyListState = rememberLazyListState()
+    val identityLazyListState = rememberLazyListState()
+    val powerLazyListState = rememberLazyListState()
+    val devotionLazyListState = rememberLazyListState()
+    val churchLazyListState = rememberLazyListState()
+    val discipleshipLazyListState = rememberLazyListState()
+
+    var pageLazyListState by remember { mutableStateOf(gettingStartedLazyListState) }
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -175,6 +187,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.getting_started)
                             contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
+
+                            // change the list state
+                            pageLazyListState = gettingStartedLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.salvation),
@@ -188,6 +203,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.salvation)
                             contentViewModel.setNavigationDrawerItemSelected(salvationSelected = true)
+
+                            // change the list state
+                            pageLazyListState = salvationLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.lordship),
@@ -201,6 +219,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.lordship)
                             contentViewModel.setNavigationDrawerItemSelected(lordshipSelected = true)
+
+                            // change the list state
+                            pageLazyListState = lordshipLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.identity),
@@ -214,6 +235,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.identity)
                             contentViewModel.setNavigationDrawerItemSelected(identitySelected = true)
+
+                            // change the list state
+                            pageLazyListState = identityLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.power),
@@ -227,6 +251,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.power)
                             contentViewModel.setNavigationDrawerItemSelected(powerSelected = true)
+
+                            // change the list state
+                            pageLazyListState = powerLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.devotion),
@@ -240,6 +267,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.devotion)
                             contentViewModel.setNavigationDrawerItemSelected(devotionSelected = true)
+
+                            // change the list state
+                            pageLazyListState = devotionLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.church),
@@ -253,6 +283,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.church)
                             contentViewModel.setNavigationDrawerItemSelected(churchSelected = true)
+
+                            // change the list state
+                            pageLazyListState = churchLazyListState
                         }
                         NavigationDrawerItemWithProgress(
                             title = stringResource(R.string.discipleship),
@@ -266,6 +299,9 @@ fun FoundationsContent(
                         ) {
                             topBarTitle = context.getString(R.string.discipleship)
                             contentViewModel.setNavigationDrawerItemSelected(discipleshipSelected = true)
+
+                            // change the list state
+                            pageLazyListState = discipleshipLazyListState
                         }
 
                         // other drawer items
@@ -302,12 +338,11 @@ fun FoundationsContent(
 
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
-        val pageContentState = rememberLazyListState()
         val navFabVisibility by remember {
             derivedStateOf {
                 // show floating navigation buttons when the user is at the end of the list, or
                 // if user could not scroll because all the content are visible
-                pageContentState.canScrollBackward || (!pageContentState.canScrollBackward && !pageContentState.canScrollForward)
+                pageLazyListState!!.canScrollBackward || (!pageLazyListState!!.canScrollBackward && !pageLazyListState!!.canScrollForward)
             }
         }
 
@@ -344,7 +379,7 @@ fun FoundationsContent(
                         devotionViewModel = devotionViewModel,
                         churchViewModel = churchViewModel,
                         discipleshipViewModel = discipleshipViewModel,
-                        pageContentState = pageContentState
+                        pageContentState = pageLazyListState
                     )
                 }
             },
