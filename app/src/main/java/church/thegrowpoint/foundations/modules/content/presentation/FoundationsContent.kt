@@ -4,6 +4,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -157,6 +158,12 @@ fun FoundationsContent(
 
     ModalNavigationDrawer(
         drawerContent = {
+            // make sure we display correct logo for light and dark mode
+            var logoPainterResource = painterResource(R.drawable.gp_login_logo)
+            if (!isSystemInDarkTheme()) {
+                logoPainterResource = painterResource(R.drawable.gp_login_logo_light)
+            }
+
             ModalDrawerSheet {
                 Column {
                     Spacer(modifier = Modifier.height(16.dp))
@@ -164,7 +171,7 @@ fun FoundationsContent(
                         modifier = Modifier.padding(16.dp),
                         title = stringResource(R.string.foundations),
                         subTitle = stringResource(R.string.established_for_growing),
-                        logo = painterResource(R.drawable.gp_login_logo)
+                        logo = logoPainterResource
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
