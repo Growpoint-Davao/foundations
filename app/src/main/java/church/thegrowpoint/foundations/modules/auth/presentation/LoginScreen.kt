@@ -2,6 +2,7 @@ package church.thegrowpoint.foundations.modules.auth.presentation
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -89,6 +90,12 @@ fun LoginScreen(
         }
     }
 
+    // make sure we display correct logo for light and dark mode
+    var logoPainterResource = painterResource(R.drawable.gp_login_logo)
+    if (!isSystemInDarkTheme()) {
+        logoPainterResource = painterResource(R.drawable.gp_login_logo_light)
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -107,7 +114,8 @@ fun LoginScreen(
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
-        Image(painter = painterResource(R.drawable.gp_login_logo), contentDescription = null)
+        Spacer(modifier = Modifier.height(8.dp))
+        Image(painter = logoPainterResource, contentDescription = null)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.sign_in_to_your_account),
