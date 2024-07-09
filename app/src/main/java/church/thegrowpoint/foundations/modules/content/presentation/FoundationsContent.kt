@@ -29,6 +29,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -145,16 +146,6 @@ fun FoundationsContent(
 
     // drawer selected status state
     val navDrawerItemsUIState = contentViewModel.navigationDrawerItemsUIState.collectAsState()
-
-    // list states per page to properly control the showing and hiding of the floating navigation buttons
-    val gettingStartedLazyListState = rememberLazyListState()
-    val salvationLazyListState = rememberLazyListState()
-    val lordshipLazyListState = rememberLazyListState()
-    val identityLazyListState = rememberLazyListState()
-    val powerLazyListState = rememberLazyListState()
-    val devotionLazyListState = rememberLazyListState()
-    val churchLazyListState = rememberLazyListState()
-    val discipleshipLazyListState = rememberLazyListState()
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -319,27 +310,9 @@ fun FoundationsContent(
         // keyboard controller for hiding the keyboard
         val keyboardController = LocalSoftwareKeyboardController.current
 
+        val coroutineScope = rememberCoroutineScope()
+        val pageLazyListState = rememberLazyListState()
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
-        // determine the correct column lazy list state depending on what page is currently selected
-        var pageLazyListState by remember { mutableStateOf(gettingStartedLazyListState) }
-        if (navDrawerItemsUIState.value.gettingStartedSelected) {
-            pageLazyListState = gettingStartedLazyListState
-        } else if (navDrawerItemsUIState.value.salvationSelected) {
-            pageLazyListState = salvationLazyListState
-        } else if (navDrawerItemsUIState.value.lordshipSelected) {
-            pageLazyListState = lordshipLazyListState
-        } else if (navDrawerItemsUIState.value.identitySelected) {
-            pageLazyListState = identityLazyListState
-        } else if (navDrawerItemsUIState.value.powerSelected) {
-            pageLazyListState = powerLazyListState
-        } else if (navDrawerItemsUIState.value.devotionSelected) {
-            pageLazyListState = devotionLazyListState
-        } else if (navDrawerItemsUIState.value.churchSelected) {
-            pageLazyListState = churchLazyListState
-        } else {
-            pageLazyListState = discipleshipLazyListState
-        }
 
         // determine the visibility of the floating navigation buttons based on the lazy list state of the page
         val navFabVisibility by remember {
@@ -373,7 +346,6 @@ fun FoundationsContent(
                 ) {
                     Content(
                         navController = navController,
-                        contentViewModel = contentViewModel,
                         salvationViewModel = salvationViewModel,
                         lordShipViewModel = lordShipViewModel,
                         identityViewModel = identityViewModel,
@@ -426,6 +398,10 @@ fun FoundationsContent(
                                 navController.navigate("$section/$nextPage")
                             }
                         }
+
+                        coroutineScope.launch {
+                            pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
+                        }
                     }
                 )
             }
@@ -436,7 +412,6 @@ fun FoundationsContent(
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
-    contentViewModel: ContentViewModel,
     salvationViewModel: SalvationViewModel = hiltViewModel(),
     lordShipViewModel: LordshipViewModel = hiltViewModel(),
     identityViewModel: IdentityViewModel = hiltViewModel(),
