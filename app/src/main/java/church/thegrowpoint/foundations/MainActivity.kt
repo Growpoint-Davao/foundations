@@ -19,7 +19,7 @@ import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.ForgotPasswordScreen
-import church.thegrowpoint.foundations.modules.auth.presentation.LoginScreen
+import church.thegrowpoint.foundations.modules.auth.presentation.NoRegistrationLoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
@@ -89,7 +89,7 @@ class MainActivity : ComponentActivity() {
                                 route = Routes.AUTH.route
                             ) {
                                 composable(route = Routes.LOGIN.route) {
-                                    LoginScreen(
+                                    NoRegistrationLoginScreen(
                                         authViewModel = authViewModel,
                                         appNavController = navController
                                     )

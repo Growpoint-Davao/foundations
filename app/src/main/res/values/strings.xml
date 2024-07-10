@@ -6,6 +6,8 @@
 
     <string name="app_name">Foundations</string>
     <string name="sign_in_to_your_account">Sign-in to your account</string>
+    <string name="sign_in_with_google">Sign-in with Google</string>
+
     <string name="sign_in">Sign in</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -23,15 +25,17 @@
     <string name="foundations">Foundations</string>
     <string name="please_provide_a_valid_email">Please provide a valid email</string>
     <string name="password_is_too_short">Password is too short</string>
-    <string name="skip_sign_in">Skip sign in</string>
+    <string name="skip_sign_in">Skip sign-in</string>
     <string name="registration_is_successful">Registration is successful!</string>">
     <string name="or">or</string>
+    <string name="you_do_not_want_to_sync_responses">You do not want to sync your responses to other device?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_question">Confirm?</string>
     <string name="please_confirm">Please confirm</string>
+    <string name="skip">Skip</string>
     <string name="skip_authentication_question">Skip Authentication?</string>
     <string name="skip_authentication_text">
         If you are not authenticated, all your answers will not be stored to the cloud, and will not sync across devices.
