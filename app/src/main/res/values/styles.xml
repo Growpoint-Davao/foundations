@@ -11,6 +11,6 @@
              drawable. -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
         <!-- Set the theme of the Activity that follows your splash screen. -->
-        <item name="postSplashScreenTheme">@style/Theme.Foundations</item>
+        <item name="postSplashScreenTheme">@style/Theme.Foundation</item>
     </style>
 </resources>
