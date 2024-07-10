@@ -3,8 +3,11 @@
     <!-- Round app icon can take all of default space -->
     <dimen name="splash_screen_icon_size">96dp</dimen>
 
-    <dimen name="padding_login_small">24dp</dimen>
-    <dimen name="padding_login_medium">32dp</dimen>
-    <dimen name="padding_login_large">40dp</dimen>
-    <dimen name="padding_login_landscape_large">240dp</dimen>
+    <dimen name="padding_login_horizontal_compact">24dp</dimen>
+    <dimen name="padding_login_horizontal_medium">160dp</dimen>
+    <dimen name="padding_login_horizontal_expanded">400dp</dimen>
+
+    <dimen name="padding_logo_vertical_compact">16dp</dimen>
+    <dimen name="padding_logo_vertical_medium">24dp</dimen>
+    <dimen name="padding_logo_vertical_expanded">32dp</dimen>
 </resources>

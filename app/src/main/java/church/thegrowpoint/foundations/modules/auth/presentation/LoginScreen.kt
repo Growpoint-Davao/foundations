@@ -19,6 +19,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,10 +38,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowHeightSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.ui.composables.ActionableDialog
@@ -250,6 +254,8 @@ fun NoRegistrationLoginScreen(
         }
     }
 
+    val orientation = LocalConfiguration.current.orientation
+
     // make sure we display correct logo for light and dark mode
     var logoPainterResource = painterResource(R.drawable.gp_login_logo)
     if (!isSystemInDarkTheme()) {
@@ -257,12 +263,43 @@ fun NoRegistrationLoginScreen(
     }
 
     // get the orientation of the device
-    val deviceOrientation = LocalConfiguration.current.orientation
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    val horizontalPadding = when (windowSizeClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.MEDIUM -> {
+            dimensionResource(R.dimen.padding_login_horizontal_medium)
+        }
 
-    // get the correct padding
-    var horizontalPadding = dimensionResource(id = R.dimen.padding_login_medium)
-    if (deviceOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-        horizontalPadding = dimensionResource(id = R.dimen.padding_login_landscape_large)
+        WindowWidthSizeClass.EXPANDED -> {
+            when (orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    dimensionResource(R.dimen.padding_login_horizontal_medium)
+                }
+
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    dimensionResource(R.dimen.padding_login_horizontal_expanded)
+                }
+
+                else -> dimensionResource(R.dimen.padding_login_horizontal_medium)
+            }
+        }
+
+        else -> {
+            dimensionResource(R.dimen.padding_login_horizontal_compact)
+        }
+    }
+
+    val logoVerticalPadding = when (windowSizeClass.windowHeightSizeClass) {
+        WindowHeightSizeClass.MEDIUM -> {
+            dimensionResource(R.dimen.padding_logo_vertical_medium)
+        }
+
+        WindowHeightSizeClass.EXPANDED -> {
+            dimensionResource(R.dimen.padding_logo_vertical_expanded)
+        }
+
+        else -> {
+            dimensionResource(R.dimen.padding_logo_vertical_compact)
+        }
     }
 
     LazyColumn(
@@ -289,11 +326,11 @@ fun NoRegistrationLoginScreen(
                 ),
                 fontWeight = FontWeight.Bold
             )
-            if (deviceOrientation != Configuration.ORIENTATION_LANDSCAPE) {
-                Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(logoVerticalPadding))
+            if (windowSizeClass.windowHeightSizeClass != WindowHeightSizeClass.COMPACT) {
                 Image(painter = logoPainterResource, contentDescription = null)
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(logoVerticalPadding))
             Text(
                 text = stringResource(R.string.sign_in_with_google),
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -316,18 +353,6 @@ fun NoRegistrationLoginScreen(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-//            Text(
-//                text = stringResource(R.string.you_do_not_want_to_sync_responses),
-//                style = MaterialTheme.typography.titleSmall
-//            )
-//            ClickableLabel(
-//                text = stringResource(R.string.skip_sign_in),
-//                fontWeight = FontWeight.Bold,
-//                color = MaterialTheme.colorScheme.primary
-//            ) {
-//                // change the open dialog state
-//                openSkipSignInDialog.value = true
-//            }
             SkipSignIn {
                 // change the open dialog state
                 openSkipSignInDialog.value = true
