@@ -32,15 +32,16 @@ fun Discipleship1(
         viewModel.setAnswersState(localPowerAnswers.value)
     }
 
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = modifier,
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))

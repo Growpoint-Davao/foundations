@@ -18,15 +18,16 @@ fun Discipleship6(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
 ) {
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = modifier,
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_6),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))

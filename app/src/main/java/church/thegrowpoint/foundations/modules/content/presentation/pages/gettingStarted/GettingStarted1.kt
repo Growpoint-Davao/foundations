@@ -25,7 +25,7 @@ fun GettingStarted1(
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.getting_started_page_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp
                 )

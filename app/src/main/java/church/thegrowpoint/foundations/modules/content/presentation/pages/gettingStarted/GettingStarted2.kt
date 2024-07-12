@@ -25,11 +25,9 @@ fun GettingStarted2(
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.getting_started_page_2),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))

@@ -29,17 +29,15 @@ fun Salvation8(
     val answer13 = answers["13"] ?: ""
 
     LazyColumn(
-        modifier = Modifier.imePadding(),
+        modifier = modifier.imePadding(),
         state = state
     ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_8_part_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -51,11 +49,9 @@ fun Salvation8(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.salvation_page_8_part_2),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(

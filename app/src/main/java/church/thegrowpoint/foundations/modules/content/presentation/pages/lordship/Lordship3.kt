@@ -32,17 +32,15 @@ fun Lordship3(
     val answer4 = answers["4"] ?: ""
 
     LazyColumn(
-        modifier = Modifier.imePadding(),
+        modifier = modifier.imePadding(),
         state = state
     ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_3_part_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -54,11 +52,9 @@ fun Lordship3(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_3_part_2),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -70,11 +66,9 @@ fun Lordship3(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_3_part_3),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
