@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -107,6 +108,8 @@ fun AnimatedNavigationFloatingActionButtons(
     modifier: Modifier = Modifier,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
+    previousButtonVisible: Boolean = true,
+    nextButtonVisible: Boolean = true,
     isVisible: Boolean = true
 ) {
     val density = LocalDensity.current
@@ -123,14 +126,21 @@ fun AnimatedNavigationFloatingActionButtons(
         ) + fadeOut()
     ) {
         Row {
-            FloatingActionButton(shape = RoundedShapes.large, onClick = onPreviousClick) {
+            FloatingActionButton(
+                modifier = Modifier.alpha(if (previousButtonVisible) 1f else 0f),
+                shape = RoundedShapes.large, onClick = onPreviousClick
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.TwoTone.NavigateBefore,
                     contentDescription = stringResource(R.string.previous)
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
-            FloatingActionButton(shape = RoundedShapes.large, onClick = onNextClick) {
+            FloatingActionButton(
+                modifier = Modifier.alpha(if (nextButtonVisible) 1f else 0f),
+                shape = RoundedShapes.large,
+                onClick = onNextClick
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.TwoTone.NavigateNext,
                     contentDescription = stringResource(R.string.next)

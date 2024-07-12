@@ -31,17 +31,15 @@ fun Church4(
     val answer4 = answers["4"] ?: ""
 
     LazyColumn(
-        modifier = Modifier.imePadding(),
+        modifier = modifier.imePadding(),
         state = state
     ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.church_page_4_part_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -53,11 +51,9 @@ fun Church4(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.church_page_4_part_2),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -72,11 +68,9 @@ fun Church4(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.church_page_4_part_3),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))

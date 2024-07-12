@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
+import android.content.res.Configuration
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -26,6 +27,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -39,8 +41,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -50,6 +54,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
@@ -71,9 +76,9 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.discip
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity3
@@ -321,6 +326,23 @@ fun FoundationsContent(
             }
         }
 
+        var previousButtonVisible by rememberSaveable {
+            mutableStateOf(false)
+        }
+
+        LaunchedEffect(navFabVisibility) {
+            val currentDestination = navController.currentDestination
+            val currentRoute = currentDestination?.route
+            val segments = currentRoute?.split('/')
+            val currentPage = segments?.get(1)?.toInt() ?: 0
+            if (currentPage == 1) {
+                // hide the previous button
+                previousButtonVisible = false
+            } else {
+                previousButtonVisible = true
+            }
+        }
+
         Scaffold(
             topBar = {
                 CenteredTopAppBar(
@@ -360,8 +382,21 @@ fun FoundationsContent(
             floatingActionButton = {
                 AnimatedNavigationFloatingActionButtons(
                     isVisible = navFabVisibility,
+                    previousButtonVisible = previousButtonVisible,
                     onPreviousClick = {
-                        navController.popBackStack()
+                        val currentDestination = navController.currentDestination
+                        val currentRoute = currentDestination?.route
+                        val segments = currentRoute?.split('/')
+                        val currentPage = segments?.get(1)?.toInt() ?: 0
+                        if (currentPage > 1) {
+                            // only pop if not in page 1
+                            navController.popBackStack()
+                        }
+
+                        // scroll back to top
+                        coroutineScope.launch {
+                            pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
+                        }
                     },
                     onNextClick = {
                         val currentDestination = navController.currentDestination
@@ -393,12 +428,16 @@ fun FoundationsContent(
                                         // probably no more section
                                         e.printStackTrace()
                                     }
+
+                                    previousButtonVisible = false
                                 }
                             } else {
                                 navController.navigate("$section/$nextPage")
+                                previousButtonVisible = true
                             }
                         }
 
+                        // scroll back to top
                         coroutineScope.launch {
                             pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
                         }
@@ -425,6 +464,23 @@ fun Content(
     // TODO: resolve start destination
     val initialSectionDestination = Routes.GETTING_STARTED.route
 
+    // get the orientation of the device
+    val orientation = LocalConfiguration.current.orientation
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    val horizontalPadding = when (windowSizeClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.MEDIUM -> {
+            dimensionResource(R.dimen.padding_content_horizontal_medium)
+        }
+
+        WindowWidthSizeClass.EXPANDED -> {
+            dimensionResource(R.dimen.padding_content_horizontal_expanded)
+        }
+
+        else -> {
+            dimensionResource(R.dimen.padding_content_horizontal_compact)
+        }
+    }
+
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
@@ -437,13 +493,22 @@ fun Content(
             route = initialSectionDestination
         ) {
             composable(route = "${Routes.GETTING_STARTED.route}/1") {
-                GettingStartedPage1(state = pageContentState)
+                GettingStarted1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
             composable(route = "${Routes.GETTING_STARTED.route}/2") {
-                GettingStartedPage2(state = pageContentState)
+                GettingStarted2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
             composable(route = "${Routes.GETTING_STARTED.route}/3") {
-                GettingStartedPage3(state = pageContentState)
+                GettingStarted3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 
@@ -452,43 +517,81 @@ fun Content(
             route = Routes.SALVATION.route
         ) {
             composable(route = "${Routes.SALVATION.route}/1") {
-                Salvation1(state = pageContentState, viewModel = salvationViewModel)
+                Salvation1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/2") {
-                Salvation2(state = pageContentState, viewModel = salvationViewModel)
+                Salvation2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/3") {
-                Salvation3(state = pageContentState, viewModel = salvationViewModel)
+                Salvation3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/4") {
-                Salvation4(state = pageContentState, viewModel = salvationViewModel)
+                Salvation4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/5") {
-                Salvation5(state = pageContentState, viewModel = salvationViewModel)
+                Salvation5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/6") {
-                Salvation6(state = pageContentState, viewModel = salvationViewModel)
+                Salvation6(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/7") {
-                Salvation7(state = pageContentState, viewModel = salvationViewModel)
+                Salvation7(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/8") {
-                Salvation8(state = pageContentState, viewModel = salvationViewModel)
+                Salvation8(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = salvationViewModel
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/9") {
-                Salvation9(state = pageContentState)
+                Salvation9(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
 
             composable(route = "${Routes.SALVATION.route}/10") {
-                Salvation10(state = pageContentState)
+                Salvation10(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 
@@ -497,31 +600,59 @@ fun Content(
             route = Routes.LORDSHIP.route
         ) {
             composable(route = "${Routes.LORDSHIP.route}/1") {
-                Lordship1(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
 
             composable(route = "${Routes.LORDSHIP.route}/2") {
-                Lordship2(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
 
             composable(route = "${Routes.LORDSHIP.route}/3") {
-                Lordship3(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
 
             composable(route = "${Routes.LORDSHIP.route}/4") {
-                Lordship4(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
 
             composable(route = "${Routes.LORDSHIP.route}/5") {
-                Lordship5(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
 
             composable(route = "${Routes.LORDSHIP.route}/6") {
-                Lordship6(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship6(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
 
             composable(route = "${Routes.LORDSHIP.route}/7") {
-                Lordship7(state = pageContentState, viewModel = lordShipViewModel)
+                Lordship7(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = lordShipViewModel
+                )
             }
         }
 
@@ -530,31 +661,57 @@ fun Content(
             route = Routes.IDENTITY.route
         ) {
             composable(route = "${Routes.IDENTITY.route}/1") {
-                Identity1(state = pageContentState)
+                Identity1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
 
             composable(route = "${Routes.IDENTITY.route}/2") {
-                Identity2(state = pageContentState, viewModel = identityViewModel)
+                Identity2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = identityViewModel
+                )
             }
 
             composable(route = "${Routes.IDENTITY.route}/3") {
-                Identity3(state = pageContentState, viewModel = identityViewModel)
+                Identity3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = identityViewModel
+                )
             }
 
             composable(route = "${Routes.IDENTITY.route}/4") {
-                Identity4(state = pageContentState, viewModel = identityViewModel)
+                Identity4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = identityViewModel
+                )
             }
 
             composable(route = "${Routes.IDENTITY.route}/5") {
-                Identity5(state = pageContentState, viewModel = identityViewModel)
+                Identity5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = identityViewModel
+                )
             }
 
             composable(route = "${Routes.IDENTITY.route}/6") {
-                Identity6(state = pageContentState, viewModel = identityViewModel)
+                Identity6(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = identityViewModel
+                )
             }
 
             composable(route = "${Routes.IDENTITY.route}/7") {
-                Identity7(state = pageContentState)
+                Identity7(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 
@@ -563,31 +720,58 @@ fun Content(
             route = Routes.POWER.route
         ) {
             composable(route = "${Routes.POWER.route}/1") {
-                Power1(state = pageContentState, viewModel = powerViewModel)
+                Power1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = powerViewModel
+                )
             }
 
             composable(route = "${Routes.POWER.route}/2") {
-                Power2(state = pageContentState, viewModel = powerViewModel)
+                Power2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = powerViewModel
+                )
             }
 
             composable(route = "${Routes.POWER.route}/3") {
-                Power3(state = pageContentState, viewModel = powerViewModel)
+                Power3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = powerViewModel
+                )
             }
 
             composable(route = "${Routes.POWER.route}/4") {
-                Power4(state = pageContentState, viewModel = powerViewModel)
+                Power4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = powerViewModel
+                )
             }
 
             composable(route = "${Routes.POWER.route}/5") {
-                Power5(state = pageContentState, viewModel = powerViewModel)
+                Power5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = powerViewModel
+                )
             }
 
             composable(route = "${Routes.POWER.route}/6") {
-                Power6(state = pageContentState, viewModel = powerViewModel)
+                Power6(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = powerViewModel
+                )
             }
 
             composable(route = "${Routes.POWER.route}/7") {
-                Power7(state = pageContentState)
+                Power7(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 
@@ -596,31 +780,58 @@ fun Content(
             route = Routes.DEVOTION.route
         ) {
             composable(route = "${Routes.DEVOTION.route}/1") {
-                Devotion1(state = pageContentState, viewModel = devotionViewModel)
+                Devotion1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = devotionViewModel
+                )
             }
 
             composable(route = "${Routes.DEVOTION.route}/2") {
-                Devotion2(state = pageContentState, viewModel = devotionViewModel)
+                Devotion2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = devotionViewModel
+                )
             }
 
             composable(route = "${Routes.DEVOTION.route}/3") {
-                Devotion3(state = pageContentState, viewModel = devotionViewModel)
+                Devotion3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = devotionViewModel
+                )
             }
 
             composable(route = "${Routes.DEVOTION.route}/4") {
-                Devotion4(state = pageContentState, viewModel = devotionViewModel)
+                Devotion4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = devotionViewModel
+                )
             }
 
             composable(route = "${Routes.DEVOTION.route}/5") {
-                Devotion5(state = pageContentState, viewModel = devotionViewModel)
+                Devotion5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = devotionViewModel
+                )
             }
 
             composable(route = "${Routes.DEVOTION.route}/6") {
-                Devotion6(state = pageContentState, viewModel = devotionViewModel)
+                Devotion6(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = devotionViewModel
+                )
             }
 
             composable(route = "${Routes.DEVOTION.route}/7") {
-                Devotion7(state = pageContentState)
+                Devotion7(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 
@@ -629,23 +840,42 @@ fun Content(
             route = Routes.CHURCH.route
         ) {
             composable(route = "${Routes.CHURCH.route}/1") {
-                Church1(state = pageContentState, viewModel = churchViewModel)
+                Church1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = churchViewModel
+                )
             }
 
             composable(route = "${Routes.CHURCH.route}/2") {
-                Church2(state = pageContentState, viewModel = churchViewModel)
+                Church2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = churchViewModel
+                )
             }
 
             composable(route = "${Routes.CHURCH.route}/3") {
-                Church3(state = pageContentState, viewModel = churchViewModel)
+                Church3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = churchViewModel
+                )
             }
 
             composable(route = "${Routes.CHURCH.route}/4") {
-                Church4(state = pageContentState, viewModel = churchViewModel)
+                Church4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = churchViewModel
+                )
             }
 
             composable(route = "${Routes.CHURCH.route}/5") {
-                Church5(state = pageContentState)
+                Church5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 
@@ -654,27 +884,48 @@ fun Content(
             route = Routes.DISCIPLESHIP.route
         ) {
             composable(route = "${Routes.DISCIPLESHIP.route}/1") {
-                Discipleship1(state = pageContentState, viewModel = discipleshipViewModel)
+                Discipleship1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = discipleshipViewModel
+                )
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/2") {
-                Discipleship2(state = pageContentState)
+                Discipleship2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/3") {
-                Discipleship3(state = pageContentState, viewModel = discipleshipViewModel)
+                Discipleship3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = discipleshipViewModel
+                )
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/4") {
-                Discipleship4(state = pageContentState, viewModel = discipleshipViewModel)
+                Discipleship4(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState,
+                    viewModel = discipleshipViewModel
+                )
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/5") {
-                Discipleship5(state = pageContentState)
+                Discipleship5(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
 
             composable(route = "${Routes.DISCIPLESHIP.route}/6") {
-                Discipleship6(state = pageContentState)
+                Discipleship6(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
     }

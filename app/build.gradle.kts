@@ -91,6 +91,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences.rxjava3)
     implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.adaptive.layout)
+    implementation(libs.androidx.adaptive.navigation)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)

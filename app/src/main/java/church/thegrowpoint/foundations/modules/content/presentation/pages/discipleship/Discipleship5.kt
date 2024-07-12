@@ -29,15 +29,16 @@ fun Discipleship5(
     val answer2b = answers["2b"] ?: ""
     val answer3 = answers["3"] ?: ""
 
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = modifier,
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_5_part_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -49,11 +50,9 @@ fun Discipleship5(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_5_part_2),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             MultilineLabeledWithSupportTextOutlinedTextField(
@@ -69,11 +68,9 @@ fun Discipleship5(
             }
             ContentMarkdown(
                 markdown = stringResource(R.string.discipleship_page_5_part_3),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))

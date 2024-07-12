@@ -14,19 +14,20 @@ import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 
 @Composable
-fun GettingStartedPage1(
+fun GettingStarted2(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = modifier,
+        state = state
+    ) {
         item {
             ContentMarkdown(
-                markdown = stringResource(R.string.getting_started_page_1),
-                modifier = modifier.padding(
+                markdown = stringResource(R.string.getting_started_page_2),
+                modifier = Modifier.padding(
                     top = 24.dp,
                     bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))

@@ -90,8 +90,7 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 composable(route = Routes.LOGIN.route) {
                                     NoRegistrationLoginScreen(
-                                        authViewModel = authViewModel,
-                                        appNavController = navController
+                                        authViewModel = authViewModel
                                     )
                                 }
 
@@ -112,7 +111,9 @@ class MainActivity : ComponentActivity() {
 
                             composable(route = Routes.CONTENT.route) {
                                 // set the initial selected item
-                                contentViewModel.setNavigationDrawerItemSelected(gettingStartedSelected = true)
+                                contentViewModel.setNavigationDrawerItemSelected(
+                                    gettingStartedSelected = true
+                                )
 
                                 FoundationsContent(
                                     authViewModel = authViewModel,

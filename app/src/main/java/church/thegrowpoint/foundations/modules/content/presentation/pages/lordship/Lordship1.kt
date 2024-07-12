@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,15 +33,16 @@ fun Lordship1(
         viewModel.setAnswersState(localLordShipAnswers.value)
     }
 
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = modifier,
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.lordship_page_1),
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     top = 24.dp,
-                    bottom = 32.dp,
-                    start = 16.dp,
-                    end = 16.dp
+                    bottom = 32.dp
                 )
             )
             Spacer(modifier = Modifier.height(32.dp))
