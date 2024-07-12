@@ -1,7 +1,5 @@
 package church.thegrowpoint.foundations
 
-import android.app.Activity
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,18 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.window.core.layout.WindowHeightSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
@@ -96,8 +90,7 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 composable(route = Routes.LOGIN.route) {
                                     NoRegistrationLoginScreen(
-                                        authViewModel = authViewModel,
-                                        appNavController = navController
+                                        authViewModel = authViewModel
                                     )
                                 }
 

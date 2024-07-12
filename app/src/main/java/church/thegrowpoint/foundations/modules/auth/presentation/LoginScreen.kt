@@ -38,7 +38,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -228,10 +227,11 @@ fun LoginScreen(
 @Composable
 fun NoRegistrationLoginScreen(
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel(),
-    appNavController: NavHostController = rememberNavController()
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
 
     val openSkipSignInDialog = rememberSaveable { mutableStateOf(false) }
 
@@ -272,7 +272,11 @@ fun NoRegistrationLoginScreen(
         WindowWidthSizeClass.EXPANDED -> {
             when (orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> {
-                    dimensionResource(R.dimen.padding_login_horizontal_medium)
+                    if (screenWidth < 900.dp) {
+                        dimensionResource(R.dimen.padding_login_horizontal_medium)
+                    } else {
+                        dimensionResource(R.dimen.padding_login_horizontal_expanded)
+                    }
                 }
 
                 Configuration.ORIENTATION_PORTRAIT -> {
@@ -307,8 +311,8 @@ fun NoRegistrationLoginScreen(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = horizontalPadding)
             .safeDrawingPadding()
+            .padding(horizontal = horizontalPadding)
     ) {
         item {
             Text(
