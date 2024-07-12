@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
+import android.content.res.Configuration
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -26,6 +27,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -39,8 +41,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -50,6 +54,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.Routes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
@@ -71,9 +76,9 @@ import church.thegrowpoint.foundations.modules.content.presentation.pages.discip
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship4
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship5
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStartedPage3
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted1
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted2
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted3
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity1
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity2
 import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity3
@@ -321,6 +326,23 @@ fun FoundationsContent(
             }
         }
 
+        var previousButtonVisible by rememberSaveable {
+            mutableStateOf(false)
+        }
+
+        LaunchedEffect(navFabVisibility) {
+            val currentDestination = navController.currentDestination
+            val currentRoute = currentDestination?.route
+            val segments = currentRoute?.split('/')
+            val currentPage = segments?.get(1)?.toInt() ?: 0
+            if (currentPage == 1) {
+                // hide the previous button
+                previousButtonVisible = false
+            } else {
+                previousButtonVisible = true
+            }
+        }
+
         Scaffold(
             topBar = {
                 CenteredTopAppBar(
@@ -360,8 +382,21 @@ fun FoundationsContent(
             floatingActionButton = {
                 AnimatedNavigationFloatingActionButtons(
                     isVisible = navFabVisibility,
+                    previousButtonVisible = previousButtonVisible,
                     onPreviousClick = {
-                        navController.popBackStack()
+                        val currentDestination = navController.currentDestination
+                        val currentRoute = currentDestination?.route
+                        val segments = currentRoute?.split('/')
+                        val currentPage = segments?.get(1)?.toInt() ?: 0
+                        if (currentPage > 1) {
+                            // only pop if not in page 1
+                            navController.popBackStack()
+                        }
+
+                        // scroll back to top
+                        coroutineScope.launch {
+                            pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
+                        }
                     },
                     onNextClick = {
                         val currentDestination = navController.currentDestination
@@ -393,12 +428,16 @@ fun FoundationsContent(
                                         // probably no more section
                                         e.printStackTrace()
                                     }
+
+                                    previousButtonVisible = false
                                 }
                             } else {
                                 navController.navigate("$section/$nextPage")
+                                previousButtonVisible = true
                             }
                         }
 
+                        // scroll back to top
                         coroutineScope.launch {
                             pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
                         }
@@ -425,6 +464,33 @@ fun Content(
     // TODO: resolve start destination
     val initialSectionDestination = Routes.GETTING_STARTED.route
 
+    // get the orientation of the device
+    val orientation = LocalConfiguration.current.orientation
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    val horizontalPadding = when (windowSizeClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.MEDIUM -> {
+            dimensionResource(R.dimen.padding_content_horizontal_medium)
+        }
+
+        WindowWidthSizeClass.EXPANDED -> {
+            when (orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    dimensionResource(R.dimen.padding_content_horizontal_medium)
+                }
+
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    dimensionResource(R.dimen.padding_content_horizontal_expanded)
+                }
+
+                else -> dimensionResource(R.dimen.padding_content_horizontal_medium)
+            }
+        }
+
+        else -> {
+            dimensionResource(R.dimen.padding_content_horizontal_compact)
+        }
+    }
+
     NavHost(
         modifier = modifier.fillMaxSize(),
         navController = navController,
@@ -437,13 +503,22 @@ fun Content(
             route = initialSectionDestination
         ) {
             composable(route = "${Routes.GETTING_STARTED.route}/1") {
-                GettingStartedPage1(state = pageContentState)
+                GettingStarted1(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
             composable(route = "${Routes.GETTING_STARTED.route}/2") {
-                GettingStartedPage2(state = pageContentState)
+                GettingStarted2(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
             composable(route = "${Routes.GETTING_STARTED.route}/3") {
-                GettingStartedPage3(state = pageContentState)
+                GettingStarted3(
+                    modifier = Modifier.padding(horizontal = horizontalPadding),
+                    state = pageContentState
+                )
             }
         }
 

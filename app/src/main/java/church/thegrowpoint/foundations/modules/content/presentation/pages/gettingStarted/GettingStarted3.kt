@@ -14,11 +14,14 @@ import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 
 @Composable
-fun GettingStartedPage3(
+fun GettingStarted3(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
-    LazyColumn(state = state) {
+    LazyColumn(
+        modifier = modifier,
+        state = state
+    ) {
         item {
             ContentMarkdown(
                 markdown = stringResource(R.string.getting_started_page_3),
