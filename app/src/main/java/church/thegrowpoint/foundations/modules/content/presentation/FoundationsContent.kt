@@ -473,17 +473,7 @@ fun Content(
         }
 
         WindowWidthSizeClass.EXPANDED -> {
-            when (orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> {
-                    dimensionResource(R.dimen.padding_content_horizontal_medium)
-                }
-
-                Configuration.ORIENTATION_PORTRAIT -> {
-                    dimensionResource(R.dimen.padding_content_horizontal_expanded)
-                }
-
-                else -> dimensionResource(R.dimen.padding_content_horizontal_medium)
-            }
+            dimensionResource(R.dimen.padding_content_horizontal_expanded)
         }
 
         else -> {
