@@ -94,6 +94,9 @@ dependencies {
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.material3.adaptive.navigation.suite)
+    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
