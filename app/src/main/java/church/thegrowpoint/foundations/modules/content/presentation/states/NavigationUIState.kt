@@ -1,7 +1,7 @@
 package church.thegrowpoint.foundations.modules.content.presentation.states
 
 /**
- * # NavigationDrawerItemsUIState
+ * # NavigationUIState
  *
  * @property gettingStartedSelected If true, it will highlight the getting started drawer item as selected.
  * @property salvationSelected If true, it will highlight the salvation drawer item as selected.
@@ -12,7 +12,8 @@ package church.thegrowpoint.foundations.modules.content.presentation.states
  * @property churchSelected If true, it will highlight the church drawer item as selected.
  * @property discipleshipSelected If true, it will highlight the discipleship drawer item as selected.
  */
-data class NavigationDrawerItemsUIState(
+data class NavigationUIState(
+    val sectionTitle: String = "",
     val gettingStartedSelected: Boolean = false,
     val salvationSelected: Boolean = false,
     val lordshipSelected: Boolean = false,

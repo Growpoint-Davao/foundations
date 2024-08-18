@@ -1,5 +1,6 @@
 package church.thegrowpoint.foundations
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,16 +8,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import church.thegrowpoint.foundations.modules.Routes
-import church.thegrowpoint.foundations.modules.SkipAuthCodes
+import church.thegrowpoint.foundations.modules.content.Routes
+import church.thegrowpoint.foundations.modules.content.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.ForgotPasswordScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.NoRegistrationLoginScreen
@@ -115,17 +119,21 @@ class MainActivity : ComponentActivity() {
                                     gettingStartedSelected = true
                                 )
 
-                                FoundationsContent(
-                                    authViewModel = authViewModel,
-                                    salvationViewModel = salvationViewModel,
-                                    lordShipViewModel = lordShipViewModel,
-                                    identityViewModel = identityViewModel,
-                                    powerViewModel = powerViewModel,
-                                    devotionViewModel = devotionViewModel,
-                                    churchViewModel = churchViewModel,
-                                    discipleshipViewModel = discipleshipViewModel,
-                                    contentViewModel = contentViewModel
-                                )
+                                if (isPhone()) {
+                                    FoundationsContent(
+                                        authViewModel = authViewModel,
+                                        salvationViewModel = salvationViewModel,
+                                        lordShipViewModel = lordShipViewModel,
+                                        identityViewModel = identityViewModel,
+                                        powerViewModel = powerViewModel,
+                                        devotionViewModel = devotionViewModel,
+                                        churchViewModel = churchViewModel,
+                                        discipleshipViewModel = discipleshipViewModel,
+                                        contentViewModel = contentViewModel
+                                    )
+                                } else {
+
+                                }
                             }
                         }
                     }
@@ -135,6 +143,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    @Composable
+    fun isPhone(): Boolean {
+        val configuration = LocalConfiguration.current
+
+        // get the width of the device, use the width (assume portrait) by default
+        var width = configuration.screenWidthDp.dp
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // if landscape, use the height
+            width = configuration.screenHeightDp.dp
+        }
+
+        return width < 600.dp
     }
 
     override fun onStop() {

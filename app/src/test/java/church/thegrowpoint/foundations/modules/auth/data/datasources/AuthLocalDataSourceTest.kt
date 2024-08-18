@@ -3,7 +3,7 @@ package church.thegrowpoint.foundations.modules.auth.data.datasources
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
-import church.thegrowpoint.foundations.modules.SkipAuthCodes
+import church.thegrowpoint.foundations.modules.content.SkipAuthCodes
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

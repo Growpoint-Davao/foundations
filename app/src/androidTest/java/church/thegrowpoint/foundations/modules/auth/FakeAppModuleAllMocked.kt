@@ -9,7 +9,7 @@ import church.thegrowpoint.foundations.modules.Discipleship
 import church.thegrowpoint.foundations.modules.Devotion
 import church.thegrowpoint.foundations.modules.Power
 import church.thegrowpoint.foundations.modules.Church
-import church.thegrowpoint.foundations.modules.Routes
+import church.thegrowpoint.foundations.modules.content.Routes
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSource
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthFirestoreDataSourceImplementation
 import church.thegrowpoint.foundations.modules.auth.data.datasources.AuthLocalDataSource
@@ -56,7 +56,6 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module

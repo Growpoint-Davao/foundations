@@ -52,21 +52,21 @@ class ContentViewModelTest {
             dispatcher = testDispatcher
         )
 
-        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.gettingStartedSelected)
-        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.salvationSelected)
+        assertFalse(contentViewModel.navigationUIState.value.gettingStartedSelected)
+        assertFalse(contentViewModel.navigationUIState.value.salvationSelected)
 
         contentViewModel.setNavigationDrawerItemSelected(
             salvationSelected = true
         )
 
-        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.gettingStartedSelected)
-        assertTrue(contentViewModel.navigationDrawerItemsUIState.value.salvationSelected)
+        assertFalse(contentViewModel.navigationUIState.value.gettingStartedSelected)
+        assertTrue(contentViewModel.navigationUIState.value.salvationSelected)
 
         contentViewModel.setNavigationDrawerItemSelected(
             gettingStartedSelected = true
         )
 
-        assertTrue(contentViewModel.navigationDrawerItemsUIState.value.gettingStartedSelected)
-        assertFalse(contentViewModel.navigationDrawerItemsUIState.value.salvationSelected)
+        assertTrue(contentViewModel.navigationUIState.value.gettingStartedSelected)
+        assertFalse(contentViewModel.navigationUIState.value.salvationSelected)
     }
 }
