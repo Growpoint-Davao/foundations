@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -96,9 +95,6 @@ fun SectionsContent(
     pageContentState: LazyListState = rememberLazyListState(),
     currentDestination: String = Routes.GETTING_STARTED.route
 ) {
-    // TODO: resolve start destination
-    // val initialSectionDestination = Routes.GETTING_STARTED.route
-
     // get the orientation of the device
     val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
     val horizontalPadding = when (windowSizeClass.windowWidthSizeClass) {

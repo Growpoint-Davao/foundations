@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,7 +41,10 @@ fun NavigationDrawerItemWithProgress(
     onClick: () -> Unit,
 ) {
     NavigationDrawerItem(
-        modifier = modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+        modifier = modifier.padding(
+            vertical = dimensionResource(R.dimen.padding_vertical),
+            horizontal = dimensionResource(R.dimen.padding_horizontal)
+        ),
         icon = {
             if (icon != null) {
                 Image(

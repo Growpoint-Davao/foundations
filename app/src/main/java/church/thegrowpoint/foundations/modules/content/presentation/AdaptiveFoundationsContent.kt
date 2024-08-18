@@ -5,7 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Logout
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -13,6 +18,7 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -72,6 +78,9 @@ fun AdaptiveFoundationsContent(
 
     // drawer selected status state
     val navUIState = contentViewModel.navigationUIState.collectAsState()
+
+    // nav suite items padding
+    val navSuiteItemPaddingVertical = dimensionResource(R.dimen.padding_vertical)
 
     NavigationSuiteScaffold(
         modifier = Modifier.padding(dimensionResource(R.dimen.padding_content_expanded)),
@@ -156,6 +165,7 @@ fun AdaptiveFoundationsContent(
                 }
 
                 item(
+                    modifier = Modifier.padding(vertical = navSuiteItemPaddingVertical),
                     icon = {
                         Image(
                             modifier = Modifier.size(48.dp),
@@ -181,6 +191,21 @@ fun AdaptiveFoundationsContent(
                     }
                 )
             }
+            item(
+                modifier = Modifier.padding(vertical = navSuiteItemPaddingVertical),
+                icon = {
+                    Icon(
+                        modifier = Modifier.width(48.dp),
+                        imageVector = Icons.AutoMirrored.Rounded.Logout,
+                        contentDescription = stringResource(R.string.logout),
+                    )
+                },
+                label = { Text(stringResource(R.string.logout)) },
+                selected = false,
+                onClick = {
+                    authViewModel.logout()
+                }
+            )
         }
     ) {
         val coroutineScope = rememberCoroutineScope()
@@ -195,6 +220,14 @@ fun AdaptiveFoundationsContent(
 
         var previousButtonVisible by rememberSaveable {
             mutableStateOf(false)
+        }
+
+        LaunchedEffect(navFabVisibility) {
+            val currentDestination = navController.currentDestination
+            val currentRoute = currentDestination?.route
+            val segments = currentRoute?.split('/')
+            val currentPage = segments?.get(1)?.toInt() ?: 0
+            previousButtonVisible = currentPage != 1 // hide the previous button
         }
 
         Scaffold(
@@ -269,8 +302,6 @@ fun AdaptiveFoundationsContent(
                     .padding(innerPadding)
                     .fillMaxSize()
             ) {
-
-
                 SectionsContent(
                     navController = navController,
                     salvationViewModel = salvationViewModel,

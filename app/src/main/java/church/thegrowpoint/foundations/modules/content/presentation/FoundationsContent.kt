@@ -1,9 +1,5 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Logout
@@ -26,7 +21,6 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -40,75 +34,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
-import church.thegrowpoint.foundations.modules.content.Routes
 import church.thegrowpoint.foundations.modules.content.Sections
-import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation1
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation10
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation2
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation3
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation4
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation5
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation6
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation7
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation8
-import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation9
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
@@ -313,12 +247,7 @@ fun FoundationsContent(
             val currentRoute = currentDestination?.route
             val segments = currentRoute?.split('/')
             val currentPage = segments?.get(1)?.toInt() ?: 0
-            if (currentPage == 1) {
-                // hide the previous button
-                previousButtonVisible = false
-            } else {
-                previousButtonVisible = true
-            }
+            previousButtonVisible = currentPage != 1 // hide the previous button
         }
 
         Scaffold(
