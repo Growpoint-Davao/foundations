@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import church.thegrowpoint.foundations.modules.BaseViewModel
-import church.thegrowpoint.foundations.modules.SkipAuthCodes
+import church.thegrowpoint.foundations.modules.content.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetDataStoreSkipAuthFlow

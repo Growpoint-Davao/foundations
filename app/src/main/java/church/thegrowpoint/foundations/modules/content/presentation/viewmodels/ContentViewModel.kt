@@ -3,8 +3,8 @@ package church.thegrowpoint.foundations.modules.content.presentation.viewmodels
 import android.content.Context
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.BaseViewModel
-import church.thegrowpoint.foundations.modules.Routes
-import church.thegrowpoint.foundations.modules.content.presentation.states.NavigationDrawerItemsUIState
+import church.thegrowpoint.foundations.modules.content.Routes
+import church.thegrowpoint.foundations.modules.content.presentation.states.NavigationUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,9 +27,12 @@ class ContentViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel(context) {
     // auth state
-    private val _navigationDrawerItemsUIState = MutableStateFlow(NavigationDrawerItemsUIState())
-    val navigationDrawerItemsUIState: StateFlow<NavigationDrawerItemsUIState> =
-        _navigationDrawerItemsUIState.asStateFlow()
+    private val _navigationUIState = MutableStateFlow(NavigationUIState())
+    val navigationUIState: StateFlow<NavigationUIState> = _navigationUIState.asStateFlow()
+
+    init {
+        setSectionTitle()
+    }
 
     /**
      * The section pages configuration.
@@ -147,8 +150,27 @@ class ContentViewModel @Inject constructor(
         churchSelected: Boolean = false,
         discipleshipSelected: Boolean = false
     ) {
-        _navigationDrawerItemsUIState.update { currentState ->
+        val title = if (gettingStartedSelected) {
+            appContext.getString(R.string.getting_started)
+        } else if (salvationSelected) {
+            appContext.getString(R.string.salvation)
+        } else if (lordshipSelected) {
+            appContext.getString(R.string.lordship)
+        } else if (identitySelected) {
+            appContext.getString(R.string.identity)
+        } else if (powerSelected) {
+            appContext.getString(R.string.power)
+        } else if (devotionSelected) {
+            appContext.getString(R.string.devotion)
+        } else if (churchSelected) {
+            appContext.getString(R.string.church)
+        } else {
+            appContext.getString(R.string.discipleship)
+        }
+
+        _navigationUIState.update { currentState ->
             currentState.copy(
+                sectionTitle = title,
                 gettingStartedSelected = gettingStartedSelected,
                 salvationSelected = salvationSelected,
                 lordshipSelected = lordshipSelected,
@@ -157,6 +179,20 @@ class ContentViewModel @Inject constructor(
                 devotionSelected = devotionSelected,
                 churchSelected = churchSelected,
                 discipleshipSelected = discipleshipSelected
+            )
+        }
+    }
+
+    /**
+     * Sets the app bar title.
+     *
+     * @param title The app bar title.
+     */
+    fun setSectionTitle(title: String? = null) {
+        // set the app bar title on initial load
+        _navigationUIState.update { currentState ->
+            currentState.copy(
+                sectionTitle = title ?: appContext.getString(R.string.getting_started)
             )
         }
     }

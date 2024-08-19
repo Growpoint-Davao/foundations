@@ -12,10 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foundation"
         android:name=".App"
+        android:resizeableActivity="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:resizeableActivity="true"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>
