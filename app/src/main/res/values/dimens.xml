@@ -10,6 +10,10 @@
     <dimen name="padding_logo_vertical_medium">24dp</dimen>
     <dimen name="padding_logo_vertical_expanded">32dp</dimen>
 
+    <dimen name="padding_vertical">8dp</dimen>
+    <dimen name="padding_horizontal">16dp</dimen>
+
+    <dimen name="padding_content_expanded">16dp</dimen>
     <dimen name="padding_content_horizontal_compact">16dp</dimen>
     <dimen name="padding_content_horizontal_medium">24dp</dimen>
     <dimen name="padding_content_horizontal_expanded">32dp</dimen>

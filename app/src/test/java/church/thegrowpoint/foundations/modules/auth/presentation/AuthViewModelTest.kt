@@ -1,7 +1,7 @@
 package church.thegrowpoint.foundations.modules.auth.presentation
 
 import android.content.Context
-import church.thegrowpoint.foundations.modules.SkipAuthCodes
+import church.thegrowpoint.foundations.modules.content.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.domain.models.User
 import church.thegrowpoint.foundations.modules.auth.domain.repositories.AuthRepository
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.GetCurrentUser

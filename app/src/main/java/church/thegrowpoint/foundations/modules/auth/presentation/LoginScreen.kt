@@ -45,7 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
-import church.thegrowpoint.foundations.modules.Routes
+import church.thegrowpoint.foundations.modules.content.Routes
 import church.thegrowpoint.foundations.ui.composables.ActionableDialog
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.DialogAction

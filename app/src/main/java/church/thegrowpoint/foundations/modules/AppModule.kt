@@ -18,6 +18,7 @@ import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithEm
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignInWithGoogle
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.SignOutUser
 import church.thegrowpoint.foundations.modules.auth.domain.usecases.UpdateDataStoreSkipAuthFlow
+import church.thegrowpoint.foundations.modules.content.Routes
 import church.thegrowpoint.foundations.modules.content.data.datasources.ContentLocalDataSourceImplementation
 import church.thegrowpoint.foundations.modules.content.data.datasources.FirestoreRemoteDataSource
 import church.thegrowpoint.foundations.modules.content.data.repositories.ContentRemoteRepositoryImplementation

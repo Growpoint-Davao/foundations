@@ -14,8 +14,8 @@ android {
         applicationId = "church.thegrowpoint.foundations"
         minSdk = 25
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.0.1"
+        versionCode = 6
+        versionName = "1.1.0"
 
         // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "church.thegrowpoint.foundations.CustomTestRunner"
@@ -94,6 +94,9 @@ dependencies {
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.material3.adaptive.navigation.suite)
+    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
