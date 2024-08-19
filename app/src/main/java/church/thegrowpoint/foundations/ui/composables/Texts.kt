@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
  * It needs the [text] to show.
  * It has optional arguments such as [modifier] to alter this composable, [fontWeight],
  * [color], and trailing lambda [onClick] callback.
- * 
+ *
  * @param modifier [Modifier] to alter this composable.
  * @param text The text to show.
  * @param fontWeight The weight of the text.
