@@ -55,20 +55,7 @@ fun NavigationDrawerItemWithProgress(
             }
         },
         label = {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-
-                if (subTitle != null) {
-                    Text(
-                        text = subTitle,
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                }
-            }
+            TitleLabel(modifier = Modifier.fillMaxWidth(), title = title, subTitle = subTitle)
         },
         selected = selected,
         onClick = {

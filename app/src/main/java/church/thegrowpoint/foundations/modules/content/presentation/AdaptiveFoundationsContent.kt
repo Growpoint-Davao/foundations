@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Logout
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -47,6 +47,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.L
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
+import church.thegrowpoint.foundations.ui.composables.TitleLabel
 import kotlinx.coroutines.launch
 
 /**
@@ -66,12 +67,12 @@ fun AdaptiveFoundationsContent(
     discipleshipViewModel: DiscipleshipViewModel = hiltViewModel()
 ) {
     val adaptiveInfo = currentWindowAdaptiveInfo()
-    val navSuiteType = with(adaptiveInfo) {
-        if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
-            NavigationSuiteType.NavigationDrawer
-        } else {
-            NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
-        }
+    val windowSizeClass = adaptiveInfo.windowSizeClass
+
+    val navSuiteType = if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
+        NavigationSuiteType.NavigationDrawer
+    } else {
+        NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
     }
 
     val navController = rememberNavController()
@@ -168,12 +169,25 @@ fun AdaptiveFoundationsContent(
                     modifier = Modifier.padding(vertical = navSuiteItemPaddingVertical),
                     icon = {
                         Image(
-                            modifier = Modifier.size(48.dp),
+                            modifier = Modifier
+                                .size(48.dp)
+                                .padding(vertical = 4.dp),
                             painter = painterResource(section.icon),
                             contentDescription = stringResource(section.title)
                         )
                     },
-                    label = { Text(stringResource(section.title)) },
+                    label = {
+                        if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
+                            TitleLabel(
+                                title = stringResource(section.title),
+                                subTitle = stringResource(section.subTitle)
+                            )
+                        } else {
+                            TitleLabel(
+                                title = stringResource(section.title)
+                            )
+                        }
+                    },
                     selected = selected,
                     onClick = {
                         val currentParentRoute = navController.currentDestination?.parent?.route
@@ -195,12 +209,19 @@ fun AdaptiveFoundationsContent(
                 modifier = Modifier.padding(vertical = navSuiteItemPaddingVertical),
                 icon = {
                     Icon(
-                        modifier = Modifier.width(48.dp),
+                        modifier = Modifier
+                            .width(48.dp)
+                            .padding(vertical = 4.dp),
                         imageVector = Icons.AutoMirrored.Rounded.Logout,
                         contentDescription = stringResource(R.string.logout),
                     )
                 },
-                label = { Text(stringResource(R.string.logout)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.logout),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                },
                 selected = false,
                 onClick = {
                     authViewModel.logout()
