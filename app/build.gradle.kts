@@ -126,7 +126,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler.v244)
+    kaptTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 
