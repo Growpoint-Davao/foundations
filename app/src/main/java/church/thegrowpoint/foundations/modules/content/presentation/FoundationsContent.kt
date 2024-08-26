@@ -188,7 +188,6 @@ fun FoundationsContent(
                                 icon = painterResource(section.icon),
                                 selected = selected,
                                 baseRoute = section.baseRoute,
-                                navController = navController,
                                 navigationDrawerState = navigationDrawerState,
                                 navigationDrawerScope = navigationDrawerScope,
                                 onClick = onSelected
@@ -275,6 +274,7 @@ fun FoundationsContent(
                 ) {
                     SectionsContent(
                         navController = navController,
+                        contentViewModel = contentViewModel,
                         salvationViewModel = salvationViewModel,
                         lordShipViewModel = lordShipViewModel,
                         identityViewModel = identityViewModel,
@@ -285,71 +285,6 @@ fun FoundationsContent(
                         pageContentState = pageLazyListState
                     )
                 }
-            },
-            floatingActionButton = {
-                AnimatedNavigationFloatingActionButtons(
-                    isVisible = navFabVisibility,
-                    previousButtonVisible = previousButtonVisible,
-                    onPreviousClick = {
-                        val currentDestination = navController.currentDestination
-                        val currentRoute = currentDestination?.route
-                        val segments = currentRoute?.split('/')
-                        val currentPage = segments?.get(1)?.toInt() ?: 0
-                        if (currentPage > 1) {
-                            // only pop if not in page 1
-                            navController.popBackStack()
-                        }
-
-                        // scroll back to top
-                        coroutineScope.launch {
-                            pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
-                        }
-                    },
-                    onNextClick = {
-                        val currentDestination = navController.currentDestination
-                        val currentRoute = currentDestination?.route
-                        val segments = currentRoute?.split('/')
-                        val section = segments?.get(0)
-                        val nextPage = segments?.get(1)?.toInt()?.plus(1) ?: 1
-
-                        if (section != null) {
-                            val sectionPageCount = contentViewModel.getSectionPageCount(section)
-
-                            if (nextPage > sectionPageCount) {
-                                val nextSection = contentViewModel.getNextSection(section)
-                                if (nextSection != null) {
-                                    val nextSectionTitle =
-                                        contentViewModel.getTitleResource(nextSection)
-                                    if (nextSectionTitle != null) {
-                                        contentViewModel.setSectionTitle(nextSectionTitle)
-                                        contentViewModel.setNavigationDrawerItemSelected(nextSection)
-                                    }
-
-                                    try {
-                                        navController.navigate(nextSection) {
-                                            popUpTo(route = section) {
-                                                inclusive = true
-                                            }
-                                        }
-                                    } catch (e: IllegalArgumentException) {
-                                        // probably no more section
-                                        e.printStackTrace()
-                                    }
-
-                                    previousButtonVisible = false
-                                }
-                            } else {
-                                navController.navigate("$section/$nextPage")
-                                previousButtonVisible = true
-                            }
-                        }
-
-                        // scroll back to top
-                        coroutineScope.launch {
-                            pageLazyListState.animateScrollToItem(index = 0) // Smoothly animates to the top
-                        }
-                    }
-                )
             }
         )
     }
