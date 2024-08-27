@@ -2,6 +2,8 @@ package church.thegrowpoint.foundations.modules.content.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -42,6 +44,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.L
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
 import church.thegrowpoint.foundations.ui.composables.EmphasisLabel
+import church.thegrowpoint.foundations.ui.composables.ExtraLargeTitleLabel
 
 @Composable
 fun AdaptiveSectionsContent(
@@ -142,14 +145,30 @@ fun AdaptiveSectionsContent(
 
         Column(modifier = Modifier.padding(horizontal = horizontalPadding)) {
             when(navUIState.value.selectedSectionRoute) {
-                Routes.GETTING_STARTED.route -> GettingStarted()
-                Routes.SALVATION.route -> Salvation(viewModel = salvationViewModel)
-                Routes.LORDSHIP.route -> Lordship(viewModel = lordShipViewModel)
-                Routes.IDENTITY.route -> Identity(viewModel = identityViewModel)
-                Routes.POWER.route -> Power(viewModel = powerViewModel)
-                Routes.DEVOTION.route -> Devotion(viewModel = devotionViewModel)
-                Routes.CHURCH.route -> Church(viewModel = churchViewModel)
-                else -> Discipleship(viewModel = discipleshipViewModel)
+                Routes.GETTING_STARTED.route -> GettingStarted {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.GETTING_STARTED.title))
+                }
+                Routes.SALVATION.route -> Salvation(viewModel = salvationViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.SALVATION.title))
+                }
+                Routes.LORDSHIP.route -> Lordship(viewModel = lordShipViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.LORDSHIP.title))
+                }
+                Routes.IDENTITY.route -> Identity(viewModel = identityViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.IDENTITY.title))
+                }
+                Routes.POWER.route -> Power(viewModel = powerViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.POWER.title))
+                }
+                Routes.DEVOTION.route -> Devotion(viewModel = devotionViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.DEVOTION.title))
+                }
+                Routes.CHURCH.route -> Church(viewModel = churchViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.CHURCH.title))
+                }
+                else -> Discipleship(viewModel = discipleshipViewModel) {
+                    ExtraLargeTitleLabel(title = stringResource(Sections.DISCIPLESHIP.title))
+                }
             }
         }
     }

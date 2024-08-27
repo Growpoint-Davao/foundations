@@ -11,12 +11,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
+import church.thegrowpoint.foundations.ui.composables.ExtraLargeTitleLabel
 
 @Composable
 fun GettingStarted(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    headerTitle: String? = null
+    header: @Composable (() -> Unit)? = null,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -24,6 +25,10 @@ fun GettingStarted(
     ) {
         item {
             Spacer(modifier = Modifier.height(8.dp))
+            if (header != null) {
+                header()
+                Spacer(modifier = Modifier.height(24.dp))
+            }
             ContentMarkdown(markdown = stringResource(R.string.getting_started_page_1))
             Spacer(modifier = Modifier.height(8.dp))
             ContentMarkdown(markdown = stringResource(R.string.getting_started_page_2))

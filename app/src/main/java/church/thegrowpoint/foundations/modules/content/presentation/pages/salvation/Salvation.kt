@@ -23,7 +23,8 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 fun Salvation(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: SalvationViewModel = hiltViewModel()
+    viewModel: SalvationViewModel = hiltViewModel(),
+    header: @Composable (() -> Unit)? = null
 ) {
     // this is the first page so restore everything here
     val localSalvationAnswers = viewModel.getDataStoreAnswersFlow().collectAsState(
@@ -56,6 +57,10 @@ fun Salvation(
     ) {
         item {
             Spacer(modifier = Modifier.height(8.dp))
+            if (header != null) {
+                header()
+                Spacer(modifier = Modifier.height(24.dp))
+            }
             ContentMarkdown(markdown = stringResource(R.string.salvation_page_1))
             Spacer(modifier = Modifier.height(8.dp))
             ContentMarkdown(markdown = stringResource(R.string.salvation_page_2_part_1))

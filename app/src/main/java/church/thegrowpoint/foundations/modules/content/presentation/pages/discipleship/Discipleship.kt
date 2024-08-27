@@ -25,7 +25,8 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 fun Discipleship(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: DiscipleshipViewModel = hiltViewModel()
+    viewModel: DiscipleshipViewModel = hiltViewModel(),
+    header: @Composable (() -> Unit)? = null
 ) {
     // this is the first page so restore everything here
     val localPowerAnswers = viewModel.getDataStoreAnswersFlow().collectAsState(
@@ -51,6 +52,10 @@ fun Discipleship(
     ) {
         item {
             Spacer(modifier = Modifier.height(8.dp))
+            if (header != null) {
+                header()
+                Spacer(modifier = Modifier.height(24.dp))
+            }
             ContentMarkdown(markdown = stringResource(R.string.discipleship_page_1))
             Spacer(modifier = Modifier.height(8.dp))
             ContentMarkdown(markdown = stringResource(R.string.discipleship_page_2_part_1))

@@ -25,7 +25,8 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 fun Power(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: PowerViewModel = hiltViewModel()
+    viewModel: PowerViewModel = hiltViewModel(),
+    header: @Composable (() -> Unit)? = null
 ) {
     // this is the first page so restore everything here
     val localPowerAnswers = viewModel.getDataStoreAnswersFlow().collectAsState(
@@ -54,9 +55,12 @@ fun Power(
     ) {
         item {
             Spacer(modifier = Modifier.height(8.dp))
+            if (header != null) {
+                header()
+                Spacer(modifier = Modifier.height(24.dp))
+            }
             ContentMarkdown(markdown = stringResource(R.string.power_page_1_part_1))
             Spacer(modifier = Modifier.height(8.dp))
-
             ContentMarkdown(markdown = stringResource(R.string.power_page_2_part_1))
             Spacer(modifier = Modifier.height(8.dp))
             MultilineLabeledWithSupportTextOutlinedTextField(

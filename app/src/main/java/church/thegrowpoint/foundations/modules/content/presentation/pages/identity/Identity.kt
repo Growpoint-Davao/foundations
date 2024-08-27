@@ -28,7 +28,8 @@ import church.thegrowpoint.foundations.ui.composables.MultilineLabeledWithSuppor
 fun Identity(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    viewModel: IdentityViewModel = hiltViewModel()
+    viewModel: IdentityViewModel = hiltViewModel(),
+    header: @Composable (() -> Unit)? = null
 ) {
     val identityAnswers = viewModel.getDataStoreAnswersFlow()
         .collectAsState(
@@ -160,6 +161,10 @@ fun Identity(
     ) {
         item {
             Spacer(modifier = Modifier.height(8.dp))
+            if (header != null) {
+                header()
+                Spacer(modifier = Modifier.height(24.dp))
+            }
             ContentMarkdown(markdown = stringResource(R.string.identity_page_1_part_1))
             Spacer(modifier = Modifier.height(8.dp))
             ContentMarkdown(markdown = stringResource(R.string.identity_page_2_part_1))
