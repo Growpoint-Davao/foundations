@@ -188,14 +188,14 @@ class ContentViewModel @Inject constructor(
         _navigationUIState.update { currentState ->
             currentState.copy(
                 sectionTitle = title,
-                gettingStartedSelected = gettingStartedSelected,
-                salvationSelected = salvationSelected,
-                lordshipSelected = lordshipSelected,
-                identitySelected = identitySelected,
-                powerSelected = powerSelected,
-                devotionSelected = devotionSelected,
-                churchSelected = churchSelected,
-                discipleshipSelected = discipleshipSelected
+//                gettingStartedSelected = gettingStartedSelected,
+//                salvationSelected = salvationSelected,
+//                lordshipSelected = lordshipSelected,
+//                identitySelected = identitySelected,
+//                powerSelected = powerSelected,
+//                devotionSelected = devotionSelected,
+//                churchSelected = churchSelected,
+//                discipleshipSelected = discipleshipSelected
             )
         }
     }

@@ -16,14 +16,14 @@ import church.thegrowpoint.foundations.modules.content.Routes
  */
 data class NavigationUIState(
     val sectionTitle: String = "",
-    val gettingStartedSelected: Boolean = false,
-    val salvationSelected: Boolean = false,
-    val lordshipSelected: Boolean = false,
-    val identitySelected: Boolean = false,
-    val powerSelected: Boolean = false,
-    val devotionSelected: Boolean = false,
-    val churchSelected: Boolean = false,
-    val discipleshipSelected: Boolean = false,
+//    val gettingStartedSelected: Boolean = false,
+//    val salvationSelected: Boolean = false,
+//    val lordshipSelected: Boolean = false,
+//    val identitySelected: Boolean = false,
+//    val powerSelected: Boolean = false,
+//    val devotionSelected: Boolean = false,
+//    val churchSelected: Boolean = false,
+//    val discipleshipSelected: Boolean = false,
 
     val selectedSectionRoute: String = Routes.GETTING_STARTED.route
 )

@@ -21,6 +21,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -28,13 +29,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
+import church.thegrowpoint.foundations.modules.content.Routes
 import church.thegrowpoint.foundations.modules.content.Sections
+import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church
+import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion
+import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship
+import church.thegrowpoint.foundations.modules.content.presentation.pages.gettingStarted.GettingStarted
+import church.thegrowpoint.foundations.modules.content.presentation.pages.identity.Identity
+import church.thegrowpoint.foundations.modules.content.presentation.pages.lordship.Lordship
+import church.thegrowpoint.foundations.modules.content.presentation.pages.power.Power
+import church.thegrowpoint.foundations.modules.content.presentation.pages.salvation.Salvation
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.DevotionViewModel
@@ -95,92 +107,17 @@ fun FoundationsContent(
                     item {
                         Spacer(modifier = Modifier.height(8.dp))
                         Sections.entries.forEach { section ->
-                            val selected = when (section) {
-                                Sections.GETTING_STARTED -> navUIState.value.gettingStartedSelected
-                                Sections.SALVATION -> navUIState.value.salvationSelected
-                                Sections.LORDSHIP -> navUIState.value.lordshipSelected
-                                Sections.IDENTITY -> navUIState.value.identitySelected
-                                Sections.POWER -> navUIState.value.powerSelected
-                                Sections.DEVOTION -> navUIState.value.devotionSelected
-                                Sections.CHURCH -> navUIState.value.churchSelected
-                                Sections.DISCIPLESHIP -> navUIState.value.discipleshipSelected
-                            }
-
-                            val onSelected = when (section) {
-                                Sections.GETTING_STARTED -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            gettingStartedSelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.SALVATION -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            salvationSelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.LORDSHIP -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            lordshipSelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.IDENTITY -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            identitySelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.POWER -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            powerSelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.DEVOTION -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            devotionSelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.CHURCH -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            churchSelected = true
-                                        )
-                                    }
-                                }
-
-                                Sections.DISCIPLESHIP -> {
-                                    {
-                                        contentViewModel.setNavigationDrawerItemSelected(
-                                            discipleshipSelected = true
-                                        )
-                                    }
-                                }
-                            }
-
                             NavigationDrawerItemWithProgress(
                                 title = stringResource(section.title),
                                 subTitle = stringResource(section.subTitle),
                                 icon = painterResource(section.icon),
-                                selected = selected,
+                                selected = section.baseRoute == navUIState.value.selectedSectionRoute,
                                 baseRoute = section.baseRoute,
                                 navigationDrawerState = navigationDrawerState,
                                 navigationDrawerScope = navigationDrawerScope,
-                                onClick = onSelected
+                                onClick = {
+                                    contentViewModel.setSelectedSectionRoute(section.baseRoute)
+                                }
                             )
                         }
 
@@ -217,10 +154,15 @@ fun FoundationsContent(
         val keyboardController = LocalSoftwareKeyboardController.current
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
+        val selectedRoute = Sections.entries.first {
+            it.baseRoute == navUIState.value.selectedSectionRoute
+        }
+        val selectedTitleString = stringResource(selectedRoute.title)
+
         Scaffold(
             topBar = {
                 CenteredTopAppBar(
-                    title = navUIState.value.sectionTitle,
+                    title = selectedTitleString,
                     scrollBehavior = scrollBehavior,
                     navIconContentDescription = stringResource(R.string.toggle_navigation_drawer)
                 ) {
@@ -235,21 +177,39 @@ fun FoundationsContent(
                 }
             },
             content = { innerPadding ->
+                val adaptiveInfo = currentWindowAdaptiveInfo()
+                val windowSizeClass = adaptiveInfo.windowSizeClass
+
+                val horizontalPadding = when (windowSizeClass.windowWidthSizeClass) {
+                    WindowWidthSizeClass.MEDIUM -> {
+                        dimensionResource(R.dimen.padding_content_horizontal_medium)
+                    }
+
+                    WindowWidthSizeClass.EXPANDED -> {
+                        dimensionResource(R.dimen.padding_content_horizontal_expanded)
+                    }
+
+                    else -> {
+                        dimensionResource(R.dimen.padding_content_horizontal_compact)
+                    }
+                }
+
                 Column(
                     modifier = Modifier
                         .padding(innerPadding)
+                        .padding(horizontal = horizontalPadding)
                         .fillMaxSize()
                 ) {
-                    SectionsContent(
-                        contentViewModel = contentViewModel,
-                        salvationViewModel = salvationViewModel,
-                        lordShipViewModel = lordShipViewModel,
-                        identityViewModel = identityViewModel,
-                        powerViewModel = powerViewModel,
-                        devotionViewModel = devotionViewModel,
-                        churchViewModel = churchViewModel,
-                        discipleshipViewModel = discipleshipViewModel
-                    )
+                    when(navUIState.value.selectedSectionRoute) {
+                        Routes.GETTING_STARTED.route -> GettingStarted()
+                        Routes.SALVATION.route -> Salvation(viewModel = salvationViewModel)
+                        Routes.LORDSHIP.route -> Lordship(viewModel = lordShipViewModel)
+                        Routes.IDENTITY.route -> Identity(viewModel = identityViewModel)
+                        Routes.POWER.route -> Power(viewModel = powerViewModel)
+                        Routes.DEVOTION.route -> Devotion(viewModel = devotionViewModel)
+                        Routes.CHURCH.route -> Church(viewModel = churchViewModel)
+                        else -> Discipleship(viewModel = discipleshipViewModel)
+                    }
                 }
             }
         )

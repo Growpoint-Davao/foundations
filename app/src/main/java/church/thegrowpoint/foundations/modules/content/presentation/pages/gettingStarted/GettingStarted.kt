@@ -15,7 +15,8 @@ import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkd
 @Composable
 fun GettingStarted(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    headerTitle: String? = null
 ) {
     LazyColumn(
         modifier = modifier,
