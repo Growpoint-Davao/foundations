@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
-import church.thegrowpoint.foundations.ui.composables.ExtraLargeTitleLabel
 
 @Composable
 fun GettingStarted(
