@@ -24,22 +24,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.content.Sections
@@ -51,7 +43,6 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.I
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
-import church.thegrowpoint.foundations.ui.composables.AnimatedNavigationFloatingActionButtons
 import church.thegrowpoint.foundations.ui.composables.CenteredTopAppBar
 import church.thegrowpoint.foundations.ui.composables.GrowpointTitlePanel
 import church.thegrowpoint.foundations.ui.composables.NavigationDrawerItemWithProgress
@@ -73,7 +64,6 @@ fun FoundationsContent(
     // drawer must be initially closed
     val navigationDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navigationDrawerScope = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     // drawer selected status state
     val navUIState = contentViewModel.navigationUIState.collectAsState()
@@ -225,29 +215,7 @@ fun FoundationsContent(
     ) {
         // keyboard controller for hiding the keyboard
         val keyboardController = LocalSoftwareKeyboardController.current
-
-        val coroutineScope = rememberCoroutineScope()
-        val pageLazyListState = rememberLazyListState()
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
-        // determine the visibility of the floating navigation buttons based on the lazy list state of the page
-        val navFabVisibility by remember {
-            derivedStateOf {
-                pageLazyListState.canScrollBackward || (!pageLazyListState.canScrollBackward && !pageLazyListState.canScrollForward)
-            }
-        }
-
-        var previousButtonVisible by rememberSaveable {
-            mutableStateOf(false)
-        }
-
-        LaunchedEffect(navFabVisibility) {
-            val currentDestination = navController.currentDestination
-            val currentRoute = currentDestination?.route
-            val segments = currentRoute?.split('/')
-            val currentPage = segments?.get(1)?.toInt() ?: 0
-            previousButtonVisible = currentPage != 1 // hide the previous button
-        }
 
         Scaffold(
             topBar = {
@@ -273,7 +241,6 @@ fun FoundationsContent(
                         .fillMaxSize()
                 ) {
                     SectionsContent(
-                        navController = navController,
                         contentViewModel = contentViewModel,
                         salvationViewModel = salvationViewModel,
                         lordShipViewModel = lordShipViewModel,
@@ -281,8 +248,7 @@ fun FoundationsContent(
                         powerViewModel = powerViewModel,
                         devotionViewModel = devotionViewModel,
                         churchViewModel = churchViewModel,
-                        discipleshipViewModel = discipleshipViewModel,
-                        pageContentState = pageLazyListState
+                        discipleshipViewModel = discipleshipViewModel
                     )
                 }
             }

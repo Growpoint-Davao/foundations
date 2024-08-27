@@ -32,6 +32,7 @@ class ContentViewModel @Inject constructor(
 
     init {
         setSectionTitle()
+        setNavigationDrawerItemSelected(Routes.GETTING_STARTED.route)
     }
 
     /**
@@ -126,6 +127,22 @@ class ContentViewModel @Inject constructor(
         }
 
         return null
+    }
+
+    fun setSelectedSectionRoute(section: Routes) {
+        _navigationUIState.update { currentState ->
+            currentState.copy(
+                selectedSectionRoute = section.route
+            )
+        }
+    }
+
+    fun setSelectedSectionRoute(section: String) {
+        _navigationUIState.update { currentState ->
+            currentState.copy(
+                selectedSectionRoute = section
+            )
+        }
     }
 
     /**

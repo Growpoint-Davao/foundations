@@ -3,19 +3,14 @@ package church.thegrowpoint.foundations.modules.content.presentation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
-import church.thegrowpoint.foundations.modules.content.Routes
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship
@@ -43,10 +38,7 @@ fun SectionsContent(
     powerViewModel: PowerViewModel = hiltViewModel(),
     devotionViewModel: DevotionViewModel = hiltViewModel(),
     churchViewModel: ChurchViewModel = hiltViewModel(),
-    discipleshipViewModel: DiscipleshipViewModel = hiltViewModel(),
-    navController: NavHostController = rememberNavController(),
-    pageContentState: LazyListState = rememberLazyListState(),
-    currentDestination: String = Routes.GETTING_STARTED.route
+    discipleshipViewModel: DiscipleshipViewModel = hiltViewModel()
 ) {
     val navUIState = contentViewModel.navigationUIState.collectAsState()
 
@@ -69,8 +61,7 @@ fun SectionsContent(
     Column(modifier = modifier.fillMaxSize()) {
         if (navUIState.value.gettingStartedSelected) {
             GettingStarted(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                state = pageContentState
+                modifier = Modifier.padding(horizontal = horizontalPadding)
             )
             return
         }
@@ -78,8 +69,7 @@ fun SectionsContent(
         if (navUIState.value.salvationSelected) {
             Salvation(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = salvationViewModel,
-                state = pageContentState
+                viewModel = salvationViewModel
             )
             return
         }
@@ -87,8 +77,7 @@ fun SectionsContent(
         if (navUIState.value.lordshipSelected) {
             Lordship(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = lordShipViewModel,
-                state = pageContentState
+                viewModel = lordShipViewModel
             )
             return
         }
@@ -96,8 +85,7 @@ fun SectionsContent(
         if (navUIState.value.identitySelected) {
             Identity(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = identityViewModel,
-                state = pageContentState
+                viewModel = identityViewModel
             )
             return
         }
@@ -105,8 +93,7 @@ fun SectionsContent(
         if (navUIState.value.powerSelected) {
             Power(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = powerViewModel,
-                state = pageContentState
+                viewModel = powerViewModel
             )
             return
         }
@@ -114,8 +101,7 @@ fun SectionsContent(
         if (navUIState.value.devotionSelected) {
             Devotion(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = devotionViewModel,
-                state = pageContentState
+                viewModel = devotionViewModel
             )
             return
         }
@@ -123,8 +109,7 @@ fun SectionsContent(
         if (navUIState.value.churchSelected) {
             Church(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = churchViewModel,
-                state = pageContentState
+                viewModel = churchViewModel
             )
             return
         }
@@ -132,8 +117,7 @@ fun SectionsContent(
         if (navUIState.value.discipleshipSelected) {
             Discipleship(
                 modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = discipleshipViewModel,
-                state = pageContentState
+                viewModel = discipleshipViewModel
             )
             return
         }

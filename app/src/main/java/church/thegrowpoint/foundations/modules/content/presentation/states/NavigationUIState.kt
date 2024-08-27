@@ -1,5 +1,7 @@
 package church.thegrowpoint.foundations.modules.content.presentation.states
 
+import church.thegrowpoint.foundations.modules.content.Routes
+
 /**
  * # NavigationUIState
  *
@@ -21,5 +23,7 @@ data class NavigationUIState(
     val powerSelected: Boolean = false,
     val devotionSelected: Boolean = false,
     val churchSelected: Boolean = false,
-    val discipleshipSelected: Boolean = false
+    val discipleshipSelected: Boolean = false,
+
+    val selectedSectionRoute: String = Routes.GETTING_STARTED.route
 )
