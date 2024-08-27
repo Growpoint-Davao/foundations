@@ -115,11 +115,6 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(route = Routes.CONTENT.route) {
-                                // set the initial selected item
-                                contentViewModel.setNavigationDrawerItemSelected(
-                                    gettingStartedSelected = true
-                                )
-
                                 if (isPhone()) {
                                     FoundationsContent(
                                         authViewModel = authViewModel,

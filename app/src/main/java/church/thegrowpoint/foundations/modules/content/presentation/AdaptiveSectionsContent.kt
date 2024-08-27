@@ -2,8 +2,6 @@ package church.thegrowpoint.foundations.modules.content.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,7 +24,6 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.content.Routes
-import church.thegrowpoint.foundations.modules.content.Sections
 import church.thegrowpoint.foundations.modules.content.presentation.pages.church.Church
 import church.thegrowpoint.foundations.modules.content.presentation.pages.devotion.Devotion
 import church.thegrowpoint.foundations.modules.content.presentation.pages.discipleship.Discipleship
@@ -43,6 +40,7 @@ import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.I
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.LordshipViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.PowerViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.SalvationViewModel
+import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.Sections
 import church.thegrowpoint.foundations.ui.composables.EmphasisLabel
 import church.thegrowpoint.foundations.ui.composables.ExtraLargeTitleLabel
 
