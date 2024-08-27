@@ -1,6 +1,7 @@
 package church.thegrowpoint.foundations.modules.content.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -118,10 +119,7 @@ fun AdaptiveSectionsContent(
                     )
                 },
                 label = {
-                    Text(
-                        text = stringResource(R.string.logout),
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                    EmphasisLabel(title = stringResource(R.string.logout))
                 },
                 selected = false,
                 onClick = {
@@ -144,38 +142,17 @@ fun AdaptiveSectionsContent(
             }
         }
 
-        when(navUIState.value.selectedSectionRoute) {
-            Routes.GETTING_STARTED.route -> GettingStarted(
-                modifier = Modifier.padding(horizontal = horizontalPadding)
-            )
-            Routes.SALVATION.route -> Salvation(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = salvationViewModel
-            )
-            Routes.LORDSHIP.route -> Lordship(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = lordShipViewModel
-            )
-            Routes.IDENTITY.route -> Identity(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = identityViewModel
-            )
-            Routes.POWER.route -> Power(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = powerViewModel
-            )
-            Routes.DEVOTION.route -> Devotion(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = devotionViewModel
-            )
-            Routes.CHURCH.route -> Church(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = churchViewModel
-            )
-            else -> Discipleship(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
-                viewModel = discipleshipViewModel
-            )
+        Column(modifier = Modifier.padding(horizontal = horizontalPadding)) {
+            when(navUIState.value.selectedSectionRoute) {
+                Routes.GETTING_STARTED.route -> GettingStarted()
+                Routes.SALVATION.route -> Salvation(viewModel = salvationViewModel)
+                Routes.LORDSHIP.route -> Lordship(viewModel = lordShipViewModel)
+                Routes.IDENTITY.route -> Identity(viewModel = identityViewModel)
+                Routes.POWER.route -> Power(viewModel = powerViewModel)
+                Routes.DEVOTION.route -> Devotion(viewModel = devotionViewModel)
+                Routes.CHURCH.route -> Church(viewModel = churchViewModel)
+                else -> Discipleship(viewModel = discipleshipViewModel)
+            }
         }
     }
 }
