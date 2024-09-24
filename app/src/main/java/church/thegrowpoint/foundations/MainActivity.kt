@@ -19,13 +19,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import church.thegrowpoint.foundations.modules.content.Routes
-import church.thegrowpoint.foundations.modules.content.SkipAuthCodes
 import church.thegrowpoint.foundations.modules.auth.presentation.AuthViewModel
 import church.thegrowpoint.foundations.modules.auth.presentation.ForgotPasswordScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.NoRegistrationLoginScreen
 import church.thegrowpoint.foundations.modules.auth.presentation.RegistrationScreen
-import church.thegrowpoint.foundations.modules.content.presentation.AdaptiveFoundationsContent
+import church.thegrowpoint.foundations.modules.content.Routes
+import church.thegrowpoint.foundations.modules.content.SkipAuthCodes
+import church.thegrowpoint.foundations.modules.content.presentation.AdaptiveSectionsContent
 import church.thegrowpoint.foundations.modules.content.presentation.FoundationsContent
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ChurchViewModel
 import church.thegrowpoint.foundations.modules.content.presentation.viewmodels.ContentViewModel
@@ -115,11 +115,6 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(route = Routes.CONTENT.route) {
-                                // set the initial selected item
-                                contentViewModel.setNavigationDrawerItemSelected(
-                                    gettingStartedSelected = true
-                                )
-
                                 if (isPhone()) {
                                     FoundationsContent(
                                         authViewModel = authViewModel,
@@ -133,7 +128,7 @@ class MainActivity : ComponentActivity() {
                                         contentViewModel = contentViewModel
                                     )
                                 } else {
-                                    AdaptiveFoundationsContent(
+                                    AdaptiveSectionsContent(
                                         authViewModel = authViewModel,
                                         salvationViewModel = salvationViewModel,
                                         lordShipViewModel = lordShipViewModel,

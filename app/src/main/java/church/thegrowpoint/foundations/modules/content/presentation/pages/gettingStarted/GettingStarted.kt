@@ -2,7 +2,6 @@ package church.thegrowpoint.foundations.modules.content.presentation.pages.getti
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,23 +13,27 @@ import church.thegrowpoint.foundations.R
 import church.thegrowpoint.foundations.modules.content.presentation.ContentMarkdown
 
 @Composable
-fun GettingStarted2(
+fun GettingStarted(
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
+    header: @Composable (() -> Unit)? = null,
 ) {
     LazyColumn(
         modifier = modifier,
         state = state
     ) {
         item {
-            ContentMarkdown(
-                markdown = stringResource(R.string.getting_started_page_2),
-                modifier = Modifier.padding(
-                    top = 24.dp,
-                    bottom = 32.dp,
-                )
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            if (header != null) {
+                header()
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+            ContentMarkdown(markdown = stringResource(R.string.getting_started_page_1))
+            Spacer(modifier = Modifier.height(8.dp))
+            ContentMarkdown(markdown = stringResource(R.string.getting_started_page_2))
+            Spacer(modifier = Modifier.height(8.dp))
+            ContentMarkdown(markdown = stringResource(R.string.getting_started_page_3))
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }

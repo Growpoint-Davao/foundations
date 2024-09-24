@@ -14,8 +14,8 @@ android {
         applicationId = "church.thegrowpoint.foundations"
         minSdk = 25
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.1.0"
+        versionCode = 7
+        versionName = "1.2.0"
 
         // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "church.thegrowpoint.foundations.CustomTestRunner"
@@ -126,7 +126,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler.v244)
+    kaptTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 
