@@ -80,3 +80,44 @@ fun TitleLabel(modifier: Modifier = Modifier, title: String, subTitle: String? =
         }
     }
 }
+
+@Composable
+fun ExtraLargeTitleLabel(modifier: Modifier = Modifier, title: String, subTitle: String? = null) {
+    Column (modifier = modifier) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.Bold
+        )
+        if (!subTitle.isNullOrBlank()) {
+            Text(
+                text = subTitle,
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
+    }
+}
+
+/**
+ * Creates a emphasis label that has subtitle.
+ *
+ * @param modifier [Modifier] to alter this composable.
+ * @param title The title to show.
+ * @param subTitle The subtitle to show.
+ */
+@Composable
+fun EmphasisLabel(modifier: Modifier = Modifier, title: String, subTitle: String? = null) {
+    Column (modifier = modifier) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        if (!subTitle.isNullOrBlank()) {
+            Text(
+                text = subTitle,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+}
