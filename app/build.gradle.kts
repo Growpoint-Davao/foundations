@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace = "church.thegrowpoint.foundations" // should be singular  sorry
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "church.thegrowpoint.foundations"
         minSdk = 25
-        targetSdk = 34
-        versionCode = 7
-        versionName = "1.2.0"
+        targetSdk = 35
+        versionCode = 8
+        versionName = "1.2.1"
 
         // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "church.thegrowpoint.foundations.CustomTestRunner"
