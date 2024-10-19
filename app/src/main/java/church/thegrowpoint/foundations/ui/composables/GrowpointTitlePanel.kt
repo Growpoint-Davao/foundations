@@ -2,7 +2,6 @@ package church.thegrowpoint.foundations.ui.composables
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -59,15 +58,9 @@ fun GrowpointTitlePanel(
         }
 
         if (logo != null) {
-            // TODO: Remove spacer once the original (dark logo) is square and edge to edge
-            if (!isSystemInDarkTheme()) {
-                Spacer(modifier = Modifier.width(8.dp))
-            }
+            Spacer(modifier = Modifier.width(8.dp))
             Image(painter = logo, contentDescription = null)
-            // TODO: Remove spacer once the original (dark logo) is square and edge to edge
-            if (!isSystemInDarkTheme()) {
-                Spacer(modifier = Modifier.width(8.dp))
-            }
+            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
@@ -82,7 +75,7 @@ fun GrowpointTitlePanel(
 fun GrowpointTitlePanelPreview() {
     FoundationsTheme {
         GrowpointTitlePanel(
-            title = stringResource(R.string.foundations),
+            title = stringResource(R.string.foundation),
             subTitle = stringResource(R.string.established_for_growing),
             logo = painterResource(R.drawable.gp_login_logo)
         )

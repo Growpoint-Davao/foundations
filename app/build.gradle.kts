@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "church.thegrowpoint.foundations" // should be singular  sorry
+    namespace = "church.thegrowpoint.foundations"
     compileSdk = 35
 
     defaultConfig {
