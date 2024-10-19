@@ -14,7 +14,7 @@ android {
         applicationId = "church.thegrowpoint.foundations"
         minSdk = 25
         targetSdk = 35
-        versionCode = 8
+        versionCode = 9
         versionName = "1.2.1"
 
         // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -48,7 +48,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
