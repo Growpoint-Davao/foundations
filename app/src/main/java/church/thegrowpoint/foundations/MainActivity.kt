@@ -65,7 +65,6 @@ class MainActivity : ComponentActivity() {
                     // A surface container using the 'background' color from the theme
                     Surface(
                         modifier = Modifier.fillMaxSize(),
-                        // color = MaterialTheme.colorScheme.background
                     ) {
                         val authState by authViewModel.authState.collectAsState()
                         val navController = rememberNavController()
