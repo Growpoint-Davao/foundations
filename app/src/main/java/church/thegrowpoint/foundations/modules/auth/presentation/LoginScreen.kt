@@ -45,7 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import church.thegrowpoint.foundations.R
-import church.thegrowpoint.foundations.modules.content.Routes
+import church.thegrowpoint.foundations.dynamics.foundation.Routes
 import church.thegrowpoint.foundations.ui.composables.ActionableDialog
 import church.thegrowpoint.foundations.ui.composables.ClickableLabel
 import church.thegrowpoint.foundations.ui.composables.DialogAction
@@ -123,7 +123,7 @@ fun LoginScreen(
             color = MaterialTheme.colorScheme.tertiary
         )
         Text(
-            text = stringResource(R.string.foundations).uppercase(Locale.ROOT),
+            text = stringResource(R.string.foundation).uppercase(Locale.ROOT),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
@@ -324,7 +324,7 @@ fun NoRegistrationLoginScreen(
                 color = MaterialTheme.colorScheme.tertiary
             )
             Text(
-                text = stringResource(R.string.foundations).uppercase(Locale.ROOT),
+                text = stringResource(R.string.foundation).uppercase(Locale.ROOT),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     textAlign = TextAlign.Center
                 ),
