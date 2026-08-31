@@ -51,7 +51,10 @@ class FirestoreRemoteDataSource(
      * @return The data written.
      */
     override suspend fun write(data: Map<String, Any?>): Any? {
-        return db.collection(collection).document(userID).set(data).await()
+        return db.collection(collection)
+            .document(userID)
+            .set(data)
+            .await()
     }
 
     /**
@@ -60,7 +63,11 @@ class FirestoreRemoteDataSource(
      * @return The data that was read.
      */
     override suspend fun read(): Map<String, Any?>? {
-        val doc = db.collection(collection).document(userID).get().await()
+        val doc = db.collection(collection)
+            .document(userID)
+            .get()
+            .await()
+
         return doc.data
     }
 }
