@@ -13,9 +13,9 @@ android {
     defaultConfig {
         applicationId = "church.thegrowpoint.foundations"
         minSdk = 25
-        targetSdk = 36
-        versionCode = 12
-        versionName = "1.2.3"
+        targetSdk = 37
+        versionCode = 13
+        versionName = "1.2.4"
 
         // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "church.thegrowpoint.foundations.CustomTestRunner"
@@ -116,6 +116,7 @@ dependencies {
     androidTestImplementation(libs.androidx.runner)
     androidTestUtil(libs.androidx.orchestrator)
 
+    debugImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -136,7 +137,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
 
-    // google play
+    // Google Play
     implementation(libs.play.services.auth)
 }
 
